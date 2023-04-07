@@ -26,6 +26,7 @@ class Camera_Parameters_Str:
 PhoXi_Scanner_M_Str = Camera_Parameters_Str()
 
 # Resolution:
+# Resolution = {'x': ..., 'y': ...}
 #   0: 1032x772
 #   1: 2064x1544
 
