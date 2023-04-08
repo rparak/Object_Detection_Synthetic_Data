@@ -10,6 +10,9 @@ import typing as tp
 # Custom Library:
 #   ../Lib/Transformation/Core
 import Lib.Transformation.Core as Transformation
+#   ../Lib/Parameters/Camera & Object
+import Lib.Parameters.Camera
+import Lib.Parameters.Object
 
 # Focal length of spherical concave mirror is .. f = alpha / 2
 # Focal length: f = 
@@ -65,7 +68,7 @@ def Set_Object_Transformation(name: str, T: tp.List[tp.List[float]]) -> None:
     if isinstance(T, (list, np.ndarray)):
         T = Transformation.Homogeneous_Transformation_Matrix_Cls(T, np.float32)
     
-    bpy.data.objects[name].matrix_basis = T.Transpose().all()
+    bpy.data.objects[name].matrix_basis = T.Transpose().all().copy()
 
 def Get_Transformation_Matrix(location: tp.List[float], rotation: tp.List[float], axes_sequence_cfg: str) -> tp.List[float]:       
     """
@@ -102,21 +105,10 @@ class Object_Cls(object):
     """
     Description:
         ...
-
-        {'x': [0.0, 0.0], 'y':, [0.0, 0.0], 'z': [0.0, 0.0]}
     """
-    def __init__(self, name: str, T_0: tp.List[tp.List[float]], limits_position: tp.Tuple[tp.List[float], tp.List[float], tp.List[float]], 
-                 limits_rotation: tp.Tuple[tp.List[float], tp.List[float], tp.List[float]], axes_sequence_cfg: str) -> None:
-        self.__name = name
-
-        if isinstance(T_0, (list, np.ndarray)):
-            self.__T_0 = Transformation.Homogeneous_Transformation_Matrix_Cls(T_0, np.float32)
-        else:
-            self.__T_0 = T_0
-
-        self.__T = Transformation.Homogeneous_Transformation_Matrix_Cls(T_0.all().copy, np.float32)
-        self.__l_p = limits_position
-        self.__l_theta = limits_rotation
+    def __init__(self, Obj_Param_Str: Lib.Parameters.Object, axes_sequence_cfg: str) -> None:
+        self.__Obj_Param_Str = Obj_Param_Str
+        self.__T = Transformation.Homogeneous_Transformation_Matrix_Cls(self.__Obj_Param_Str.T.all().copy(), np.float32)
         self.__axes_sequence_cfg = axes_sequence_cfg
 
         # ....
@@ -124,38 +116,41 @@ class Object_Cls(object):
 
     @property
     def Name(self):
-        self.__name
+        return self.__Obj_Param_Str.Name
 
     @property
+    def Id(self):
+        return self.__Obj_Param_Str.Id
+    
+    @property
     def T_0(self):
-        return self.__T_0
+        return self.__Obj_Param_Str.T
     
     @property
     def T(self):
         return self.__T
 
     def Reset(self) -> None:
-        self.__T = Transformation.Homogeneous_Transformation_Matrix_Cls(self.__T_0.all().copy, np.float32)
+        self.__T = Transformation.Homogeneous_Transformation_Matrix_Cls(self.__Obj_Param_Str.T.all().copy(), np.float32)
 
-        Set_Object_Transformation(self.__name, self.__T_0)
+        Set_Object_Transformation(self.__Obj_Param_Str.Name, self.__Obj_Param_Str.T)
 
     def Visibility(self, state: bool) -> None:
-        Object_Visibility(self.__name, state)
+        Object_Visibility(self.__Obj_Param_Str.Name, state)
         
     def Random(self) -> None:
-        p = Transformation.Vector3_Cls(None, np.float32)
-        theta = Transformation.Euler_Angle_Cls(None, 'ZYX', np.float32)
+        p = np.zeros(3, np.float32); theta = p.copy()
+        for i, (l_p_i, l_theta_i) in enumerate(zip(self.__Obj_Param_Str.Limit.Position.items(), 
+                                                   self.__Obj_Param_Str.Limit.Rotation.items())):
+            if l_p_i[1] != None:
+                p[i] = np.random.uniform(l_p_i[1][0], l_p_i[1][1])
 
-        for i, (l_p_i, l_theta_i) in enumerate(zip(self.__l_p, self.__l_theta)):
-            if l_p_i != None:
-                p[i] = np.random.uniform(l_p_i[0], l_p_i[1])
+            if l_theta_i[1] != None:
+                theta[i] = np.random.uniform(l_theta_i[1][0], l_theta_i[1][1])
 
-            if l_theta_i != None:
-                theta[i] = np.random.uniform(l_theta_i[0], l_theta_i[1])
+        self.__T = self.__Obj_Param_Str.T @ Get_Transformation_Matrix(p, theta, self.__axes_sequence_cfg)
 
-        self.__T = Get_Transformation_Matrix(p, theta, self.__axes_sequence_cfg)
-
-        Set_Object_Transformation(self.__name, self.__T)
+        Set_Object_Transformation(self.__Obj_Param_Str.Name, self.__T)
 
 
 
