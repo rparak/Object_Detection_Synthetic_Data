@@ -12,8 +12,8 @@ import Lib.Transformation.Core as Transformation
 
 print(Lib.Camera.Parameters.PhoXi_Scanner_M_Str.Resolution['x'])
 
-T_0 = Transformation.Homogeneous_Transformation_Matrix_Cls(None, np.float32)
-T = T_0.Translation(Lib.Camera.Parameters.PhoXi_Scanner_M_Str.Location.all()).Rotation(Lib.Camera.Parameters.PhoXi_Scanner_M_Str.Rotation.all(),'ZYX')
+import typing as tp
 
 
-print(T.Get_Rotation('ZYX').Degree)
+
+

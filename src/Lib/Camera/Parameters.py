@@ -21,8 +21,8 @@ class Camera_Parameters_Str:
     """
 
     # Transformation parameters of the object. Cartesian coordinates.
-    #   Location - p(x, y, z) in meters.
-    Location: Transformation.Vector3_Cls = field(default_factory=list)
+    #   Position - p(x, y, z) in meters.
+    Position: Transformation.Vector3_Cls = field(default_factory=list)
     #   Rotation (Euler Angles) - theta(z, y, x) in radians.
     Rotation: Transformation.Euler_Angle_Cls = field(default_factory=list)
     # Camera resolution in pixels (x, y).
@@ -55,7 +55,7 @@ Description:
 PhoXi_Scanner_M_Str = Camera_Parameters_Str()
 # Cartesian coordinates.
 #   Location in meters.
-PhoXi_Scanner_M_Str.Location = Transformation.Vector3_Cls([0.145, -0.175, 0.885], np.float32)
+PhoXi_Scanner_M_Str.Position = Transformation.Vector3_Cls([0.145, -0.175, 0.885], np.float32)
 #   Rotation in radians.
 PhoXi_Scanner_M_Str.Rotation = Transformation.Euler_Angle_Cls([0.0, Mathematics.Degree_To_Radian(11.75), -Mathematics.CONST_MATH_HALF_PI], 
                                                               'ZYX', np.float32)

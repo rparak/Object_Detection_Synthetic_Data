@@ -17,11 +17,6 @@ import typing as tp
 # https://www.rojtberg.net/1601/from-blender-to-opencv-camera-and-back/
 # https://docs.opencv.org/3.4.3/d9/d0c/group__calib3d.html#details
 
-# CAMERA: ROT Y 11.75,
-# LOC:
-# X- 0.133691 m
-# Y- -0.170359 m
-# Z- 0.881605 m
 """
 Description:
     Initialization of constants.

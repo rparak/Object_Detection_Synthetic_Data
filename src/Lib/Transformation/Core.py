@@ -963,7 +963,7 @@ class Homogeneous_Transformation_Matrix_Cls(object):
 
             # Create an array with the desired data type.
             self.__T = self.__data_type(T) if T is not None else self.__data_type(Get_Matrix_Identity(4))
-
+            
             """
             Description:
                 Determine if the shape of the input object is in the 

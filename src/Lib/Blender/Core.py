@@ -11,8 +11,6 @@ import typing as tp
 #   ../Lib/Transformation/Core
 import Lib.Transformation.Core as Transformation
 
-#import cv2
-
 # Focal length of spherical concave mirror is .. f = alpha / 2
 # Focal length: f = 
 
@@ -28,6 +26,23 @@ def Object_Exist(name: str) -> bool:
     """
     
     return True if bpy.context.scene.objects.get(name) else False
+
+def Object_Visibility(name: str, state: bool) -> None:
+    """
+    Description:
+        Function to hide and unhide the visibility of objects.
+    
+    Args:
+        (1) name [string]: Name of the main object.
+        (2) state [bool]: Unhide (True) / Hide (False).  
+    """
+    
+    cmd = not state; obj = bpy.data.objects[name]
+    
+    if Object_Exist(name):
+        obj.hide_viewport = cmd; obj.hide_render = cmd
+        for obj_i in obj.children:
+            obj_i.hide_viewport = cmd; obj_i.hide_render = cmd
 
 def Deselect_All() -> None:
     """
@@ -73,12 +88,74 @@ def Get_Transformation_Matrix(location: tp.List[float], rotation: tp.List[float]
     return T.Translation(location).Rotation(rotation, axes_sequence_cfg)
 
 class Camera_Cls(object):
+    """
+    Description:
+        ...
+
+        {'x': [0.0, 0.0], 'y':, [0.0, 0.0], 'z': [0.0, 0.0]}
+    """
+        
     def __init__(self) -> None:
         pass
 
 class Object_Cls(object):
-    def __init__(self) -> None:
-        pass
+    """
+    Description:
+        ...
+
+        {'x': [0.0, 0.0], 'y':, [0.0, 0.0], 'z': [0.0, 0.0]}
+    """
+    def __init__(self, name: str, T_0: tp.List[tp.List[float]], limits_position: tp.Tuple[tp.List[float], tp.List[float], tp.List[float]], 
+                 limits_rotation: tp.Tuple[tp.List[float], tp.List[float], tp.List[float]], axes_sequence_cfg: str) -> None:
+        self.__name = name
+
+        if isinstance(T_0, (list, np.ndarray)):
+            self.__T_0 = Transformation.Homogeneous_Transformation_Matrix_Cls(T_0, np.float32)
+        else:
+            self.__T_0 = T_0
+
+        self.__T = Transformation.Homogeneous_Transformation_Matrix_Cls(T_0.all().copy, np.float32)
+        self.__l_p = limits_position
+        self.__l_theta = limits_rotation
+        self.__axes_sequence_cfg = axes_sequence_cfg
+
+        # ....
+        self.Reset()
+
+    @property
+    def Name(self):
+        self.__name
+
+    @property
+    def T_0(self):
+        return self.__T_0
+    
+    @property
+    def T(self):
+        return self.__T
+
+    def Reset(self) -> None:
+        self.__T = Transformation.Homogeneous_Transformation_Matrix_Cls(self.__T_0.all().copy, np.float32)
+
+        Set_Object_Transformation(self.__name, self.__T_0)
+
+    def Visibility(self, state: bool) -> None:
+        Object_Visibility(self.__name, state)
+        
+    def Random(self) -> None:
+        p = Transformation.Vector3_Cls(None, np.float32)
+        theta = Transformation.Euler_Angle_Cls(None, 'ZYX', np.float32)
+
+        for i, (l_p_i, l_theta_i) in enumerate(zip(self.__l_p, self.__l_theta)):
+            if l_p_i != None:
+                p[i] = np.random.uniform(l_p_i[0], l_p_i[1])
+
+            if l_theta_i != None:
+                theta[i] = np.random.uniform(l_theta_i[0], l_theta_i[1])
+
+        self.__T = Get_Transformation_Matrix(p, theta, self.__axes_sequence_cfg)
+
+        Set_Object_Transformation(self.__name, self.__T)
 
 
 
