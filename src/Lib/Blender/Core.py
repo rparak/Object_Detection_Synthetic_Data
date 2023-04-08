@@ -11,5 +11,5 @@ import Utilities.Transformation as Transformation
 
 #import cv2
 
-
-# ...
+# Focal length of spherical concave mirror is .. f = alpha / 2
+# Focal length: f = 

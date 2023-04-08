@@ -1,1 +1,0 @@
-# Custom script to test some functions, classes, etc.
