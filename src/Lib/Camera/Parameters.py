@@ -10,18 +10,14 @@ import Lib.Transformation.Core as Transformation
 #   ../Lib/Transformation/Utilities
 import Lib.Transformation.Utilities.Mathematics as Mathematics
 
-"""
-Description:
-    ....
-
-    Something like a .... Parameters of the 2D camera, etc.
-"""
-
 @dataclass
 class Camera_Parameters_Str:
     """
     Description:
         The structure of the main parameters of the camera (sensor) object.
+
+        Note:
+            The parameter structure mainly focuses on the 2D representation of the image.
     """
 
     # Transformation parameters of the object. Cartesian coordinates.
