@@ -109,7 +109,7 @@ class Camera_Cls(object):
     def __Set_Camera_Parameters(self) -> None:
         # ...
         self.__T_Cam = Get_Transformation_Matrix(self.__Cam_Param_Str.Position.all(), 
-                                                    self.__Cam_Param_Str.Rotation.all(), 'XYZ')
+                                                 self.__Cam_Param_Str.Rotation.all(), 'XYZ')
         Set_Object_Transformation(self.__name, self.__T_Cam)
         # Adjust the width or height of the sensor depending on the resolution of the image.
         bpy.data.cameras[self.__name].sensor_fit = 'AUTO'
@@ -151,7 +151,7 @@ class Camera_Cls(object):
             # intrinsic matrix
             # ...
             alpha_u = (self.__Cam_Param_Str.f * self.__Cam_Param_Str.Resolution['x']) / bpy.data.cameras[self.__name].sensor_width
-            alpha_v = (self.__Cam_Param_Str.f * self.__Cam_Param_Str.Resolution['y']) / bpy.data.cameras[self.__name].sensor_height
+            alpha_v = alpha_u
             # Only use rectangular pixels ...
             s = 0.0
             # ...
@@ -172,17 +172,25 @@ class Camera_Cls(object):
     # https://en.wikipedia.org/wiki/Camera_resectioning
     # https://miaodx.com/blogs/unrealcv_digest/camera_pose/
     # https://blender.stackexchange.com/questions/882/how-to-find-image-coordinates-of-the-rendered-vertex
+    # https://github.com/vsitzmann/shapenet_renderer/blob/master/util.py
     def Rt(self):
         # extrinsic matrix (R | t)
         # obj.matrix_world.normalized().inverted()
         #R_n = np.array(R_bcam2cv) @ np.array(cam.matrix_world.inverted())[:3, :3]
         #t_n = np.array(R_bcam2cv) @ ((-1) * np.array(cam.matrix_world.inverted())[:3, :3] @ location)
 
-        pass
+        R_tmp = np.array([[1.0, 0.0,  0.0],
+                          [0.0, 1.0,  0.0],
+                          [0.0, 0.0, -1.0]], dtype=np.float32)
+
+        R = R_tmp @ self.__T_Cam.Transpose().R
+        t = R_tmp @ ((-1) * self.__T_Cam.Transpose().R @ self.__T_Cam.p.all())
+
+        return np.hstack((R, t.reshape(3, 1)))
 
     def P(self):
         # K x [R | t]
-        return self.K() @ self.RT()
+        return self.K() @ self.Rt()
 
     def Save_Data(self, image_properties) -> None:
         # image_properties = {'Path': .., 'Name': ..}

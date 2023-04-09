@@ -2,18 +2,6 @@ import bpy
 from mathutils import Matrix, Vector
 import numpy as np
 
-# References:
-# https://blender.stackexchange.com/questions/213602/getting-edges-of-the-cameras-view-on-the-scene-xy-plane
-# https://blender.stackexchange.com/questions/45146/how-to-find-all-objects-in-the-cameras-view-with-python
-# https://github.com/federicoarenasl/Data-Generation-with-Blender/blob/master/Resources/main_script.py
-# https://federicoarenasl.github.io/Data-Generation-with-Blender/
-# https://www.immersivelimit.com/tutorials/synthetic-datasets-with-blender
-# https://github.com/ku6ryo/synthetic-dataset-torus/blob/master/blender/script.py
-# https://www.youtube.com/watch?v=J2C7QbUZL6Y
-# https://github.com/georg-wolflein/chesscog/blob/master/scripts/synthesize_data.py
-# https://www.rojtberg.net/1601/from-blender-to-opencv-camera-and-back/
-# https://docs.opencv.org/3.4.3/d9/d0c/group__calib3d.html#details
-
 # References
 # https://gist.github.com/autosquid/8e1cddbc0336a49c6f84591d35371c4d
 # https://blender.stackexchange.com/questions/38009/3x4-camera-matrix-from-blender-camera
