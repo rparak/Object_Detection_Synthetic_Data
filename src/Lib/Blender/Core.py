@@ -110,7 +110,7 @@ class Camera_Cls(object):
         T_Cam = Get_Transformation_Matrix(self.__Cam_Param_Str.Position.all(), 
                                           self.__Cam_Param_Str.Rotation.all(), 'XYZ')
         Set_Object_Transformation(self.__name, T_Cam)
-        # ...
+        # Adjust the width or height of the sensor depending on the resolution of the image.
         bpy.data.cameras[self.__name].sensor_fit = 'AUTO'
         # ...
         bpy.context.scene.render.resolution_x = self.__Cam_Param_Str.Resolution['x']
@@ -118,7 +118,7 @@ class Camera_Cls(object):
         # Set the projection of the camera
         bpy.data.cameras[self.__name].type = self.__Cam_Param_Str.Type
         bpy.data.cameras[self.__name].lens_unit = 'MILLIMETERS'
-        bpy.data.cameras[self.__name].lens = self.__Cam_Param_Str.alpha / 2.0
+        bpy.data.cameras[self.__name].lens = self.__Cam_Param_Str.f
         # Color Management
         bpy.context.scene.view_settings.gamma = self.__Cam_Param_Str.Gamma
         # Output image settings (8-bit, 16-bit)
@@ -132,17 +132,46 @@ class Camera_Cls(object):
         # ...
         bpy.context.scene.render.image_settings.file_format = self.__image_format
 
+        # Update the scene.
         bpy.context.view_layer.update()
 
-    def __K(self):
+    # https://learnopencv.com/camera-calibration-using-opencv/
+    # https://blender.stackexchange.com/questions/38009/3x4-camera-matrix-from-blender-camera
+    # https://visp-doc.inria.fr/doxygen/visp-3.4.0/tutorial-tracking-mb-generic-rgbd-Blender.html
+    # https://github.com/vsitzmann/shapenet_renderer/blob/master/util.py
+    # https://mcarletti.github.io/articles/blenderintrinsicparams/
+    # https://docs.opencv.org/3.4.3/d9/d0c/group__calib3d.html#details
+
+    def K(self) -> tp.List[tp.List[float]]:
+        try:
+            assert bpy.data.cameras[self.__name].sensor_fit == 'AUTO'
+
+            # intrinsic matrix
+            # ...
+            alpha_u = (self.__Cam_Param_Str.f * self.__Cam_Param_Str.Resolution['x']) / bpy.data.cameras[self.__name].sensor_width
+            alpha_v = (self.__Cam_Param_Str.f * self.__Cam_Param_Str.Resolution['y']) / bpy.data.cameras[self.__name].sensor_height
+            # Only use rectangular pixels ...
+            s = 0.0
+            # ...
+            u_0 = self.__Cam_Param_Str.Resolution['x'] / 2.0
+            v_0 = self.__Cam_Param_Str.Resolution['y'] / 2.0
+
+            return Transformation.Homogeneous_Transformation_Matrix_Cls([[alpha_u,       s, u_0, 0.0],
+                                                                         [    0.0, alpha_v, v_0, 0.0],
+                                                                         [    0.0,     0.0, 1.0, 0.0],
+                                                                         [    0.0,     0.0, 0.0, 1.0]], np.float32).R
+        
+        except AssertionError as error:
+            print(f'[ERROR] Information: {error}')
+            print('[ERROR] Incorrectly set method to fit the image and field of view angle inside the sensor.')
+            print(f'[ERROR] The method must be set to AUTO. Not to {bpy.data.cameras[self.__name].sensor_fit}')
+
+    def RT(self):
+        # extrinsic matrix (R | T)
         pass
 
-    def __p(self):
-        pass
-
-    def __R(self):
-        pass
-
+    def P(self):
+        return self.K() @ self.RT()
 
     def Save_Data(self, image_properties) -> None:
         # image_properties = {'Path': .., 'Name': ..}
@@ -188,6 +217,9 @@ class Object_Cls(object):
 
         Set_Object_Transformation(self.__Obj_Param_Str.Name, self.__Obj_Param_Str.T)
 
+        # Update the scene.
+        bpy.context.view_layer.update()
+
     def Visibility(self, state: bool) -> None:
         Object_Visibility(self.__Obj_Param_Str.Name, state)
         
@@ -204,6 +236,9 @@ class Object_Cls(object):
         self.__T = self.__Obj_Param_Str.T @ Get_Transformation_Matrix(p, theta, self.__axes_sequence_cfg)
 
         Set_Object_Transformation(self.__Obj_Param_Str.Name, self.__T)
+
+        # Update the scene.
+        bpy.context.view_layer.update()
 
 
 

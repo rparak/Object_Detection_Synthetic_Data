@@ -32,8 +32,10 @@ class Camera_Parameters_Str:
     Type: str = 'PERSP'
     #   An exponential brightness factor.
     Gamma: float = 1.0
-    #   Camera projection angle in radians.
+    #   Camera projection angle in degrees.
     alpha: float = 0.0
+    #   The focal length (lens) of the camera in millimeters.
+    f: float = 0.0
     #   Spectrum of the camera (Monochrome / Color). The color parameter of the output image.
     Spectrum: str = 'Monochrome'
 
@@ -65,4 +67,5 @@ PhoXi_Scanner_M_Str.Resolution = {'x': 2064, 'y': 1544}
 PhoXi_Scanner_M_Str.Type = 'PERSP'
 PhoXi_Scanner_M_Str.Gamma = 1.0
 PhoXi_Scanner_M_Str.alpha = 78.25
+PhoXi_Scanner_M_Str.f = PhoXi_Scanner_M_Str.alpha / 2.0
 PhoXi_Scanner_M_Str.Spectrum = 'Monochrome'

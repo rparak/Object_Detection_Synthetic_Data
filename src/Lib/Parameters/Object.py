@@ -51,10 +51,10 @@ Description:
     The main parameters of the T-Joint object in view type 0.
 """
 T_Joint_VT_0_Str = Object_Parameters_Str(Name='T_Joint_VT_0', Id=0)
-T_Joint_VT_0_Str.T = Transformation.Homogeneous_Transformation_Matrix_Cls([[ 0.99939, 0.0,  0.0349, 0.175 ],
-                                                                           [     0.0, 1.0,     0.0, 0.0   ],
-                                                                           [ -0.0349, 0.0, 0.99939, 0.0193],
-                                                                           [     0.0, 0.0,     0.0, 1.0   ]], np.float32)
+T_Joint_VT_0_Str.T = Transformation.Homogeneous_Transformation_Matrix_Cls([[0.99939, 0.0,  0.0349, 0.175 ],
+                                                                           [    0.0, 1.0,     0.0, 0.0   ],
+                                                                           [-0.0349, 0.0, 0.99939, 0.0193],
+                                                                           [    0.0, 0.0,     0.0, 1.0   ]], np.float32)
 T_Joint_VT_0_Str.Limit.Position = {'x': [-0.2, 0.2], 'y': [-0.325, 0.4], 'z': None}
 T_Joint_VT_0_Str.Limit.Rotation = {'x': None, 'y': None, 'z': [-Mathematics.CONST_MATH_PI, Mathematics.CONST_MATH_PI]}
 
@@ -63,10 +63,10 @@ Description:
     The main parameters of the T-Joint object in view type 1.
 """
 T_Joint_VT_1_Str = Object_Parameters_Str(Name='T_Joint_VT_1', Id=1)
-T_Joint_VT_1_Str.T = Transformation.Homogeneous_Transformation_Matrix_Cls([[  0.0, 1.0,  0.0, 0.175 ],
-                                                                           [  0.0, 0.0, -1.0, 0.    ],
-                                                                           [ -1.0, 0.0,  0.0, 0.0302],
-                                                                           [  0.0, 0.0,  0.0, 1.    ]], np.float32)
+T_Joint_VT_1_Str.T = Transformation.Homogeneous_Transformation_Matrix_Cls([[ 0.0, 1.0,  0.0, 0.175 ],
+                                                                           [ 0.0, 0.0, -1.0, 0.    ],
+                                                                           [-1.0, 0.0,  0.0, 0.0302],
+                                                                           [ 0.0, 0.0,  0.0, 1.    ]], np.float32)
 T_Joint_VT_1_Str.Limit.Position = {'x': [-0.2, 0.2], 'y': [-0.325, 0.4], 'z': None}
 T_Joint_VT_1_Str.Limit.Rotation = {'x': None, 'y': [-Mathematics.CONST_MATH_PI, Mathematics.CONST_MATH_PI], 'z': None}
 
@@ -75,9 +75,9 @@ Description:
     The main parameters of the T-Joint object in view type 2.
 """
 T_Joint_VT_2_Str = Object_Parameters_Str(Name='T_Joint_VT_2', Id=2)
-T_Joint_VT_2_Str.T = Transformation.Homogeneous_Transformation_Matrix_Cls([[ 1.0, 0.0,  0.0, 0.175 ],
-                                                                           [ 0.0, 0.0, -1.0, 0.0   ],
-                                                                           [ 0.0, 1.0,  0.0, 0.0302],
-                                                                           [ 0.0, 0.0,  0.0, 1.0   ]], np.float32)
+T_Joint_VT_2_Str.T = Transformation.Homogeneous_Transformation_Matrix_Cls([[1.0, 0.0,  0.0, 0.175 ],
+                                                                           [0.0, 0.0, -1.0, 0.0   ],
+                                                                           [0.0, 1.0,  0.0, 0.0302],
+                                                                           [0.0, 0.0,  0.0, 1.0   ]], np.float32)
 T_Joint_VT_2_Str.Limit.Position = {'x': [-0.2, 0.2], 'y': [-0.325, 0.4], 'z': None}
 T_Joint_VT_2_Str.Limit.Rotation = {'x': None, 'y': [-Mathematics.CONST_MATH_PI, Mathematics.CONST_MATH_PI], 'z': None}
