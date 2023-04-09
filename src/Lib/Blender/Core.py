@@ -70,43 +70,96 @@ def Set_Object_Transformation(name: str, T: tp.List[tp.List[float]]) -> None:
     
     bpy.data.objects[name].matrix_basis = T.Transpose().all().copy()
 
-def Get_Transformation_Matrix(location: tp.List[float], rotation: tp.List[float], axes_sequence_cfg: str) -> tp.List[float]:       
+def Get_Transformation_Matrix(position: tp.List[float], rotation: tp.List[float], axes_sequence_cfg: str) -> tp.List[float]:       
     """
     Description:
         Obtain a homogeneous transformation matrix from the specified input parameters.
 
     Args:
-        (1) location [Vector<float> 1x3]: Direction vector (x, y, z).
+        (1) position [Vector<float> 1x3]: Direction vector (x, y, z).
         (2) rotation [Vector<float> 1x3, 1x4]: Angle of rotation defined in the specified form (axes sequence 
                                                configuration): Euler Angles, Quaternions, etc. 
         (3) axes_sequence_cfg [string]: Rotation axis sequence configuration (e.g. 'ZYX', 'QUATERNION', etc.)
 
     Returns:
         (1) parameter [Matrix<cls_data_type> 4x4]: Homogeneous transformation matrix {T} transformed according to the input 
-                                                   parameters {location, rotation}.
+                                                   parameters {position, rotation}.
     """
 
     T = Transformation.Homogeneous_Transformation_Matrix_Cls(None, np.float32)
 
-    return T.Translation(location).Rotation(rotation, axes_sequence_cfg)
+    return T.Translation(position).Rotation(rotation, axes_sequence_cfg)
 
 class Camera_Cls(object):
     """
     Description:
         ...
-
-        {'x': [0.0, 0.0], 'y':, [0.0, 0.0], 'z': [0.0, 0.0]}
+        (1) name [string]: Object name.
     """
         
-    def __init__(self) -> None:
+    def __init__(self, name: str, Cam_Param_Str: Lib.Parameters.Camera.Camera_Parameters_Str, image_format: str = 'PNG') -> None:
+        self.__name = name
+        self.__Cam_Param_Str = Cam_Param_Str
+        self.__image_format = image_format
+
+        self.__Set_Camera_Parameters()
+
+    # Camera Parameters vs Properties
+    def __Set_Camera_Parameters(self) -> None:
+        # ...
+        T_Cam = Get_Transformation_Matrix(self.__Cam_Param_Str.Position.all(), 
+                                          self.__Cam_Param_Str.Rotation.all(), 'XYZ')
+        Set_Object_Transformation(self.__name, T_Cam)
+        # ...
+        bpy.data.cameras[self.__name].sensor_fit = 'AUTO'
+        # ...
+        bpy.context.scene.render.resolution_x = self.__Cam_Param_Str.Resolution['x']
+        bpy.context.scene.render.resolution_y = self.__Cam_Param_Str.Resolution['y']
+        # Set the projection of the camera
+        bpy.data.cameras[self.__name].type = self.__Cam_Param_Str.Type
+        bpy.data.cameras[self.__name].lens_unit = 'MILLIMETERS'
+        bpy.data.cameras[self.__name].lens = self.__Cam_Param_Str.alpha / 2.0
+        # Color Management
+        bpy.context.scene.view_settings.gamma = self.__Cam_Param_Str.Gamma
+        # Output image settings (8-bit, 16-bit)
+        bpy.context.scene.render.image_settings.color_depth = '8'
+        # BW vs RGBA
+        if self.__Cam_Param_Str.Spectrum == 'Monochrome':
+            bpy.context.scene.render.image_settings.color_mode = 'BW'
+        elif self.__Cam_Param_Str.Spectrum == 'Color':
+            bpy.context.scene.render.image_settings.color_mode = 'RGBA'
+
+        # ...
+        bpy.context.scene.render.image_settings.file_format = self.__image_format
+
+        bpy.context.view_layer.update()
+
+    def __K(self):
         pass
+
+    def __p(self):
+        pass
+
+    def __R(self):
+        pass
+
+
+    def Save_Data(self, image_properties) -> None:
+        # image_properties = {'Path': .., 'Name': ..}
+        # label_properties = {'Path': .., 'Name': .., 'Data': ..}
+        
+        # ...
+        img_path = image_properties['Path']; img_name = image_properties['Name']
+        #   ...
+        bpy.context.scene.render.filepath = f'{img_path}/{img_name}.{self.__image_format.lower()}'
+        bpy.ops.render.render(write_still=True)
 
 class Object_Cls(object):
     """
     Description:
         ...
     """
-    def __init__(self, Obj_Param_Str: Lib.Parameters.Object, axes_sequence_cfg: str) -> None:
+    def __init__(self, Obj_Param_Str: Lib.Parameters.Object.Object_Parameters_Str, axes_sequence_cfg: str) -> None:
         self.__Obj_Param_Str = Obj_Param_Str
         self.__T = Transformation.Homogeneous_Transformation_Matrix_Cls(self.__Obj_Param_Str.T.all().copy(), np.float32)
         self.__axes_sequence_cfg = axes_sequence_cfg

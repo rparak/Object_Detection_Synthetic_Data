@@ -64,5 +64,5 @@ PhoXi_Scanner_M_Str.Resolution = {'x': 2064, 'y': 1544}
 # The properties of the camera:
 PhoXi_Scanner_M_Str.Type = 'PERSP'
 PhoXi_Scanner_M_Str.Gamma = 1.0
-PhoXi_Scanner_M_Str.alpha = Mathematics.Degree_To_Radian(78.25)
+PhoXi_Scanner_M_Str.alpha = 78.25
 PhoXi_Scanner_M_Str.Spectrum = 'Monochrome'
