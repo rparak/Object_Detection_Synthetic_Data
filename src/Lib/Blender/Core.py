@@ -101,15 +101,16 @@ class Camera_Cls(object):
         self.__name = name
         self.__Cam_Param_Str = Cam_Param_Str
         self.__image_format = image_format
+        self.__T_Cam = None
 
         self.__Set_Camera_Parameters()
 
     # Camera Parameters vs Properties
     def __Set_Camera_Parameters(self) -> None:
         # ...
-        T_Cam = Get_Transformation_Matrix(self.__Cam_Param_Str.Position.all(), 
-                                          self.__Cam_Param_Str.Rotation.all(), 'XYZ')
-        Set_Object_Transformation(self.__name, T_Cam)
+        self.__T_Cam = Get_Transformation_Matrix(self.__Cam_Param_Str.Position.all(), 
+                                                    self.__Cam_Param_Str.Rotation.all(), 'XYZ')
+        Set_Object_Transformation(self.__name, self.__T_Cam)
         # Adjust the width or height of the sensor depending on the resolution of the image.
         bpy.data.cameras[self.__name].sensor_fit = 'AUTO'
         # ...
@@ -141,6 +142,7 @@ class Camera_Cls(object):
     # https://github.com/vsitzmann/shapenet_renderer/blob/master/util.py
     # https://mcarletti.github.io/articles/blenderintrinsicparams/
     # https://docs.opencv.org/3.4.3/d9/d0c/group__calib3d.html#details
+    # https://blender.stackexchange.com/questions/16472/how-can-i-get-the-cameras-projection-matrix
 
     def K(self) -> tp.List[tp.List[float]]:
         try:
@@ -166,11 +168,20 @@ class Camera_Cls(object):
             print('[ERROR] Incorrectly set method to fit the image and field of view angle inside the sensor.')
             print(f'[ERROR] The method must be set to AUTO. Not to {bpy.data.cameras[self.__name].sensor_fit}')
 
-    def RT(self):
-        # extrinsic matrix (R | T)
+    # https://ksimek.github.io/2012/08/22/extrinsic/
+    # https://en.wikipedia.org/wiki/Camera_resectioning
+    # https://miaodx.com/blogs/unrealcv_digest/camera_pose/
+    # https://blender.stackexchange.com/questions/882/how-to-find-image-coordinates-of-the-rendered-vertex
+    def Rt(self):
+        # extrinsic matrix (R | t)
+        # obj.matrix_world.normalized().inverted()
+        #R_n = np.array(R_bcam2cv) @ np.array(cam.matrix_world.inverted())[:3, :3]
+        #t_n = np.array(R_bcam2cv) @ ((-1) * np.array(cam.matrix_world.inverted())[:3, :3] @ location)
+
         pass
 
     def P(self):
+        # K x [R | t]
         return self.K() @ self.RT()
 
     def Save_Data(self, image_properties) -> None:
