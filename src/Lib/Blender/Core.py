@@ -17,6 +17,10 @@ import Lib.Parameters.Object
 # Focal length of spherical concave mirror is .. f = alpha / 2
 # Focal length: f = 
 
+# Warning ...
+#   New Script Utilities -> add helper functions
+#   New Class Bounding Box -> to work with boxes
+
 """
 Description:
     Initialization of constants.
