@@ -17,6 +17,14 @@ import Lib.Parameters.Object
 # Focal length of spherical concave mirror is .. f = alpha / 2
 # Focal length: f = 
 
+"""
+Description:
+    Initialization of constants.
+"""
+# Shape (Bounding Box):
+#   Vertices: 8; Space: 3D;
+CONST_BOX_SHAPE = (8, 3)
+
 def Object_Exist(name: str) -> bool:
     """
     Description:
@@ -29,6 +37,52 @@ def Object_Exist(name: str) -> bool:
     """
     
     return True if bpy.context.scene.objects.get(name) else False
+
+def Remove_Object(name: str) -> None:
+    """
+    Description:
+        Remove the object (hierarchy) from the scene, if it exists. 
+    Args:
+        (1) name [string]: The name of the object.
+    """
+
+    # Find the object with the desired name in the scene.
+    object_name = None
+    for obj in bpy.data.objects:
+        if name in obj.name and Object_Exist(obj.name) == True:
+            object_name = obj.name
+            break
+
+    # If the object exists, remove it, as well as the other objects in the hierarchy.
+    if object_name is not None:
+        bpy.data.objects[object_name].select_set(True)
+        for child in bpy.data.objects[object_name].children:
+            child.select_set(True)
+        bpy.ops.object.delete()
+        bpy.context.view_layer.update()
+
+def Add_Primitive(type: str, properties: tp.Tuple[float, tp.List[float], tp.List[float]]) -> bpy.ops.mesh:
+    """
+    Description:
+        Add a primitive three-dimensional object.
+        
+    Args:
+        (1) type [string]: Type of the object. 
+                            Primitives: ['Plane', 'Cube', 'Sphere', 'Capsule']
+        (2) properties [Dictionary {'Size/Radius': float, 'Scale/Size/None': Vector<float>, 
+                                    'Location': Vector<float>]: Transformation properties of the created object. The structure depends 
+                                                                on the specific object.
+    
+    Returns:
+        (1) parameter [bpy.ops.mesh]: Individual three-dimensional object (primitive).
+    """
+        
+    return {
+        'Plane': lambda x: bpy.ops.mesh.primitive_plane_add(size=x['Size'], scale=x['Scale'], location=x['Location']),
+        'Cube': lambda x: bpy.ops.mesh.primitive_cube_add(size=x['Size'], scale=x['Scale'], location=x['Location']),
+        'Sphere': lambda x: bpy.ops.mesh.primitive_uv_sphere_add(radius=x['Radius'], location=x['Location']),
+        'Capsule': lambda x: bpy.ops.mesh.primitive_round_cube_add(radius=x['Radius'], size=x['Size'], location=x['Location'], arc_div=10)
+    }[type](properties)
 
 def Object_Visibility(name: str, state: bool) -> None:
     """
@@ -89,6 +143,46 @@ def Get_Transformation_Matrix(position: tp.List[float], rotation: tp.List[float]
     T = Transformation.Homogeneous_Transformation_Matrix_Cls(None, np.float32)
 
     return T.Translation(position).Rotation(rotation, axes_sequence_cfg)
+
+def Get_Vertices_From_Object(name: str) -> tp.List[float]:
+    """
+    Description:
+        Get (x, y, z) positions of the vertices of the mesh object.
+
+    Args:
+        (1) name [string]: Name of the mesh object.
+
+    Returns:
+        (1) parameter [Vector<float>]: Vector (list) of given vertices.
+    """
+
+    return [bpy.data.objects[name].matrix_world @ vertex_i.co for vertex_i in bpy.data.objects[name].data.vertices]
+
+def Get_Min_Max(vertices: tp.List[float]) -> tp.Tuple[tp.List[float], tp.List[float]]:
+    """
+    Description:
+        Get the minimum and maximum X, Y, Z values of the input vertices.
+
+    Args:
+        (1) vertices [Vector<float> 8x3]: Vertices of the bounding box (AABB, OBB).
+
+    Returns:
+        (1) parameter [Vector<float> 1x3]: Minimum X, Y, Z values of the input vertices.
+        (2) parameter [Vector<float> 1x3]: Maximum X, Y, Z values of the input vertices.
+    """
+
+    min_vec3 = np.array([vertices[0, 0], vertices[0, 1], vertices[0, 2]], dtype=np.float32)
+    max_vec3 = min_vec3.copy()
+    
+    for _, verts_i in enumerate(vertices[1::]):
+        for j, verts_ij in enumerate(verts_i):
+            if verts_ij < min_vec3[j]:
+                min_vec3[j] = verts_ij
+
+            if verts_ij > max_vec3[j]:
+                max_vec3[j] = verts_ij
+                
+    return (min_vec3, max_vec3)
 
 class Camera_Cls(object):
     """
@@ -193,6 +287,7 @@ class Camera_Cls(object):
         return self.K() @ self.Rt()
 
     def Save_Data(self, image_properties) -> None:
+        # Maybe save data of the camera, and of the object as well. Means separately.
         # image_properties = {'Path': .., 'Name': ..}
         # label_properties = {'Path': .., 'Name': .., 'Data': ..}
         
@@ -212,8 +307,39 @@ class Object_Cls(object):
         self.__T = Transformation.Homogeneous_Transformation_Matrix_Cls(self.__Obj_Param_Str.T.all().copy(), np.float32)
         self.__axes_sequence_cfg = axes_sequence_cfg
 
+        """
+        # test something
+        Set_Object_Transformation(self.__Obj_Param_Str.Name, Transformation.Homogeneous_Transformation_Matrix_Cls(None, np.float32))
+
+        # Update the scene.
+        bpy.context.view_layer.update()
+
+        # Calculate the bounding box parameters from the vertices of the main object.
+        #   Get the minimum and maximum X, Y, Z values of the input vertices.
+        (min_verts, max_verts) = Get_Min_Max(np.array(Get_Vertices_From_Object(self.__Obj_Param_Str.Name), dtype=np.float32))
+        #   Properties of the object.
+        origin = np.array([(max_v_i + min_v_i)/2.0 for _, (min_v_i, max_v_i) in enumerate(zip(min_verts, max_verts))], dtype=np.float32)
+
+        # ...
+        self.__Bounding_Box_Size = np.array([np.abs(max_v_i - min_v_i) for _, (min_v_i, max_v_i) in enumerate(zip(min_verts, max_verts))], dtype=np.float32)
+
+        # Convert the initial object sizes to a transformation matrix.
+        self.__T_Size = Transformation.Homogeneous_Transformation_Matrix_Cls(None, np.float32).Scale(self.__Bounding_Box_Size)
+
+        # Calculate the vertices of the box defined by the input parameters of the class.
+        self.__Init_Bounding_Box_Vertices = np.zeros(CONST_BOX_SHAPE, dtype=np.float32)
+        for i, verts_i in enumerate(self.__Get_Init_Vertices()):
+            self.__Init_Bounding_Box_Vertices[i, :] = (self.__T_Size.all() @ np.append(verts_i, 1.0).tolist())[0:3] + origin
+
+        #self.__Bounding_Box_Vertices = np.zeros(CONST_BOX_SHAPE, dtype=np.float32)
+        self.__Bounding_Box_Vertices = self.__Init_Bounding_Box_Vertices
+        """
+
         # ....
         self.Reset()
+
+        # ...
+        #self.__Transformation_Bounding_Box()
 
     @property
     def Name(self):
@@ -230,6 +356,42 @@ class Object_Cls(object):
     @property
     def T(self):
         return self.__T
+    
+    @property
+    def Bounding_Box(self):
+        """
+        The main parametrs of the bounding box.
+        """
+
+        return {'Centroid': self.__T.p.all(), 'Size': self.__Bounding_Box_Size, 'Vertices': self.__Bounding_Box_Vertices}
+    
+    @staticmethod
+    def __Get_Init_Vertices() -> tp.List[tp.List[float]]:
+        """
+        Description:
+            A helper function to get the initial vertices of the bounding box of an object.
+
+            Note: 
+                Lower Base: A {id: 0}, B {id: 1}, C {id: 2}, D {id: 3}
+                Upper Base: E {id: 4}, F {id: 5}, G {id: 6}, H {id: 7}
+
+        Returns:
+            (1) parameter [Vector<float> 8x3]: Vertices of the object.
+        """
+ 
+        return np.array([[0.5, -0.5, -0.5], [0.5, 0.5, -0.5], [-0.5, 0.5, -0.5], [-0.5, -0.5, -0.5],
+                         [0.5, -0.5,  0.5], [0.5, 0.5,  0.5], [-0.5, 0.5,  0.5], [-0.5, -0.5,  0.5]], dtype=np.float32)
+    
+    def __Transformation_Bounding_Box(self) -> tp.List[tp.List[float]]:
+        """
+        Description:
+            ...
+        """
+
+        q = self.__T.Get_Rotation('QUATERNION'); p = self.__T.p.all().copy()
+        for i, verts_i in enumerate(self.__Init_Bounding_Box_Vertices):
+            #self.__Bounding_Box_Vertices[i, :] = q.Rotate(Transformation.Vector3_Cls(verts_i, np.float32)).all() + p
+            self.__Bounding_Box_Vertices[i, :] = verts_i + p
 
     def Reset(self) -> None:
         self.__T = Transformation.Homogeneous_Transformation_Matrix_Cls(self.__Obj_Param_Str.T.all().copy(), np.float32)
@@ -249,12 +411,17 @@ class Object_Cls(object):
             if l_p_i[1] != None:
                 p[i] = np.random.uniform(l_p_i[1][0], l_p_i[1][1])
 
+            """
             if l_theta_i[1] != None:
                 theta[i] = np.random.uniform(l_theta_i[1][0], l_theta_i[1][1])
+            """
+            theta[i] = 0.0
 
-        self.__T = self.__Obj_Param_Str.T @ Get_Transformation_Matrix(p, theta, self.__axes_sequence_cfg)
+        self.__T = Get_Transformation_Matrix(p, theta, self.__axes_sequence_cfg) @ self.__Obj_Param_Str.T
 
         Set_Object_Transformation(self.__Obj_Param_Str.Name, self.__T)
+
+        #self.__Transformation_Bounding_Box()
 
         # Update the scene.
         bpy.context.view_layer.update()
