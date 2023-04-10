@@ -1180,7 +1180,7 @@ class Homogeneous_Transformation_Matrix_Cls(object):
             (1) parameter [Matrix<cls_data_type> 4x4]: Translated homogeneous transformation matrix.
         """
 
-        self.__T[:3, 3] = vector
+        self.__T[:3, 3] += vector
         return self.__class__(self.__T, self.__data_type)
 
     def Rotation(self, angle: tp.List[tp.Optional[cls_data_type]], axes_sequence_cfg: str) -> tp.List[tp.List[cls_data_type]]:

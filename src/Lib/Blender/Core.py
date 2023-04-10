@@ -61,11 +61,49 @@ def Remove_Object(name: str) -> None:
         bpy.ops.object.delete()
         bpy.context.view_layer.update()
 
-def Add_Primitive(type: str, properties: tp.Tuple[float, tp.List[float], tp.List[float]]) -> bpy.ops.mesh:
+def Set_Object_Material_Transparency(name: str, alpha: float) -> None:
+    """
+    Description:
+        Set the transparency of the object material and/or the object hierarchy (if exists).
+        
+        Note: 
+            alpha = 1.0: Render surface without transparency.
+            
+    Args:
+        (1) name [string]: The name of the object.
+        (2) alpha [float]: Transparency information.
+                           (total transparency is 0.0 and total opacity is 1.0)
+    """
+
+    for obj in bpy.data.objects:
+        if bpy.data.objects[name].parent == True:
+            if obj.parent == bpy.data.objects[name]:
+                for material in obj.material_slots:
+                    if alpha == 1.0:
+                        material.material.blend_method  = 'OPAQUE'
+                    else:
+                        material.material.blend_method  = 'BLEND'
+                    
+                    material.material.shadow_method = 'OPAQUE'
+                    material.material.node_tree.nodes['Principled BSDF'].inputs['Alpha'].default_value = alpha
+                
+                # Recursive call.
+                return Set_Object_Material_Transparency(obj.name, alpha)
+        else:
+            if obj == bpy.data.objects[name]:
+                for material in obj.material_slots:
+                    if alpha == 1.0:
+                        material.material.blend_method  = 'OPAQUE'
+                    else:
+                        material.material.blend_method  = 'BLEND'
+                    
+                    material.material.shadow_method = 'OPAQUE'
+                    material.material.node_tree.nodes['Principled BSDF'].inputs['Alpha'].default_value = alpha
+
+def __Add_Primitive(type: str, properties: tp.Tuple[float, tp.List[float], tp.List[float]]) -> bpy.ops.mesh:
     """
     Description:
         Add a primitive three-dimensional object.
-        
     Args:
         (1) type [string]: Type of the object. 
                             Primitives: ['Plane', 'Cube', 'Sphere', 'Capsule']
@@ -83,6 +121,63 @@ def Add_Primitive(type: str, properties: tp.Tuple[float, tp.List[float], tp.List
         'Sphere': lambda x: bpy.ops.mesh.primitive_uv_sphere_add(radius=x['Radius'], location=x['Location']),
         'Capsule': lambda x: bpy.ops.mesh.primitive_round_cube_add(radius=x['Radius'], size=x['Size'], location=x['Location'], arc_div=10)
     }[type](properties)
+
+def Create_Primitive(type: str, name: str, properties: tp.Tuple[tp.Tuple[float, tp.List[float]], tp.Tuple[float]]) -> None:
+    """
+    Description:
+        Create a primitive three-dimensional object with additional properties.
+    Args:
+        (1) type [string]: Type of the object. 
+                            Primitives: ['Plane', 'Cube', 'Sphere', 'Capsule']
+        (2) name [string]: The name of the created object.
+        (3) properties [{'transformation': {'Size/Radius': float, 'Scale/Size/None': Vector<float>, Location': Vector<float>}, 
+                         'material': {'RGBA': Vector<float>, 'alpha': float}}]: Properties of the created object. The structure depends on 
+                                                                                on the specific object.
+    """
+
+    # Create a new material and set the material color of the object.
+    material = bpy.data.materials.new(f'{name}_mat')
+    material.use_nodes = True
+    material.node_tree.nodes['Principled BSDF'].inputs['Base Color'].default_value = properties['material']['RGBA']
+
+    # Add a primitive three-dimensional object.
+    __Add_Primitive(type, properties['transformation'])
+
+    # Change the name and material of the object.
+    bpy.context.active_object.name = name
+    bpy.context.active_object.active_material = material
+
+    # Set the transparency of the object material.
+    if properties['material']['alpha'] < 1.0:
+        Set_Object_Material_Transparency(name, properties['material']['alpha'])
+
+    # Deselect all objects in the current scene.
+    Deselect_All()
+
+    # Update the scene.
+    bpy.context.view_layer.update()
+
+def Set_Object_Origin(name: str, location: tp.List[float]) -> None:
+    """
+    Description:
+        Set the origin of the individual objects.
+
+    Args:
+        (1) name [string]: Name of the mesh object. 
+        (2) location [Vector<float> 1x3]: The origin of the object (location in x, y, z coordinates).
+    """
+
+    # Select an object.
+    bpy.data.objects[name].select_set(True)
+
+    # Set the position of the cursor and the origin of the 
+    # object.
+    bpy.context.scene.cursor.location = location
+    bpy.ops.object.origin_set(type='ORIGIN_CURSOR')
+
+    # Deselect an object and update the layer.
+    bpy.data.objects[name].select_set(False)
+    bpy.context.view_layer.update()
 
 def Object_Visibility(name: str, state: bool) -> None:
     """
@@ -123,26 +218,6 @@ def Set_Object_Transformation(name: str, T: tp.List[tp.List[float]]) -> None:
         T = Transformation.Homogeneous_Transformation_Matrix_Cls(T, np.float32)
     
     bpy.data.objects[name].matrix_basis = T.Transpose().all().copy()
-
-def Get_Transformation_Matrix(position: tp.List[float], rotation: tp.List[float], axes_sequence_cfg: str) -> tp.List[float]:       
-    """
-    Description:
-        Obtain a homogeneous transformation matrix from the specified input parameters.
-
-    Args:
-        (1) position [Vector<float> 1x3]: Direction vector (x, y, z).
-        (2) rotation [Vector<float> 1x3, 1x4]: Angle of rotation defined in the specified form (axes sequence 
-                                               configuration): Euler Angles, Quaternions, etc. 
-        (3) axes_sequence_cfg [string]: Rotation axis sequence configuration (e.g. 'ZYX', 'QUATERNION', etc.)
-
-    Returns:
-        (1) parameter [Matrix<cls_data_type> 4x4]: Homogeneous transformation matrix {T} transformed according to the input 
-                                                   parameters {position, rotation}.
-    """
-
-    T = Transformation.Homogeneous_Transformation_Matrix_Cls(None, np.float32)
-
-    return T.Translation(position).Rotation(rotation, axes_sequence_cfg)
 
 def Get_Vertices_From_Object(name: str) -> tp.List[float]:
     """
@@ -202,8 +277,9 @@ class Camera_Cls(object):
     # Camera Parameters vs Properties
     def __Set_Camera_Parameters(self) -> None:
         # ...
-        self.__T_Cam = Get_Transformation_Matrix(self.__Cam_Param_Str.Position.all(), 
-                                                 self.__Cam_Param_Str.Rotation.all(), 'XYZ')
+        self.__T_Cam = Transformation.Homogeneous_Transformation_Matrix_Cls(None, np.float32).Rotation(self.__Cam_Param_Str.Rotation.all(), 
+                                                                                                       'XYZ').Translation(self.__Cam_Param_Str.Position.all())
+
         Set_Object_Transformation(self.__name, self.__T_Cam)
         # Adjust the width or height of the sensor depending on the resolution of the image.
         bpy.data.cameras[self.__name].sensor_fit = 'AUTO'
@@ -304,10 +380,9 @@ class Object_Cls(object):
     """
     def __init__(self, Obj_Param_Str: Lib.Parameters.Object.Object_Parameters_Str, axes_sequence_cfg: str) -> None:
         self.__Obj_Param_Str = Obj_Param_Str
-        self.__T = Transformation.Homogeneous_Transformation_Matrix_Cls(self.__Obj_Param_Str.T.all().copy(), np.float32)
+        self.__T = Transformation.Homogeneous_Transformation_Matrix_Cls(None, np.float32)
         self.__axes_sequence_cfg = axes_sequence_cfg
 
-        """
         # test something
         Set_Object_Transformation(self.__Obj_Param_Str.Name, Transformation.Homogeneous_Transformation_Matrix_Cls(None, np.float32))
 
@@ -318,7 +393,7 @@ class Object_Cls(object):
         #   Get the minimum and maximum X, Y, Z values of the input vertices.
         (min_verts, max_verts) = Get_Min_Max(np.array(Get_Vertices_From_Object(self.__Obj_Param_Str.Name), dtype=np.float32))
         #   Properties of the object.
-        origin = np.array([(max_v_i + min_v_i)/2.0 for _, (min_v_i, max_v_i) in enumerate(zip(min_verts, max_verts))], dtype=np.float32)
+        self.__origin = np.array([(max_v_i + min_v_i)/2.0 for _, (min_v_i, max_v_i) in enumerate(zip(min_verts, max_verts))], dtype=np.float32)
 
         # ...
         self.__Bounding_Box_Size = np.array([np.abs(max_v_i - min_v_i) for _, (min_v_i, max_v_i) in enumerate(zip(min_verts, max_verts))], dtype=np.float32)
@@ -329,17 +404,15 @@ class Object_Cls(object):
         # Calculate the vertices of the box defined by the input parameters of the class.
         self.__Init_Bounding_Box_Vertices = np.zeros(CONST_BOX_SHAPE, dtype=np.float32)
         for i, verts_i in enumerate(self.__Get_Init_Vertices()):
-            self.__Init_Bounding_Box_Vertices[i, :] = (self.__T_Size.all() @ np.append(verts_i, 1.0).tolist())[0:3] + origin
+            self.__Init_Bounding_Box_Vertices[i, :] = (self.__T_Size.all() @ np.append(verts_i, 1.0).tolist())[0:3] + self.__origin
 
-        #self.__Bounding_Box_Vertices = np.zeros(CONST_BOX_SHAPE, dtype=np.float32)
-        self.__Bounding_Box_Vertices = self.__Init_Bounding_Box_Vertices
-        """
+        self.__Bounding_Box_Vertices = np.zeros(CONST_BOX_SHAPE, dtype=np.float32)
 
         # ....
         self.Reset()
 
         # ...
-        #self.__Transformation_Bounding_Box()
+        self.__Transformation_Bounding_Box()
 
     @property
     def Name(self):
@@ -390,8 +463,7 @@ class Object_Cls(object):
 
         q = self.__T.Get_Rotation('QUATERNION'); p = self.__T.p.all().copy()
         for i, verts_i in enumerate(self.__Init_Bounding_Box_Vertices):
-            #self.__Bounding_Box_Vertices[i, :] = q.Rotate(Transformation.Vector3_Cls(verts_i, np.float32)).all() + p
-            self.__Bounding_Box_Vertices[i, :] = verts_i + p
+            self.__Bounding_Box_Vertices[i, :] = q.Rotate(Transformation.Vector3_Cls(verts_i, np.float32)).all() + p
 
     def Reset(self) -> None:
         self.__T = Transformation.Homogeneous_Transformation_Matrix_Cls(self.__Obj_Param_Str.T.all().copy(), np.float32)
@@ -400,6 +472,23 @@ class Object_Cls(object):
 
         # Update the scene.
         bpy.context.view_layer.update()
+
+    # add -> visibility of the bounding box
+    # change the name!!! Vis_BB is just for test
+    def Vis_BB(self):
+        # Properties of the created object.
+        box_properties = {'transformation': {'Size': 1.0, 'Scale': self.__Bounding_Box_Size, 'Location': [0.0, 0.0, 0.0]}, 
+                          'material': {'RGBA': [0.8,0.8,0.8,1.0], 'alpha': 1.0}}
+            
+        Create_Primitive('Cube', f'{self.__Obj_Param_Str.Name}_Bounding_Box', box_properties)
+
+        bpy.data.objects[f'{self.__Obj_Param_Str.Name}_Bounding_Box'].rotation_mode = 'ZYX'
+
+        # It works!
+        Set_Object_Origin(f'{self.__Obj_Param_Str.Name}_Bounding_Box', (-1) * self.__origin)
+
+        # ...
+        Set_Object_Transformation(f'{self.__Obj_Param_Str.Name}_Bounding_Box', self.__T)
 
     def Visibility(self, state: bool) -> None:
         Object_Visibility(self.__Obj_Param_Str.Name, state)
@@ -411,17 +500,15 @@ class Object_Cls(object):
             if l_p_i[1] != None:
                 p[i] = np.random.uniform(l_p_i[1][0], l_p_i[1][1])
 
-            """
+        
             if l_theta_i[1] != None:
                 theta[i] = np.random.uniform(l_theta_i[1][0], l_theta_i[1][1])
-            """
-            theta[i] = 0.0
 
-        self.__T = Get_Transformation_Matrix(p, theta, self.__axes_sequence_cfg) @ self.__Obj_Param_Str.T
+        self.__T = self.__Obj_Param_Str.T.Rotation(theta, self.__axes_sequence_cfg).Translation(p)
 
         Set_Object_Transformation(self.__Obj_Param_Str.Name, self.__T)
 
-        #self.__Transformation_Bounding_Box()
+        self.__Transformation_Bounding_Box()
 
         # Update the scene.
         bpy.context.view_layer.update()
