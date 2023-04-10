@@ -46,14 +46,23 @@ def main():
     
     Camera_Cls = Lib.Blender.Core.Camera_Cls('Camera', Lib.Parameters.Camera.PhoXi_Scanner_M_Str, 'PNG')
     P = Camera_Cls.P()
+
     #print(Matrix(P))
     #print(Matrix(Camera_Cls.K()))
     #print(Matrix(Camera_Cls.Rt()))
     
     p_1 = Matrix(P) @ co
     p_1 = np.vstack((P, np.ones(4))) @ np.hstack((np.array(co), 1))
+    p_f = p_1.copy()
+    print(Vector(p_1))
     p_1 /= p_1[2]
-    print(Vector(p_1)[0], Vector(p_1)[1])
+    print(Vector(p_1))
+    
+    #print(Vector(p_1)[0], Vector(p_1)[1])
+    
+    p_inv = np.linalg.inv(np.vstack((P, np.ones(4)))) @ p_1
+    print(Vector(p_inv))
+    print(co)
 
     
     #Camera_Cls.Save_Data({'Path':'./Documents', 'Name':'Test_Image_10'})
