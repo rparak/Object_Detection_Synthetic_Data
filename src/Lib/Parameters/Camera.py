@@ -20,11 +20,8 @@ class Camera_Parameters_Str:
             The parameter structure mainly focuses on the 2D representation of the image.
     """
 
-    # Transformation parameters of the object. Cartesian coordinates.
-    #   Position - p(x, y, z) in meters.
-    Position: Transformation.Vector3_Cls = field(default_factory=list)
-    #   Rotation (Euler Angles) - theta(z, y, x) in radians.
-    Rotation: Transformation.Euler_Angle_Cls = field(default_factory=list)
+    # Homogeneous transformation matrix of the object.
+    T: tp.List[tp.List[float]] = field(default_factory=list)
     # Camera resolution in pixels (x, y).
     Resolution: tp.Dict[int, int] = field(default_factory=dict)
     #  The properties of the object.
@@ -55,12 +52,9 @@ Description:
             {'XS': 73°, 'S': 74.55°, 'M': 78.25°, 'L': 80.55°, 'XL': 82.5°}
 """
 PhoXi_Scanner_M_Str = Camera_Parameters_Str()
-# Cartesian coordinates.
-#   Location in meters.
-PhoXi_Scanner_M_Str.Position = Transformation.Vector3_Cls([0.145, -0.175, 0.885], np.float32)
-#   Rotation in radians.
-PhoXi_Scanner_M_Str.Rotation = Transformation.Euler_Angle_Cls([0.0, Mathematics.Degree_To_Radian(11.75), -Mathematics.CONST_MATH_HALF_PI], 
-                                                              'ZYX', np.float32)
+# Homogeneous transformation matrix {T} of the object.
+PhoXi_Scanner_M_Str.T = Transformation.Homogeneous_Transformation_Matrix_Cls(None, np.float32).Rotation([0.0, Mathematics.Degree_To_Radian(11.75), -Mathematics.CONST_MATH_HALF_PI], 
+                                                                                                        'XYZ').Translation([0.145, -0.175, 0.885])
 # Camera resolution in pixels.
 PhoXi_Scanner_M_Str.Resolution = {'x': 2064, 'y': 1544}
 # The properties of the camera:
