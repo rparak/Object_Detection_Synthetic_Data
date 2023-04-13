@@ -10,6 +10,19 @@ import Lib.Transformation.Core as Transformation
 #   ../Lib/Transformation/Utilities
 import Lib.Transformation.Utilities.Mathematics as Mathematics
 
+"""
+[INFO] Object name: Metal_Blank_001
+[INFO] Bounding Box Parameters:
+[INFO]  - Origin: [0.    0.    0.007]
+[INFO]  - Size: [0.05  0.05  0.014]
+[INFO] The bounding box was successfully created!
+[INFO] Object name: T_Joint_001
+[INFO] Bounding Box Parameters:
+[INFO]  - Origin: [0.00545 0.      0.     ]
+[INFO]  - Size: [0.0475 0.0584 0.0366]
+[INFO] The bounding box was successfully created!
+"""
+
 @dataclass
 class Limit_Str:
     """

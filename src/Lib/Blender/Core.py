@@ -155,7 +155,7 @@ class Object_Cls(object):
         # Update the scene.
         bpy.context.view_layer.update()
 
-        # Calculate the bounding box parameters from the vertices of the main object.
+        # Calculate the bounding box parameters from the vertices of the object.
         #   Get the minimum and maximum X, Y, Z values of the input vertices.
         (min_verts, max_verts) = Utilities.Get_Min_Max(np.array(Utilities.Get_Vertices_From_Object(self.__Obj_Param_Str.Name), dtype=np.float32))
         #   Properties of the object.

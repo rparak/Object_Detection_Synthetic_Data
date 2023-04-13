@@ -87,6 +87,7 @@ def __Add_Primitive(type: str, properties: tp.Tuple[float, tp.List[float], tp.Li
     """
     Description:
         Add a primitive three-dimensional object.
+        
     Args:
         (1) type [string]: Type of the object. 
                             Primitives: ['Plane', 'Cube', 'Sphere', 'Capsule']
@@ -109,6 +110,7 @@ def Create_Primitive(type: str, name: str, properties: tp.Tuple[tp.Tuple[float, 
     """
     Description:
         Create a primitive three-dimensional object with additional properties.
+
     Args:
         (1) type [string]: Type of the object. 
                             Primitives: ['Plane', 'Cube', 'Sphere', 'Capsule']
@@ -192,6 +194,7 @@ def Set_Object_Transformation(name: str, T: tp.List[tp.List[float]]) -> None:
     """
     Description:
         Set the object transformation.
+        
     Args:
         (1) name [string]: Name of the main object.
         (2) T [Matrix<float> 4x4]: Homogeneous transformation matrix (access to location, rotation and scale).
