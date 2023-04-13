@@ -1,11 +1,16 @@
+# System (Default)
 import sys
-import cv2
+sys.path.append('..')
+# Numpy (Array computing) [pip3 install numpy]
 import numpy as np
+# OpenCV (Computer Vision) [pip3 install opencv-python]
+import cv2
+# Custom Library:
+#   ../Lib/Utilities/Image_Processing
+import Lib.Utilities.Image_Processing
+
 # https://christianbernecker.medium.com/convert-bounding-boxes-from-coco-to-pascal-voc-to-yolo-and-back-660dc6178742
 
-def Draw_Bounding_Box(image, Bounding_Box = {'Name': 'Obj_Name_Id_0', 'Accuracy': '100', 'Data': None}, format = 'YOLO/Pascal_VOC', Resolution = {'x': 2064, 'y': 1544}, 
-                      Color = (0, 255, 0)):
-    pass
 
 def pascal_voc_to_yolo(x1, y1, x2, y2, image_w, image_h):
     return [((x2 + x1)/(2*image_w)), ((y2 + y1)/(2*image_h)), (x2 - x1)/image_w, (y2 - y1)/image_h]
@@ -42,10 +47,9 @@ def main():
     height = overlay.shape[0]; width = overlay.shape[1]
 
     XML = {'x_min': 950, 'y_min': 614, 'x_max': 1132, 'y_max': 752}
-    YOLO = {'x_c': 0.504347, 'y_c': 0.442419, 'w': 0.087728, 'h': 0.089276}
 
     #print(pascal_voc_to_yolo(XML['x_min'], XML['y_min'], XML['x_max'], XML['y_max'], width, height))
-    #print(yolo_to_pascal_voc(YOLO['x_c'], YOLO['y_c'], YOLO['w'], YOLO['h'], width, height))
+    #print(yolo_to_pascal_voc(YOLO['x_c'], YOLO['y_c'], YOLO['width'], YOLO['heigt'], width, height))
 
     x, y, w, h = XML['x_min'], XML['y_min'], (XML['x_max'] - XML['x_min']), (XML['y_max'] - XML['y_min'])
 
@@ -83,9 +87,11 @@ def main():
     cv2.rectangle(image_new,(x,y-35),(x+w,y-5),RGB_Color, 1)
     cv2.rectangle(image_new,(XML['x_max'] + 5,y-35),(XML['x_max'] + 5 + 80,y-5),RGB_Color, 1)
 
+    """
     cv2.imshow('Test OpenCV', image_new)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
+    """
 
 if __name__ == '__main__':
     sys.exit(main())
