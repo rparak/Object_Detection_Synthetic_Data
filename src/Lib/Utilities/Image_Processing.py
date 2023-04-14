@@ -34,7 +34,7 @@ def Draw_Bounding_Box(image: tp.List[tp.List[int]], bounding_box_properties: tp.
     image_out = image.copy()
 
     # Set the properties of the drawing bounding box.
-    #   Resolution: [x: Height, y: Width]
+    #   Image Resolution: [x: Height, y: Width]
     Resolution = {'x': image_out.shape[0], 'y': image_out.shape[1]}
     #   Line width of the rectangle.
     line_width = 1
