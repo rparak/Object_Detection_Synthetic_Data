@@ -7,6 +7,8 @@ import typing as tp
 # Custom Library:
 #   ../Lib/Transformation/Core
 import Lib.Transformation.Core as Transformation
+#   ../Lib/Utilities/File_IO
+import Lib.Utilities.File_IO as File_IO
 
 def Object_Exist(name: str) -> bool:
     """
@@ -15,6 +17,7 @@ def Object_Exist(name: str) -> bool:
         
     Args:
         (1) name [string]: Object name.
+        
     Returns:
         (1) parameter [bool]: 'True' if it exists, otherwise 'False'.
     """
@@ -25,6 +28,7 @@ def Remove_Object(name: str) -> None:
     """
     Description:
         Remove the object (hierarchy) from the scene, if it exists. 
+
     Args:
         (1) name [string]: The name of the object.
     """
@@ -219,28 +223,10 @@ def Get_Vertices_From_Object(name: str) -> tp.List[float]:
 
     return [bpy.data.objects[name].matrix_world @ vertex_i.co for vertex_i in bpy.data.objects[name].data.vertices]
 
-def Get_Min_Max(vertices: tp.List[float]) -> tp.Tuple[tp.List[float], tp.List[float]]:
-    """
-    Description:
-        Get the minimum and maximum X, Y, Z values of the input vertices.
-
-    Args:
-        (1) vertices [Vector<float> 8x3]: Vertices of the bounding box (AABB, OBB).
-
-    Returns:
-        (1) parameter [Vector<float> 1x3]: Minimum X, Y, Z values of the input vertices.
-        (2) parameter [Vector<float> 1x3]: Maximum X, Y, Z values of the input vertices.
-    """
-
-    min_vec3 = np.array([vertices[0, 0], vertices[0, 1], vertices[0, 2]], dtype=np.float32)
-    max_vec3 = min_vec3.copy()
-    
-    for _, verts_i in enumerate(vertices[1::]):
-        for j, verts_ij in enumerate(verts_i):
-            if verts_ij < min_vec3[j]:
-                min_vec3[j] = verts_ij
-
-            if verts_ij > max_vec3[j]:
-                max_vec3[j] = verts_ij
-                
-    return (min_vec3, max_vec3)
+def Save_Synthetic_Data(path, name, id, boundig_box, label_format, image_format):
+    # id -> class of the object.
+    # label ...
+    File_IO.Save(f'{path}/Label/{name}', np.hstack((id, boundig_box)), label_format.lower(), ' ')
+    # image ...
+    bpy.context.scene.render.filepath = f'{path}/Image/{name}.{image_format.lower()}'
+    bpy.ops.render.render(write_still=True)

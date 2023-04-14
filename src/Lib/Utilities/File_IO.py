@@ -5,7 +5,7 @@ import typing as tp
 # Pickle (Python object serialization)
 import pickle as pkl
 
-def Load(file_path: str, mode: str) -> tp.List[float]:
+def Load(file_path: str, mode: str, separator: str) -> tp.List[float]:
     """
     Description:
         A simple function to read data from the file.
@@ -18,6 +18,7 @@ def Load(file_path: str, mode: str) -> tp.List[float]:
         (2) mode [string]: Mode to load the data.
                            Note:
                             'pkl' : Pickle file; 'txt' : Text file
+        (3) separator [string]: Separator between data.
 
     Returns:
         (1) parameter [Dictionary of different types of data <float, bool, etc.>]: Loaded data from a binary file.
@@ -35,7 +36,7 @@ def Load(file_path: str, mode: str) -> tp.List[float]:
             for line in f:
                 # Splits a string into a list with the specified delimiter (,) 
                 # and converts to a float.
-                data_tmp.append(np.float64(line.split(',')))
+                data_tmp.append(np.float64(line.split(separator)))
 
         # Convert a list to an array.
         data = np.array(data_tmp, dtype=np.float32)
@@ -45,7 +46,7 @@ def Load(file_path: str, mode: str) -> tp.List[float]:
     
     return data
 
-def Save(file_path: str, data: tp.List[float], mode: str) -> None:
+def Save(file_path: str, data: tp.List[float], mode: str, separator: str) -> None:
     """
     Description:
         A simple function to write data to the file.
@@ -58,7 +59,8 @@ def Save(file_path: str, data: tp.List[float], mode: str) -> None:
         (2) data [Dictionary of different types of data <float, bool, etc.>]: Individual data.
         (3) mode [string]: Mode to load the data.
                            Note:
-                            'pkl' : Pickle file; 'txt' : Text file
+                            'pkl' : Pickle file; 'txt' : Text file.
+        (3) separator [string]: Separator between data.
     """
     
     if mode == 'pkl':
@@ -70,7 +72,7 @@ def Save(file_path: str, data: tp.List[float], mode: str) -> None:
         with open(file_path + f'.{mode}', 'a+') as f:
             # Write the data to the file.
             for data_i in data[:-1]:
-                f.writelines([str(data_i), ','])
+                f.writelines([str(data_i), separator])
             f.writelines([str(data[-1]), '\n'])
 
     # Close the file after writing the data.

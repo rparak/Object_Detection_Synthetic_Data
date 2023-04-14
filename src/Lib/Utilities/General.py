@@ -1,5 +1,33 @@
+# Numpy (Array computing) [pip3 install numpy]
+import numpy as np
 # Typing (Support for type hints)
 import typing as tp
+
+def Get_Min_Max(vertices: tp.List[float]) -> tp.Tuple[tp.List[float], tp.List[float]]:
+    """
+    Description:
+        Get the minimum and maximum X, Y, Z values of the input vertices.
+
+    Args:
+        (1) vertices [Vector<float> 8x3]: Vertices of the bounding box (AABB, OBB).
+
+    Returns:
+        (1) parameter [Vector<float> 1x3]: Minimum X, Y, Z values of the input vertices.
+        (2) parameter [Vector<float> 1x3]: Maximum X, Y, Z values of the input vertices.
+    """
+
+    min_vec3 = np.array([vertices[0, 0], vertices[0, 1], vertices[0, 2]], dtype=np.float32)
+    max_vec3 = min_vec3.copy()
+    
+    for _, verts_i in enumerate(vertices[1::]):
+        for j, verts_ij in enumerate(verts_i):
+            if verts_ij < min_vec3[j]:
+                min_vec3[j] = verts_ij
+
+            if verts_ij > max_vec3[j]:
+                max_vec3[j] = verts_ij
+                
+    return (min_vec3, max_vec3)
 
 def __YOLO_to_PASCAL_VOC(Bounding_Box: tp.Tuple[tp.List[float]], Resolution: tp.Tuple[int, int]) -> tp.Tuple[tp.List[int]]:
     """
@@ -41,7 +69,7 @@ def __PASCAL_VOC_to_YOLO(Bounding_Box: tp.Tuple[tp.List[int]], Resolution: tp.Tu
             'width': (Bounding_Box['x_max'] - Bounding_Box['x_min'])/float(Resolution['x']), 
             'height': (Bounding_Box['y_max'] - Bounding_Box['y_min'])/float(Resolution['y'])}
 
-def Convert_Annotation(format_in: str, format_out: str, Bounding_Box: tp.Tuple[tp.List[tp.Union[int, float]]], Resolution: tp.Tuple[int, int]) -> tp.Tuple[tp.Union[int, float]]:
+def Convert_Boundig_Box_Data(format_in: str, format_out: str, Bounding_Box: tp.Tuple[tp.List[tp.Union[int, float]]], Resolution: tp.Tuple[int, int]) -> tp.Tuple[tp.List[tp.Union[int, float]]]:
     """
     Description:
         Function to convert the bounding box data from one format to another.
@@ -52,7 +80,6 @@ def Convert_Annotation(format_in: str, format_out: str, Bounding_Box: tp.Tuple[t
             Input dictionary of individual formats:
                 YOLO = {'x_c': float, 'y_c': float, 'width': float, 'height': float}
                 PASCAL_VOC = {'x_min': int, 'y_min': int, 'x_max': int, 'y_max': int}
-
 
             PASCAL VOC:
                 The {x_min} and {y_min} are the coordinates of the left top corner and {x_max} and {y_max} 
@@ -82,4 +109,14 @@ def Convert_Annotation(format_in: str, format_out: str, Bounding_Box: tp.Tuple[t
         
     except AssertionError as error:
         print(f'[ERROR] Information: {error}')
+        print('[ERROR] Invalid input parameters. The input/output format must be named YOLO or PASCAL_VOC \
+              and cannot be the same..')
+        
+def Get_2D_Coordinates_Bounding_Box(vertices: tp.List[float], P: tp.List[tp.List[float]], format_out: str) -> tp.List[tp.Union[int, float]]:
+    """
+    Description:
+        Get the 2D coordinates of the bounding box from the rendered object scanned by the camera.
+    """
+    
+    pass
     

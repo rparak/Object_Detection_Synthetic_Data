@@ -33,7 +33,7 @@ class Camera_Cls(object):
 
     # Camera Parameters vs Properties
     def __Set_Camera_Parameters(self) -> None:
-        Utilities.Set_Object_Transformation(self.__name, self.__Cam_Param_Str.T)
+        Lib.Blender.Utilities.Set_Object_Transformation(self.__name, self.__Cam_Param_Str.T)
 
         # Adjust the width or height of the sensor depending on the resolution of the image.
         bpy.data.cameras[self.__name].sensor_fit = 'AUTO'
@@ -119,19 +119,30 @@ class Object_Cls(object):
     Description:
         ...
     """
+    
     def __init__(self, Obj_Param_Str: Lib.Parameters.Object.Object_Parameters_Str, axes_sequence_cfg: str) -> None:
-        self.__Obj_Param_Str = Obj_Param_Str
-        self.__T = Transformation.Homogeneous_Transformation_Matrix_Cls(None, np.float32)
-        self.__axes_sequence_cfg = axes_sequence_cfg
+        try:
+            assert Lib.Blender.Utilities.Object_Exist(Obj_Param_Str.Name) == True
 
-        # test something
-        Utilities.Set_Object_Transformation(self.__Obj_Param_Str.Name, Transformation.Homogeneous_Transformation_Matrix_Cls(None, np.float32))
+            self.__Obj_Param_Str = Obj_Param_Str
+            self.__T = Transformation.Homogeneous_Transformation_Matrix_Cls(None, np.float32)
+            self.__axes_sequence_cfg = axes_sequence_cfg
 
-        # Update the scene.
-        bpy.context.view_layer.update()
+            self.__Bounding_Box = {'Centroid': self.__T.p.all(), 'Size': self.__Obj_Param_Str.Bounding_Box.Size, 
+                                'Vertices': self.__Obj_Param_Str.Bounding_Box.Vertices.copy()}
 
-        # ....
-        self.Reset()
+            # test something
+            Lib.Blender.Utilities.Set_Object_Transformation(self.__Obj_Param_Str.Name, Transformation.Homogeneous_Transformation_Matrix_Cls(None, np.float32))
+            self.__Update()
+
+            # print(f'[INFO] An object named <{self.__Obj_Param_Str.Name}_Bounding_Box> does not exist in the current scene.')
+
+            # ....
+            self.Reset()
+        
+        except AssertionError as error:
+            print(f'[ERROR] Information: {error}')
+            print(f'[INFO] An object named <{Obj_Param_Str.Name}> does not exist in the current scene.')
 
     @property
     def Name(self):
@@ -152,39 +163,58 @@ class Object_Cls(object):
     @property
     def Bounding_Box(self):
         """
-        The main parametrs of the bounding box.
+        Description:
+            Get the main parameters of the object's bounding box.
         """
 
-        return {'Centroid': self.__T.p.all(), 'Size': self.__Bounding_Box_Size, 'Vertices': self.__Bounding_Box_Vertices}
+        # Oriented Bounding Box (OBB) transformation according to the homogeneous transformation matrix of the object.
+        q = self.__T.Get_Rotation('QUATERNION'); p = self.__T.p.all()
+        for i, point_i in enumerate(self.__Obj_Param_Str.Bounding_Box.Vertices):
+            self.__Bounding_Box['Vertices'][i, :] = q.Rotate(Transformation.Vector3_Cls(point_i, np.float32)).all() + p
+
+        # The center of the bounding box is the same as the center of the object.
+        self.__Bounding_Box['Centroid'] = p
+        
+        return self.__Bounding_Box
+    
+    def __Update(self) -> None:
+        """
+        Description:
+            Update the scene.
+        """
+
+        bpy.context.view_layer.update()
     
     def Reset(self) -> None:
+        # ...
         self.__T = Transformation.Homogeneous_Transformation_Matrix_Cls(self.__Obj_Param_Str.T.all().copy(), np.float32)
 
-        Utilities.Set_Object_Transformation(self.__Obj_Param_Str.Name, self.__Obj_Param_Str.T)
-
-        # Update the scene.
-        bpy.context.view_layer.update()
+        # ...
+        Lib.Blender.Utilities.Set_Object_Transformation(self.__Obj_Param_Str.Name, self.__Obj_Param_Str.T)
+        self.__Update()
 
     def Visibility(self, state: bool) -> None:
-        Utilities.Object_Visibility(self.__Obj_Param_Str.Name, state)
-        
+        Lib.Blender.Utilities.Object_Visibility(self.__Obj_Param_Str.Name, state)
+        self.__Update()
+
     def Random(self) -> None:
+        # ...
         p = np.zeros(3, np.float32); theta = p.copy()
         for i, (l_p_i, l_theta_i) in enumerate(zip(self.__Obj_Param_Str.Limit.Position.items(), 
                                                    self.__Obj_Param_Str.Limit.Rotation.items())):
+            # ...
             if l_p_i[1] != None:
                 p[i] = np.random.uniform(l_p_i[1][0], l_p_i[1][1])
-
-        
+            # ...
             if l_theta_i[1] != None:
                 theta[i] = np.random.uniform(l_theta_i[1][0], l_theta_i[1][1])
 
+        # ...
         self.__T = self.__Obj_Param_Str.T.Rotation(theta, self.__axes_sequence_cfg).Translation(p)
 
-        Utilities.Set_Object_Transformation(self.__Obj_Param_Str.Name, self.__T)
-
-        # Update the scene.
-        bpy.context.view_layer.update()
+        # ...
+        Lib.Blender.Utilities.Set_Object_Transformation(self.__Obj_Param_Str.Name, self.__T)
+        self.__Update()
 
 
 

@@ -35,18 +35,18 @@ def Draw_Bounding_Box(image: tp.List[tp.List[int]], bounding_box_properties: tp.
 
     # Set the properties of the drawing bounding box.
     #   Image Resolution: [x: Height, y: Width]
-    Resolution = {'x': image_out.shape[0], 'y': image_out.shape[1]}
+    Resolution = {'x': image_out.shape[1], 'y': image_out.shape[0]}
     #   Line width of the rectangle.
     line_width = 1
     # Offset of an additional rectangles.
     offset = 5
     
- 
     # Obtain data in PASCAL_VOC format to determine the bounding box to be rendered.
     #   data = {'x_min', 'y_min', 'x_max', 'y_max'}
     if format == 'YOLO':
-        data = Lib.Utilities.General.Convert_Annotation(format, 'PASCAL_VOC', bounding_box_properties['Data'], Resolution) 
-    data = bounding_box_properties['Data']
+        data = Lib.Utilities.General.Convert_Boundig_Box_Data(format, 'PASCAL_VOC', bounding_box_properties['Data'], Resolution)
+    elif format == 'PASCAL_VOC':
+        data = bounding_box_properties['Data']
 
     x_min = data['x_min']; y_min = data['y_min']
     x_max = data['x_max']; y_max = data['y_max']

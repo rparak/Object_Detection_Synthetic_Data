@@ -12,6 +12,8 @@ import numpy as np
 import Lib.Blender.Utilities
 #   ../Lib/Transformation/Core
 import Lib.Transformation.Core as Transformation
+#   ../Lib/Utilities/General
+import Lib.Utilities.General
 
 def main():
     """
@@ -40,7 +42,7 @@ def main():
         
         # Calculate the bounding box parameters from the vertices of the object.
         #   Get the minimum and maximum values of the X, Y, Z vertices of the object.
-        (min_verts, max_verts) = Lib.Blender.Utilities.Get_Min_Max(np.array(Lib.Blender.Utilities.Get_Vertices_From_Object(obj.name), dtype=np.float32))
+        (min_verts, max_verts) = Lib.Utilities.General.Get_Min_Max(np.array(Lib.Blender.Utilities.Get_Vertices_From_Object(obj.name), dtype=np.float32))
         #   Obtain the main parameters of the bounding box.
         origin = []; size = []
         for _, (min_v_i, max_v_i) in enumerate(zip(min_verts, max_verts)):
