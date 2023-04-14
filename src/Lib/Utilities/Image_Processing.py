@@ -1,15 +1,30 @@
 # Numpy (Array computing) [pip3 install numpy]
 import numpy as np
+# Typing (Support for type hints)
+import typing as tp
 # OpenCV (Computer Vision) [pip3 install opencv-python]
 import cv2
 # Custom Library:
 #   ../Lib/Utilities/General
 import Lib.Utilities.General
 
-def Draw_Bounding_Box(image, bounding_box_properties, format, Color, fill_box, show_info):
+def Draw_Bounding_Box(image: tp.List[tp.List[int]], bounding_box_properties: tp.Tuple[str, str, tp.List[tp.Union[int, float]]], format: str, Color: tp.List[int], 
+                      fill_box: bool, show_info: bool) -> tp.List[tp.List[int]]:
     """
     Description:
-        ...
+        Function to draw the bounding box of an object with additional dependencies (name, accuracy, etc.) in the raw image.
+
+    Args:
+        (1) image [Vector<float> Image Shape {Resolution<x, y>}]: Input raw image.
+        (2) bounding_box_properties [Dictionary {'Name': string, 'Accuracy', string, 
+                                                 'Data': Vector<int/float> 1x4}]: Bounding box properties.
+        (3) format [string]: The format of the bounding box input data. Available formats: YOLO, Pascal_VOC.
+        (4) Color [Vector<float> 1x3]: Color of the box and other dependencies.
+        (5) fill_box [bool]: Information about whether or not to fill the rectangle.
+        (6) show_info [bool]: Information about whether or not to show additional text.
+
+    Returns:
+        (1) parameter [Vector<float> Image Shape {Resolution<x, y>}]: Output image extended with bounding box and other dependencies.
 
     Example:
         image_out = Draw_Bounding_Box(image, bounding_box_properties = {'Name': 'Obj_Name_Id_0', 'Accuracy': '100', 'Data': None}, format = 'YOLO/Pascal_VOC', 

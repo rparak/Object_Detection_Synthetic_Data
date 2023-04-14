@@ -9,19 +9,8 @@ import typing as tp
 import Lib.Transformation.Core as Transformation 
 #   ../Lib/Transformation/Utilities
 import Lib.Transformation.Utilities.Mathematics as Mathematics
-
-"""
-[INFO] Object name: Metal_Blank_001
-[INFO] Bounding Box Parameters:
-[INFO]  - Origin: [0.    0.    0.007]
-[INFO]  - Size: [0.05  0.05  0.014]
-[INFO] The bounding box was successfully created!
-[INFO] Object name: T_Joint_001
-[INFO] Bounding Box Parameters:
-[INFO]  - Origin: [0.00545 0.      0.     ]
-[INFO]  - Size: [0.0475 0.0584 0.0366]
-[INFO] The bounding box was successfully created!
-"""
+#   ../Lib/Parameters/Primitives
+import Lib.Parameters.Primitives as Primitives
 
 @dataclass
 class Limit_Str:
@@ -56,41 +45,35 @@ class Object_Parameters_Str:
     Id: int = 0
     # Homogeneous transformation matrix of the initial position of the object.
     T: tp.List[tp.List[float]] = field(default_factory=list)
+    # Parameters of the object bounding box. Generated from the script gen_object_bounding_box.py. 
+    Bounding_Box: Primitives.Box_Cls = field(default_factory=Primitives.Box_Cls)
     # The position/rotation boundaries of the object.
     Limit: Limit_Str = field(default_factory=Limit_Str)
 
 """
 Description:
-    The main parameters of the T-Joint object in view type 0.
+    The main parameters of the object: T-Joint
 """
-T_Joint_VT_0_Str = Object_Parameters_Str(Name='T_Joint_VT_0', Id=0)
+T_Joint_001_Str = Object_Parameters_Str(Name='T_Joint_001', Id=0)
 # Homogeneous transformation matrix {T} of the object.
-T_Joint_VT_0_Str.T = Transformation.Homogeneous_Transformation_Matrix_Cls(None, np.float32).Rotation([0.0, Mathematics.Degree_To_Radian(2.0), 0.0], 
-                                                                                                     'ZYX').Translation([0.175, 0.0, 0.0193])
+T_Joint_001_Str.T = Transformation.Homogeneous_Transformation_Matrix_Cls(None, np.float32).Rotation([0.0, Mathematics.Degree_To_Radian(2.0), 0.0], 
+                                                                                                    'ZYX').Translation([0.175, 0.0, 0.0193])
+# Parameters of the object bounding box.
+T_Joint_001_Str.Bounding_Box = Primitives.Box_Cls([0.00545, 0.0, 0.0], [0.0475, 0.0584, 0.0366])
 # Other parameters.
-T_Joint_VT_0_Str.Limit.Position = {'x': [-0.2, 0.2], 'y': [-0.325, 0.4], 'z': None}
-T_Joint_VT_0_Str.Limit.Rotation = {'x': None, 'y': None, 'z': [-Mathematics.CONST_MATH_PI, Mathematics.CONST_MATH_PI]}
+T_Joint_001_Str.Limit.Position = {'x': [-0.2, 0.2], 'y': [-0.325, 0.4], 'z': None}
+T_Joint_001_Str.Limit.Rotation = {'x': None, 'y': None, 'z': [-Mathematics.CONST_MATH_PI, Mathematics.CONST_MATH_PI]}
 
 """
 Description:
-    The main parameters of the T-Joint object in view type 1.
+    The main parameters of the object: Metan Blank
 """
-T_Joint_VT_1_Str = Object_Parameters_Str(Name='T_Joint_VT_1', Id=1)
+Metal_Blank_001_Str = Object_Parameters_Str(Name='Metal_Blank_001', Id=1)
 # Homogeneous transformation matrix {T} of the object.
-T_Joint_VT_1_Str.T = Transformation.Homogeneous_Transformation_Matrix_Cls(None, np.float32).Rotation([Mathematics.CONST_MATH_HALF_PI, 0.0, 0.0], 
-                                                                                                     'ZYX').Translation([0.175, 0.0, 0.0302])
+Metal_Blank_001_Str.T = Transformation.Homogeneous_Transformation_Matrix_Cls(None, np.float32).Rotation([0.0, 0.0, 0.0], 
+                                                                                                        'ZYX').Translation([0.175, 0.0, 0.001])
+# Parameters of the object bounding box.
+Metal_Blank_001_Str.Bounding_Box = Primitives.Box_Cls([0.0, 0.0, 0.007], [0.05, 0.05, 0.014])
 # Other parameters.
-T_Joint_VT_1_Str.Limit.Position = {'x': [-0.2, 0.2], 'y': [-0.325, 0.4], 'z': None}
-T_Joint_VT_1_Str.Limit.Rotation = {'x': None, 'y': [-Mathematics.CONST_MATH_PI, Mathematics.CONST_MATH_PI], 'z': None}
-
-"""
-Description:
-    The main parameters of the T-Joint object in view type 2.
-"""
-T_Joint_VT_2_Str = Object_Parameters_Str(Name='T_Joint_VT_2', Id=2)
-# Homogeneous transformation matrix {T} of the object.
-T_Joint_VT_2_Str.T = Transformation.Homogeneous_Transformation_Matrix_Cls(None, np.float32).Rotation([Mathematics.CONST_MATH_HALF_PI, 0.0, -Mathematics.CONST_MATH_HALF_PI], 
-                                                                                                     'ZYX').Translation([0.175, 0.0, 0.0302])
-# Other parameters.
-T_Joint_VT_2_Str.Limit.Position = {'x': [-0.2, 0.2], 'y': [-0.325, 0.4], 'z': None}
-T_Joint_VT_2_Str.Limit.Rotation = {'x': None, 'y': [-Mathematics.CONST_MATH_PI, Mathematics.CONST_MATH_PI], 'z': None}
+Metal_Blank_001_Str.Limit.Position = {'x': [-0.2, 0.2], 'y': [-0.325, 0.4], 'z': None}
+Metal_Blank_001_Str.Limit.Rotation = {'x': None, 'y': None, 'z': [-Mathematics.CONST_MATH_PI, Mathematics.CONST_MATH_PI]}
