@@ -22,7 +22,7 @@ def main():
             Object_Parameters_Str() in ../Lib/Parameters/Object.py
 
         Note:
-            Open Gen_Object_Bounding_Box.blend from the Blender folder and copy + paste this script and run it.
+            Open Object_Bounding_Box.blend from the Blender folder and copy + paste this script and run it.
     """
     
     # Deselect all objects in the current scene.
