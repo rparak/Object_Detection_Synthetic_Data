@@ -17,12 +17,15 @@ import Lib.Utilities.File_IO as File_IO
 Description:
     Initialization of constants.
 """
+CONST_OBJECT_ID = 1
 CONST_OBJECT_NAME = ['T_Joint', 'Metal_Blank']
 CONST_SCAN_ITERATION = 1
 
 def main():
-    raw_image  = cv2.imread(f'../../../Data/Train/Images/Image_{CONST_SCAN_ITERATION:07}.png')
-    label_data = File_IO.Load(f'../../../Data/Train/Labels/Label_{CONST_SCAN_ITERATION:07}', 'txt', ' ')[0]
+    path = '../../../Data/Train'    
+
+    raw_image  = cv2.imread(f'{path}/Images/ID_{CONST_OBJECT_ID}/Image_{CONST_SCAN_ITERATION:07}.png')
+    label_data = File_IO.Load(f'{path}/Labels/ID_{CONST_OBJECT_ID}/Label_{CONST_SCAN_ITERATION:07}', 'txt', ' ')[0]
     
     Bounding_Box_Properties = {'Name': f'{CONST_OBJECT_NAME[int(label_data[0])]}', 'Accuracy': '99.99', 
                                'Data': {'x_c': label_data[1], 'y_c': label_data[2], 'width': label_data[3], 'height': label_data[4]}}

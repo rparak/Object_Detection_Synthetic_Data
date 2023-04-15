@@ -17,8 +17,12 @@ import Lib.Utilities.General
 Description:
     Initialization of constants.
 """
+# The ID of the object to be scanned.
+#   ID{0} = 'T_Joint'
+#   ID{1} = 'Metal_Blank'
+CONST_SCANNED_OBJ_ID = 1
 # Number of synthetic data to be generated.
-CONST_NUM_OF_GEN_DATA = 10
+CONST_NUM_OF_GEN_DATA = 1
 # Initial index for data generation.
 CONST_INIT_INDEX = 0
 
@@ -26,19 +30,18 @@ def main():
     # Deselect all objects in the current scene.
     Lib.Blender.Utilities.Deselect_All()
 
-    # The object to be scanned.
-    #   'T_Joint': Lib.Parameters.Object.T_Joint_001_Str
-    #   'Metal_Blank': Lib.Parameters.Object.Metal_Blank_001_Str
-    Object_Str = Lib.Parameters.Object.T_Joint_001_Str
+    # ....
+    Object_Str = [Lib.Parameters.Object.T_Joint_001_Str, 
+                  Lib.Parameters.Object.Metal_Blank_001_Str][CONST_SCANNED_OBJ_ID]
     
     # ...
     Camera_Cls = Lib.Blender.Core.Camera_Cls('Camera', Lib.Parameters.Camera.PhoXi_Scanner_M_Str, 'PNG')
     # ...
-    Object_Cls = Lib.Blender.Core.Object_Cls(Lib.Parameters.Object.T_Joint_001_Str, 'ZYX')
+    Object_Cls = Lib.Blender.Core.Object_Cls(Object_Str, 'ZYX')
     Object_Cls.Visibility(True)
     
     i = 0
-    while CONST_NUM_OF_GEN_DATA < i:
+    while CONST_NUM_OF_GEN_DATA > i:
         # ...
         Object_Cls.Random()
 
