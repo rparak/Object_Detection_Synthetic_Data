@@ -223,10 +223,10 @@ def Get_Vertices_From_Object(name: str) -> tp.List[float]:
 
     return [bpy.data.objects[name].matrix_world @ vertex_i.co for vertex_i in bpy.data.objects[name].data.vertices]
 
-def Save_Synthetic_Data(path, name, id, boundig_box, label_format, image_format):
+def Save_Synthetic_Data(path, iteration, object_id, boundig_box, label_format, image_format):
     # id -> class of the object.
     # label ...
-    File_IO.Save(f'{path}/Label/{name}', np.hstack((id, boundig_box)), label_format.lower(), ' ')
+    File_IO.Save(f'{path}/Labels/Label_{iteration}', np.hstack((object_id, boundig_box)), label_format.lower(), ' ')
     # image ...
-    bpy.context.scene.render.filepath = f'{path}/Image/{name}.{image_format.lower()}'
+    bpy.context.scene.render.filepath = f'{path}/Images/Image_{iteration}.{image_format.lower()}'
     bpy.ops.render.render(write_still=True)

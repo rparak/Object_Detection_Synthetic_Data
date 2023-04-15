@@ -112,11 +112,37 @@ def Convert_Boundig_Box_Data(format_in: str, format_out: str, Bounding_Box: tp.T
         print('[ERROR] Invalid input parameters. The input/output format must be named YOLO or PASCAL_VOC \
               and cannot be the same..')
         
-def Get_2D_Coordinates_Bounding_Box(vertices: tp.List[float], P: tp.List[tp.List[float]], format_out: str) -> tp.List[tp.Union[int, float]]:
+def Get_2D_Coordinates_Bounding_Box(vertices: tp.List[float], P: tp.List[tp.List[float]], Resolution: tp.Tuple[int, int], format_out: str) -> tp.Tuple[tp.List[float]]:
     """
     Description:
         Get the 2D coordinates of the bounding box from the rendered object scanned by the camera.
+
+    Args:
+        (1) vertices []:
+        (2) P []:
+        (3) Resolution []:
+        (4) format_out []:
+
+    Returns:
+        (1) parameter []:
     """
-    
-    pass
+
+    try:
+        assert format_out == 'YOLO'
+
+        P_extended = np.vstack((P, np.ones(4)))
+
+        p = []
+        for _, verts_i in enumerate(vertices):
+            p_tmp = (P_extended @ np.hstack((np.array(verts_i), 1)))[0:-1]
+            p.append(p_tmp/p_tmp[-1])
+
+        (p_min, p_max) = Get_Min_Max(np.array(p, dtype=np.float32))
+
+        return Convert_Boundig_Box_Data('PASCAL_VOC', format_out, {'x_min': p_min[0], 'y_min': p_min[1], 'x_max': p_max[0], 'y_max': p_max[1]}, 
+                                        Resolution)
+
+    except AssertionError as error:
+        print(f'[ERROR] Information: {error}')
+        print('[INFO] The output format must be YOLO, as other formats are not yet implemented.')
     

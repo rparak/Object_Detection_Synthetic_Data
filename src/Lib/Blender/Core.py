@@ -31,9 +31,18 @@ class Camera_Cls(object):
 
         self.__Set_Camera_Parameters()
 
+    def __Update(self) -> None:
+        """
+        Description:
+            Update the scene.
+        """
+
+        bpy.context.view_layer.update()
+
     # Camera Parameters vs Properties
     def __Set_Camera_Parameters(self) -> None:
         Lib.Blender.Utilities.Set_Object_Transformation(self.__name, self.__Cam_Param_Str.T)
+        self.__Update()
 
         # Adjust the width or height of the sensor depending on the resolution of the image.
         bpy.data.cameras[self.__name].sensor_fit = 'AUTO'
@@ -90,9 +99,9 @@ class Camera_Cls(object):
         #R_n = np.array(R_bcam2cv) @ np.array(cam.matrix_world.inverted())[:3, :3]
         #t_n = np.array(R_bcam2cv) @ ((-1) * np.array(cam.matrix_world.inverted())[:3, :3] @ location)
 
-        R_tmp = np.array([[1.0, 0.0,  0.0],
-                          [0.0, 1.0,  0.0],
-                          [0.0, 0.0, -1.0]], dtype=np.float32)
+        R_tmp = np.array([[1.0,  0.0,  0.0],
+                          [0.0, -1.0,  0.0],
+                          [0.0,  0.0, -1.0]], dtype=np.float32)
 
         R = R_tmp @ self.__Cam_Param_Str.T.Transpose().R
         t = R_tmp @ ((-1) * self.__Cam_Param_Str.T.Transpose().R @ self.__Cam_Param_Str.T.p.all())
@@ -129,7 +138,7 @@ class Object_Cls(object):
             self.__axes_sequence_cfg = axes_sequence_cfg
 
             self.__Bounding_Box = {'Centroid': self.__T.p.all(), 'Size': self.__Obj_Param_Str.Bounding_Box.Size, 
-                                'Vertices': self.__Obj_Param_Str.Bounding_Box.Vertices.copy()}
+                                   'Vertices': self.__Obj_Param_Str.Bounding_Box.Vertices.copy()}
 
             # test something
             Lib.Blender.Utilities.Set_Object_Transformation(self.__Obj_Param_Str.Name, Transformation.Homogeneous_Transformation_Matrix_Cls(None, np.float32))
@@ -159,6 +168,11 @@ class Object_Cls(object):
     @property
     def T(self):
         return self.__T
+    
+    @property
+    def Vertices(self):
+        return np.array(Lib.Blender.Utilities.Get_Vertices_From_Object(self.__Obj_Param_Str.Name),
+                        dtype=np.float32)
     
     @property
     def Bounding_Box(self):
