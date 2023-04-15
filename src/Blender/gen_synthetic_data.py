@@ -54,6 +54,7 @@ def main():
                                                   'txt', 'png')
         i += 1
 
+    # ...
     Object_Cls.Visibility(False)
 
 if __name__ == '__main__':

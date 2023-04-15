@@ -1,8 +1,6 @@
 # Conda instructions
 https://blog.roboflow.com/m1-opencv/
 
-python3 version = 3.10.10
-
 # Set up a new virtual environment called {name} with python {version}.
 conda create -n {name} python={version}
 conda activate {name}
@@ -10,10 +8,10 @@ conda activate {name}
 # Install dependencies.
 conda install -c conda-forge opencv
 
-# Deactivate env.
+# Deactivate environment.
 conda deactivate
 
-# Remove env.
+# Remove environment.
 conda remove -name {name} --all
 
 # To verify that the environment was removed, in your terminal window or an Anaconda Prompt, run:
