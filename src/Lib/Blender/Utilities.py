@@ -258,7 +258,7 @@ def Save_Synthetic_Data(file_path: str, iteration: int, object_id: int, bounding
     bpy.ops.render.render(write_still=True)
 
     # Display information.
-    print(f'[INFO] The data in iteration {iteration} was successfully saved to the folder {file_path}.')
+    print(f'[INFO] The data in iteration {int(iteration)} was successfully saved to the folder {file_path}.')
     print(f'[INFO]  - Image: /Images/ID_{object_id}/Image_{iteration}.{image_format.lower()}')
     print(f'[INFO]  - Label: /Labels/ID_{object_id}/Label_{iteration}.txt')
     print(f'[INFO] Time: {(time.time() - t_0):0.05f} in seconds.')
