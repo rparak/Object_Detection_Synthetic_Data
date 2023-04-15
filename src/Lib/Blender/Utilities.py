@@ -4,6 +4,8 @@ import bpy
 import numpy as np
 # Typing (Support for type hints)
 import typing as tp
+# Time (Time access and conversions)
+import time
 # Custom Library:
 #   ../Lib/Transformation/Core
 import Lib.Transformation.Core as Transformation
@@ -223,10 +225,38 @@ def Get_Vertices_From_Object(name: str) -> tp.List[float]:
 
     return [bpy.data.objects[name].matrix_world @ vertex_i.co for vertex_i in bpy.data.objects[name].data.vertices]
 
-def Save_Synthetic_Data(path, iteration, object_id, boundig_box, label_format, image_format):
-    # id -> class of the object.
-    # label ...
-    File_IO.Save(f'{path}/Labels/ID_{object_id}/Label_{iteration}', np.hstack((object_id, boundig_box)), label_format.lower(), ' ')
-    # image ...
-    bpy.context.scene.render.filepath = f'{path}/Images/ID_{object_id}/Image_{iteration}.{image_format.lower()}'
+def Save_Synthetic_Data(file_path: str, iteration: int, object_id: int, bounding_box: tp.List[tp.Union[int, float]], label_format: str, 
+                        image_format: str) -> None:
+    """
+    Description:
+        Function to save data generated from the Blender. More precisely, an image in the required format 
+        with corresponding labelling.
+
+    Args:
+        (1) file_path [string]: The specified path of the file without extension (format).
+        (2) iteration [int]: The current iteration of the process.
+        (3) object_id [int]: The identification number of the scanned object.
+        (4) bounding_box [Vector<float> 1x4]: The bounding box data (2D) in the specific format (YOLO, PASCAL_VOC, etc.)
+        (5) label_format [string]: The format of the saved file.
+                                   Note:
+                                    'pkl' : Pickle file; 'txt' : Text file.
+        (6) image_format [string]: The format of the saved image.
+                                   Note:
+                                    'png', jpeg', etc.
+    """
+
+    # Start the timer.
+    t_0 = time.time()
+
+    # Save the label data to a file.
+    File_IO.Save(f'{file_path}/Labels/ID_{object_id}/Label_{iteration}', np.hstack((object_id, bounding_box)), label_format.lower(), ' ')
+    
+    # Save the image to a file.
+    bpy.context.scene.render.filepath = f'{file_path}/Images/ID_{object_id}/Image_{iteration}.{image_format.lower()}'
     bpy.ops.render.render(write_still=True)
+
+    # Display information.
+    print(f'[INFO] The data in iteration {iteration} was successfully saved to the folder {file_path}.')
+    print(f'[INFO]  - Image: /Images/ID_{object_id}/Image_{iteration}.{image_format.lower()}')
+    print(f'[INFO]  - Label: /Labels/ID_{object_id}/Label_{iteration}.txt')
+    print(f'[INFO] Time: {(time.time() - t_0):0.05f} in seconds.')

@@ -21,15 +21,48 @@ class Camera_Cls(object):
     """
     Description:
         ...
-        (1) name [string]: Object name.
+
+    Initialization of the Class:
+        Args:
+            (1) name [string]: Object name.
+
+        Example:
+            Initialization:
+                # Assignment of the variables.
+                ...
+
+                # Initialization of the class.
+                Cls = Camera_Cls()
+
+            Features:
+                # Properties of the class.
+                ...
+
+                # Functions of the class.
+                Cls.()
+                    ...
+                Cls.()
     """
         
     def __init__(self, name: str, Cam_Param_Str: Lib.Parameters.Camera.Camera_Parameters_Str, image_format: str = 'PNG') -> None:
-        self.__name = name
-        self.__Cam_Param_Str = Cam_Param_Str
-        self.__image_format = image_format
+        try:
+            assert Lib.Blender.Utilities.Object_Exist(name) == True
+            
+            # << PRIVATE >> #
+            # The name of the camera object (in Blender).
+            self.__name = name
+            # The structure of the main parameters of the camera (sensor) object.
+            #   See the ../Lib/Parameters/Camera script.
+            self.__Cam_Param_Str = Cam_Param_Str
+            # The format to save the rendered image.
+            self.__image_format = image_format
 
-        self.__Set_Camera_Parameters()
+            # Set the main parameters of the camera object.
+            self.__Set_Camera_Parameters()
+
+        except AssertionError as error:
+            print(f'[ERROR] Information: {error}')
+            print(f'[ERROR] The camera object named <{name}> does not exist in the current scene.')
 
     def __Update(self) -> None:
         """
@@ -39,15 +72,22 @@ class Camera_Cls(object):
 
         bpy.context.view_layer.update()
 
-    # Camera Parameters vs Properties
     def __Set_Camera_Parameters(self) -> None:
+        """
+        Description:
+            Set the main parameters of the camera object.
+        """
+
+        # Set the transformation of the object.
         Lib.Blender.Utilities.Set_Object_Transformation(self.__name, self.__Cam_Param_Str.T)
         self.__Update()
 
         # Adjust the width or height of the sensor depending on the resolution of the image.
         bpy.data.cameras[self.__name].sensor_fit = 'AUTO'
-        # ...
+        # Resolution of the image:
+        #   ['x']: Horizontal pixels.
         bpy.context.scene.render.resolution_x = self.__Cam_Param_Str.Resolution['x']
+        #   ['y']: Vertical pixels.
         bpy.context.scene.render.resolution_y = self.__Cam_Param_Str.Resolution['y']
         # Set the projection of the camera
         bpy.data.cameras[self.__name].type = self.__Cam_Param_Str.Type
@@ -62,12 +102,8 @@ class Camera_Cls(object):
             bpy.context.scene.render.image_settings.color_mode = 'BW'
         elif self.__Cam_Param_Str.Spectrum == 'Color':
             bpy.context.scene.render.image_settings.color_mode = 'RGBA'
-
-        # ...
+        # The format to save the rendered image.
         bpy.context.scene.render.image_settings.file_format = self.__image_format
-
-        # Update the scene.
-        bpy.context.view_layer.update()
 
     def K(self) -> tp.List[tp.List[float]]:
         try:
@@ -127,13 +163,38 @@ class Object_Cls(object):
     """
     Description:
         ...
+
+    Initialization of the Class:
+        Args:
+            (1) ...
+
+        Example:
+            Initialization:
+                # Assignment of the variables.
+                ...
+
+                # Initialization of the class.
+                Cls = Object_Cls()
+
+            Features:
+                # Properties of the class.
+                ...
+
+                # Functions of the class.
+                Cls.()
+                    ...
+                Cls.()
     """
     
     def __init__(self, Obj_Param_Str: Lib.Parameters.Object.Object_Parameters_Str, axes_sequence_cfg: str) -> None:
         try:
             assert Lib.Blender.Utilities.Object_Exist(Obj_Param_Str.Name) == True
 
+            # << PRIVATE >> #
+            # The structure of the main parameters of the scanned object.
+            #   See the ../Lib/Parameters/Object script.
             self.__Obj_Param_Str = Obj_Param_Str
+
             self.__T = Transformation.Homogeneous_Transformation_Matrix_Cls(None, np.float32)
             self.__axes_sequence_cfg = axes_sequence_cfg
 
@@ -144,14 +205,12 @@ class Object_Cls(object):
             Lib.Blender.Utilities.Set_Object_Transformation(self.__Obj_Param_Str.Name, Transformation.Homogeneous_Transformation_Matrix_Cls(None, np.float32))
             self.__Update()
 
-            # print(f'[INFO] An object named <{self.__Obj_Param_Str.Name}_Bounding_Box> does not exist in the current scene.')
-
             # ....
             self.Reset()
         
         except AssertionError as error:
             print(f'[ERROR] Information: {error}')
-            print(f'[INFO] An object named <{Obj_Param_Str.Name}> does not exist in the current scene.')
+            print(f'[ERROR] An object named <{Obj_Param_Str.Name}> does not exist in the current scene.')
 
     @property
     def Name(self):

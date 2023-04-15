@@ -5,7 +5,7 @@ import typing as tp
 # Pickle (Python object serialization)
 import pickle as pkl
 
-def Load(file_path: str, mode: str, separator: str) -> tp.List[float]:
+def Load(file_path: str, format: str, separator: str) -> tp.List[float]:
     """
     Description:
         A simple function to read data from the file.
@@ -14,24 +14,24 @@ def Load(file_path: str, mode: str, separator: str) -> tp.List[float]:
             Deserialization of the data into a binary / text file.
 
     Args:
-        (1) file_path [string]: The specified path of the file without extension.
-        (2) mode [string]: Mode to load the data.
-                           Note:
-                            'pkl' : Pickle file; 'txt' : Text file
+        (1) file_path [string]: The specified path of the file without extension (format).
+        (2) format [string]: The format of the loaded file.
+                             Note:
+                                'pkl' : Pickle file; 'txt' : Text file
         (3) separator [string]: Separator between data.
 
     Returns:
         (1) parameter [Dictionary of different types of data <float, bool, etc.>]: Loaded data from a binary file.
     """
 
-    if mode == 'pkl':
+    if format == 'pkl':
         # Open the file in 'rb' mode (read binary). 
-        with open(file_path + f'.{mode}', 'rb') as f:
+        with open(file_path + f'.{format}', 'rb') as f:
             # Load the data from the file using the file object (f).
             data = pkl.load(f)
-    elif mode == 'txt':
+    elif format == 'txt':
         data_tmp = []
-        with open(file_path + f'.{mode}', 'r') as f:
+        with open(file_path + f'.{format}', 'r') as f:
             # Read the line of the file in the current step.
             for line in f:
                 # Splits a string into a list with the specified delimiter (,) 
@@ -46,7 +46,7 @@ def Load(file_path: str, mode: str, separator: str) -> tp.List[float]:
     
     return data
 
-def Save(file_path: str, data: tp.List[float], mode: str, separator: str) -> None:
+def Save(file_path: str, data: tp.List[float], format: str, separator: str) -> None:
     """
     Description:
         A simple function to write data to the file.
@@ -55,21 +55,21 @@ def Save(file_path: str, data: tp.List[float], mode: str, separator: str) -> Non
             Serialization of the data into a binary / text file.
 
     Args:
-        (1) file_path [string]: The specified path of the file without extension.
+        (1) file_path [string]: The specified path of the file without extension (format).
         (2) data [Dictionary of different types of data <float, bool, etc.>]: Individual data.
-        (3) mode [string]: Mode to load the data.
-                           Note:
-                            'pkl' : Pickle file; 'txt' : Text file.
+        (3) format [string]: The format of the saved file.
+                             Note:
+                                'pkl' : Pickle file; 'txt' : Text file.
         (3) separator [string]: Separator between data.
     """
     
-    if mode == 'pkl':
+    if format == 'pkl':
         # Open the file in 'wb' mode (write binary). 
-        with open(file_path + f'.{mode}', 'wb') as f:
+        with open(file_path + f'.{format}', 'wb') as f:
             # Write the input data to a file using the file object (f).
             pkl.dump(data, f)
-    elif mode == 'txt':
-        with open(file_path + f'.{mode}', 'a+') as f:
+    elif format == 'txt':
+        with open(file_path + f'.{format}', 'a+') as f:
             # Write the data to the file.
             for data_i in data[:-1]:
                 f.writelines([str(data_i), separator])

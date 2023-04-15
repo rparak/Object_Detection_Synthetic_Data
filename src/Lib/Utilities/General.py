@@ -118,25 +118,30 @@ def Get_2D_Coordinates_Bounding_Box(vertices: tp.List[float], P: tp.List[tp.List
         Get the 2D coordinates of the bounding box from the rendered object scanned by the camera.
 
     Args:
-        (1) vertices []:
-        (2) P []:
-        (3) Resolution []:
-        (4) format_out []:
+        (1) vertices [Vector<float> 3xn]: The vertices of the scanned object.
+                                          Note:
+                                            Where n is the number of vertices.
+        (2) P [Matrix<float> 3x4]:
+        (3) Resolution [Dictionary {'x': width, 'y': height}]: Resolution of the processed image.
+        (4) format_out [string]: The format into which the data is to be converted.
 
     Returns:
-        (1) parameter []:
+        (1) parameter [Dictionary .. See the Convert_Boundig_Box_Data() function.]: Output bounding box in the desired format.
     """
 
     try:
         assert format_out == 'YOLO'
 
+        # ...
         P_extended = np.vstack((P, np.ones(4)))
 
+        # ...
         p = []
         for _, verts_i in enumerate(vertices):
             p_tmp = (P_extended @ np.hstack((np.array(verts_i), 1)))[0:-1]
             p.append(p_tmp/p_tmp[-1])
 
+        # ...
         (p_min, p_max) = Get_Min_Max(np.array(p, dtype=np.float32))
 
         return Convert_Boundig_Box_Data('PASCAL_VOC', format_out, {'x_min': p_min[0], 'y_min': p_min[1], 'x_max': p_max[0], 'y_max': p_max[1]}, 
