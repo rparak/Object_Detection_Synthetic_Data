@@ -20,28 +20,34 @@ import Lib.Transformation.Core as Transformation
 class Camera_Cls(object):
     """
     Description:
-        ...
+        A class for working with a camera object in a Blender scene.
 
     Initialization of the Class:
         Args:
             (1) name [string]: Object name.
+            (2) Cam_Param_Str [Camera_Parameters_Str]: The structure of the main parameters of the camera (sensor) object.
+                                                       Note:
+                                                        See the ../Lib/Parameters/Camera script.
+            (3) image_format [string]: The format to save the rendered image.
 
         Example:
             Initialization:
                 # Assignment of the variables.
-                ...
+                name = 'Camera'
+                Camera_Str = Camera_Parameters_Str()
+                image_format = 'PNG'
 
                 # Initialization of the class.
-                Cls = Camera_Cls()
+                Cls = Camera_Cls(name, Camera_Str, image_format)
 
             Features:
                 # Properties of the class.
-                ...
+                None
 
                 # Functions of the class.
-                Cls.()
+                Cls.K; Cls.R_t
                     ...
-                Cls.()
+                Cls.P
     """
         
     def __init__(self, name: str, Cam_Param_Str: Lib.Parameters.Camera.Camera_Parameters_Str, image_format: str = 'PNG') -> None:
@@ -52,7 +58,6 @@ class Camera_Cls(object):
             # The name of the camera object (in Blender).
             self.__name = name
             # The structure of the main parameters of the camera (sensor) object.
-            #   See the ../Lib/Parameters/Camera script.
             self.__Cam_Param_Str = Cam_Param_Str
             # The format to save the rendered image.
             self.__image_format = image_format
@@ -106,6 +111,14 @@ class Camera_Cls(object):
         bpy.context.scene.render.image_settings.file_format = self.__image_format
 
     def K(self) -> tp.List[tp.List[float]]:
+        """
+        Description:
+            ...
+
+        Returns:
+            (1) parameter []: 
+        """
+
         try:
             assert bpy.data.cameras[self.__name].sensor_fit == 'AUTO'
 
@@ -129,12 +142,15 @@ class Camera_Cls(object):
             print('[ERROR] Incorrectly set method to fit the image and field of view angle inside the sensor.')
             print(f'[ERROR] The method must be set to AUTO. Not to {bpy.data.cameras[self.__name].sensor_fit}')
 
-    def R_t(self):
-        # extrinsic matrix (R | t)
-        # obj.matrix_world.normalized().inverted()
-        #R_n = np.array(R_bcam2cv) @ np.array(cam.matrix_world.inverted())[:3, :3]
-        #t_n = np.array(R_bcam2cv) @ ((-1) * np.array(cam.matrix_world.inverted())[:3, :3] @ location)
+    def R_t(self) -> tp.List[tp.List[float]]:
+        """
+        Description:
+            ...
 
+        Returns:
+            (1) parameter []: 
+        """
+                
         R_tmp = np.array([[1.0,  0.0,  0.0],
                           [0.0, -1.0,  0.0],
                           [0.0,  0.0, -1.0]], dtype=np.float32)
@@ -144,46 +160,48 @@ class Camera_Cls(object):
 
         return np.hstack((R, t.reshape(3, 1)))
 
-    def P(self):
-        # K x [R | t]
-        return self.K() @ self.R_t()
+    def P(self) -> tp.List[tp.List[float]]:
+        """
+        Description:
+            ...
 
-    def Save_Data(self, image_properties) -> None:
-        # Maybe save data of the camera, and of the object as well. Means separately.
-        # image_properties = {'Path': .., 'Name': ..}
-        # label_properties = {'Path': .., 'Name': .., 'Data': ..}
-        
-        # ...
-        img_path = image_properties['Path']; img_name = image_properties['Name']
-        #   ...
-        bpy.context.scene.render.filepath = f'{img_path}/{img_name}.{self.__image_format.lower()}'
-        bpy.ops.render.render(write_still=True)
+        Returns:
+            (1) parameter []: 
+        """
+                
+        return self.K() @ self.R_t()
 
 class Object_Cls(object):
     """
     Description:
-        ...
+        A class for working with a scanned object in a Blender scene.
 
     Initialization of the Class:
         Args:
-            (1) ...
+            (1) Obj_Param_Str [Object_Parameters_Str]: The structure of the main parameters of the scanned object.
+                                                       Note:
+                                                        See the ../Lib/Parameters/Object script.
+            (2) axes_sequence_cfg [string]: Rotation axis sequence configuration (e.g. 'ZYX', 'QUATERNION', etc.)
 
         Example:
             Initialization:
                 # Assignment of the variables.
-                ...
+                Object_Str = Object_Parameters_Str()
+                axes_sequence_cfg = 'ZYX'
 
                 # Initialization of the class.
-                Cls = Object_Cls()
+                Cls = Object_Cls(Object_Str, axes_sequence_cfg)
 
             Features:
                 # Properties of the class.
-                ...
+                self.T; self.T_0
+                    ...
+                self.Bounding_Box
 
                 # Functions of the class.
-                Cls.()
+                Cls.Reset(); Cls.Visibility(True)
                     ...
-                Cls.()
+                Cls.Random()
     """
     
     def __init__(self, Obj_Param_Str: Lib.Parameters.Object.Object_Parameters_Str, axes_sequence_cfg: str) -> None:
@@ -191,21 +209,22 @@ class Object_Cls(object):
             assert Lib.Blender.Utilities.Object_Exist(Obj_Param_Str.Name) == True
 
             # << PRIVATE >> #
+            self.__axes_sequence_cfg = axes_sequence_cfg
             # The structure of the main parameters of the scanned object.
-            #   See the ../Lib/Parameters/Object script.
             self.__Obj_Param_Str = Obj_Param_Str
 
+            # Initialize the homogeneous transformation matrix as the identity matrix.
             self.__T = Transformation.Homogeneous_Transformation_Matrix_Cls(None, np.float32)
-            self.__axes_sequence_cfg = axes_sequence_cfg
 
+            # Create a dictionary and initialize the object's bounding box parameters.
             self.__Bounding_Box = {'Centroid': self.__T.p.all(), 'Size': self.__Obj_Param_Str.Bounding_Box.Size, 
                                    'Vertices': self.__Obj_Param_Str.Bounding_Box.Vertices.copy()}
 
-            # test something
+            # Set the object transform to zero position.
             Lib.Blender.Utilities.Set_Object_Transformation(self.__Obj_Param_Str.Name, Transformation.Homogeneous_Transformation_Matrix_Cls(None, np.float32))
             self.__Update()
 
-            # ....
+            # Return the object to the initialization position.
             self.Reset()
         
         except AssertionError as error:
@@ -213,31 +232,77 @@ class Object_Cls(object):
             print(f'[ERROR] An object named <{Obj_Param_Str.Name}> does not exist in the current scene.')
 
     @property
-    def Name(self):
+    def Name(self) -> str:
+        """
+        Description:
+            Get the name of the object.
+
+        Returns:
+            (1) parameter [string]: Name of the object.
+        """
+
         return self.__Obj_Param_Str.Name
 
     @property
-    def Id(self):
+    def Id(self) -> int:
+        """
+        Description:
+            Get the identification number of the object.
+
+        Returns:
+            (1) parameter [int]: Identification number.
+        """
+
         return self.__Obj_Param_Str.Id
     
     @property
-    def T_0(self):
+    def T_0(self) -> tp.List[tp.List[float]]:
+        """
+        Description:
+            Get the initial (null) homogeneous transformation matrix of an object.
+
+        Returns:
+            (1) parameter [Matrix<float> 4x4]: Homogeneous transformation matrix.
+        """
+
         return self.__Obj_Param_Str.T
     
     @property
     def T(self):
+        """
+        Description:
+            Get the actual homogeneous transformation matrix of an object.
+
+        Returns:
+            (1) parameter [Matrix<float> 4x4]: Homogeneous transformation matrix.
+        """
+                
         return self.__T
     
     @property
     def Vertices(self):
+        """
+        Description:
+            Get the positions (x, y, z) of the vertices of the given object.
+
+        Returns:
+            (1) parameter [Matrix<float> 3xn]: The vertices of the scanned object.
+                                               Note:
+                                                Where n is the number of vertices.
+        """
+                
         return np.array(Lib.Blender.Utilities.Get_Vertices_From_Object(self.__Obj_Param_Str.Name),
                         dtype=np.float32)
     
     @property
-    def Bounding_Box(self):
+    def Bounding_Box(self) -> tp.Tuple[tp.List[float], tp.List[float], tp.List[tp.List[float]]]:
         """
         Description:
             Get the main parameters of the object's bounding box.
+
+        Returns:
+            (1) parameter [Dictionary {'Centroid': Vector<float> 1x3, 'Size': Vector<float> 1x3, 
+                                       'Vertices': Matrix<float> 3x8}]: The main parameters of the bounding box as a dictionary.
         """
 
         # Oriented Bounding Box (OBB) transformation according to the homogeneous transformation matrix of the object.
@@ -259,33 +324,54 @@ class Object_Cls(object):
         bpy.context.view_layer.update()
     
     def Reset(self) -> None:
-        # ...
+        """
+        Description:
+            Function to return the object to the initialization position.
+        """
+
         self.__T = Transformation.Homogeneous_Transformation_Matrix_Cls(self.__Obj_Param_Str.T.all().copy(), np.float32)
 
-        # ...
+        # Set the transformation of the object to the initial position.
         Lib.Blender.Utilities.Set_Object_Transformation(self.__Obj_Param_Str.Name, self.__Obj_Param_Str.T)
         self.__Update()
 
     def Visibility(self, state: bool) -> None:
+        """
+        Description:
+            Function to enable and disable the visibility of an object.
+
+        Args:
+            (1) state [bool]: Enable (True) / Disable (False). 
+        """
+
         Lib.Blender.Utilities.Object_Visibility(self.__Obj_Param_Str.Name, state)
         self.__Update()
 
     def Random(self) -> None:
-        # ...
+        """
+        Description:
+            Function for random generation of object transformation (position, rotation). The boundaries of the random 
+            generation are defined in the object structure.
+
+            Note:
+                If there are no boundaries in any axis (equals None), continue without generating.
+        """
+
         p = np.zeros(3, np.float32); theta = p.copy()
         for i, (l_p_i, l_theta_i) in enumerate(zip(self.__Obj_Param_Str.Limit.Position.items(), 
                                                    self.__Obj_Param_Str.Limit.Rotation.items())):
-            # ...
+            # Random Position: {p}
             if l_p_i[1] != None:
                 p[i] = np.random.uniform(l_p_i[1][0], l_p_i[1][1])
-            # ...
+
+            # Random Rotation: {theta}
             if l_theta_i[1] != None:
                 theta[i] = np.random.uniform(l_theta_i[1][0], l_theta_i[1][1])
 
-        # ...
+        # Create a homogeneous transformation matrix from random values.
         self.__T = self.__Obj_Param_Str.T.Rotation(theta, self.__axes_sequence_cfg).Translation(p)
 
-        # ...
+        # Set the object transformation.
         Lib.Blender.Utilities.Set_Object_Transformation(self.__Obj_Param_Str.Name, self.__T)
         self.__Update()
 

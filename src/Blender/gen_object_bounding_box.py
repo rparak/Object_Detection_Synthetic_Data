@@ -14,6 +14,14 @@ import Lib.Blender.Utilities
 import Lib.Transformation.Core as Transformation
 #   ../Lib/Utilities/General
 import Lib.Utilities.General
+"""
+Description:
+    Open Object_Bounding_Box.blend from the Blender folder and copy + paste this script and run it.
+
+    Terminal:
+        $ cd Documents/GitHub/Blender_Synthetic_Data/Blender
+        $ Blender Object_Bounding_Box.blend
+"""
 
 def main():
     """
@@ -22,9 +30,6 @@ def main():
 
         Find and display the main bounding box parameters relevant to the main object structure.
             Object_Parameters_Str() in ../Lib/Parameters/Object.py
-
-        Note:
-            Open Object_Bounding_Box.blend from the Blender folder and copy + paste this script and run it.
     """
     
     # Deselect all objects in the current scene.

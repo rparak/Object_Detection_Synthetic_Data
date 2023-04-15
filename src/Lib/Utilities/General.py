@@ -112,13 +112,13 @@ def Convert_Boundig_Box_Data(format_in: str, format_out: str, Bounding_Box: tp.T
         print('[ERROR] Invalid input parameters. The input/output format must be named YOLO or PASCAL_VOC \
               and cannot be the same..')
         
-def Get_2D_Coordinates_Bounding_Box(vertices: tp.List[float], P: tp.List[tp.List[float]], Resolution: tp.Tuple[int, int], format_out: str) -> tp.Tuple[tp.List[float]]:
+def Get_2D_Coordinates_Bounding_Box(vertices: tp.List[tp.List[float]], P: tp.List[tp.List[float]], Resolution: tp.Tuple[int, int], format_out: str) -> tp.Tuple[tp.List[float]]:
     """
     Description:
         Get the 2D coordinates of the bounding box from the rendered object scanned by the camera.
 
     Args:
-        (1) vertices [Vector<float> 3xn]: The vertices of the scanned object.
+        (1) vertices [Matrix<float> 3xn]: The vertices of the scanned object.
                                           Note:
                                             Where n is the number of vertices.
         (2) P [Matrix<float> 3x4]:

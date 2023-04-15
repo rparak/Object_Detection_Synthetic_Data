@@ -173,11 +173,11 @@ def Set_Object_Origin(name: str, location: tp.List[float]) -> None:
 def Object_Visibility(name: str, state: bool) -> None:
     """
     Description:
-        Function to hide and unhide the visibility of objects.
+        Function to enable and disable the visibility of an object.
     
     Args:
         (1) name [string]: Name of the main object.
-        (2) state [bool]: Unhide (True) / Hide (False).  
+        (2) state [bool]: Enable (True) / Disable (False).  
     """
     
     cmd = not state; obj = bpy.data.objects[name]
@@ -211,7 +211,7 @@ def Set_Object_Transformation(name: str, T: tp.List[tp.List[float]]) -> None:
     
     bpy.data.objects[name].matrix_basis = T.Transpose().all().copy()
 
-def Get_Vertices_From_Object(name: str) -> tp.List[float]:
+def Get_Vertices_From_Object(name: str) -> tp.List[tp.List[float]]:
     """
     Description:
         Get (x, y, z) positions of the vertices of the mesh object.
@@ -220,7 +220,9 @@ def Get_Vertices_From_Object(name: str) -> tp.List[float]:
         (1) name [string]: Name of the mesh object.
 
     Returns:
-        (1) parameter [Vector<float>]: Vector (list) of given vertices.
+        (1) parameter [Matrix<float> 3xn]: The vector (list) of given vertices.
+                                           Note:
+                                            Where n is the number of vertices.
     """
 
     return [bpy.data.objects[name].matrix_world @ vertex_i.co for vertex_i in bpy.data.objects[name].data.vertices]
