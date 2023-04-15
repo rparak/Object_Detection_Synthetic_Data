@@ -31,7 +31,7 @@ Description:
 #   ID{1} = 'Metal_Blank'
 CONST_SCANNED_OBJ_ID = 0
 # Number of synthetic data to be generated.
-CONST_NUM_OF_GEN_DATA = 500
+CONST_NUM_OF_GEN_DATA = 300
 # Partition the dataset into training, validation, and test sets in percentages.
 CONST_PARTITION_DATASET = {'Train': 80, 'Valid': 10, 'Test': 10}
 # Initial index (iteration) for data generation.
