@@ -6,7 +6,12 @@ conda create -n {name} python={version}
 conda activate {name}
 
 # Install dependencies.
+#   OpenCV
 conda install -c conda-forge opencv
+#   PyTorch - Stable
+conda install pytorch torchvision torchaudio -c pytorch
+# or PyTorch - Preview (Nightly)
+conda install pytorch torchvision torchaudio -c pytorch-nightly
 
 # Deactivate environment.
 conda deactivate
