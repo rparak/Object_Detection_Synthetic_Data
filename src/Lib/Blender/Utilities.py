@@ -255,7 +255,7 @@ def Save_Synthetic_Data(file_path: str, iteration: int, object_id: int, bounding
     
     # Save the image to a file.
     bpy.context.scene.render.filepath = f'{file_path}/Images/ID_{object_id}/Image_{iteration}.{image_format.lower()}'
-    bpy.ops.render.render(write_still=True)
+    bpy.ops.render.render(animation=False, write_still=True)
 
     # Display information.
     print(f'[INFO] The data in iteration {int(iteration)} was successfully saved to the folder {file_path}.')
