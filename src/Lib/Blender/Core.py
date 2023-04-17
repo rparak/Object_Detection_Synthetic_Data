@@ -17,6 +17,8 @@ import Lib.Parameters.Object
 #   ../Lib/Transformation/Core
 import Lib.Transformation.Core as Transformation
 
+# tomorrow plan is to finish the comments of this part and try to train the model using YoLo.
+
 class Camera_Cls(object):
     """
     Description:
