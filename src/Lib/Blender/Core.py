@@ -17,8 +17,6 @@ import Lib.Parameters.Object
 #   ../Lib/Transformation/Core
 import Lib.Transformation.Core as Transformation
 
-# tomorrow plan is to finish the comments of this part and try to train the model using YoLo.
-
 class Camera_Cls(object):
     """
     Description:
@@ -118,7 +116,7 @@ class Camera_Cls(object):
             ...
 
         Returns:
-            (1) parameter []: 
+            (1) parameter [Matrix<float> 3x3]: 
         """
 
         try:
@@ -150,7 +148,7 @@ class Camera_Cls(object):
             ...
 
         Returns:
-            (1) parameter []: 
+            (1) parameter [Matrix<float> 3x4]: 
         """
                 
         R_tmp = np.array([[1.0,  0.0,  0.0],
@@ -168,7 +166,7 @@ class Camera_Cls(object):
             ...
 
         Returns:
-            (1) parameter []: 
+            (1) parameter [Matrix<float> 3x4]: 
         """
                 
         return self.K() @ self.R_t()
