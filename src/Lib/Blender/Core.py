@@ -22,6 +22,13 @@ class Camera_Cls(object):
     Description:
         A class for working with a camera object in a Blender scene.
 
+        The main part is to solve the equation:
+
+            P = K x [R | t],
+        
+        where {K} is the instrict matrix that contains the intrinsic parameters, and {[R | t]} is the extrinsic 
+        matrix that is combination of rotation matrix {R} and a translation vector {t}.
+
     Initialization of the Class:
         Args:
             (1) name [string]: Object name.
@@ -113,26 +120,33 @@ class Camera_Cls(object):
     def K(self) -> tp.List[tp.List[float]]:
         """
         Description:
-            ...
+            Get the intrinsic matrix {K}, which contains the intrinsic parameters.
+
+            Equation:
+                K = [[alpha_u,   gamma, u_0],
+                     [      0, alpha_v, v_0],
+                     [      0,       0,   0]],
+
+                where (alpha_u, alpha_v) are focal lengths expressed in units of pixels (note: usually the same), (u_0, v_0) are the principal 
+                point (i.e. the central point of the image frame) and gamma is the skew between the axes (note: usually equal to zero).
 
         Returns:
-            (1) parameter [Matrix<float> 3x3]: 
+            (1) parameter [Matrix<float> 3x3]: Instrict matrix of the camera.
         """
 
         try:
             assert bpy.data.cameras[self.__name].sensor_fit == 'AUTO'
 
-            # intrinsic matrix
-            # ...
+            # Express the parameters of intrinsic matrix {K} of the camera.
+            gamma = 0.0
+            #   Focal lengths expressed in units of pixesl: alpha_u and alpha_v (note: alpha_v = alpha_u)
             alpha_u = (self.__Cam_Param_Str.f * self.__Cam_Param_Str.Resolution['x']) / bpy.data.cameras[self.__name].sensor_width
             alpha_v = alpha_u
-            # Only use rectangular pixels ...
-            s = 0.0
-            # ...
+            #   Principal point: u_0 and v_0
             u_0 = self.__Cam_Param_Str.Resolution['x'] / 2.0
             v_0 = self.__Cam_Param_Str.Resolution['y'] / 2.0
 
-            return Transformation.Homogeneous_Transformation_Matrix_Cls([[alpha_u,       s, u_0, 0.0],
+            return Transformation.Homogeneous_Transformation_Matrix_Cls([[alpha_u,   gamma, u_0, 0.0],
                                                                          [    0.0, alpha_v, v_0, 0.0],
                                                                          [    0.0,     0.0, 1.0, 0.0],
                                                                          [    0.0,     0.0, 0.0, 1.0]], np.float32).R
@@ -145,28 +159,37 @@ class Camera_Cls(object):
     def R_t(self) -> tp.List[tp.List[float]]:
         """
         Description:
-            ...
+            Get the extrinsic matrix {[R | t]}, which is the combination of the rotation matrix {R} and a translation 
+            vector {t}.
 
         Returns:
-            (1) parameter [Matrix<float> 3x4]: 
+            (1) parameter [Matrix<float> 3x4]: Extrinsic matrix of the camera.
         """
                 
-        R_tmp = np.array([[1.0,  0.0,  0.0],
+        # Modification matrix {R} to adjust the direction (sign {+, -}) of each axis.  
+        R_mod = np.array([[1.0,  0.0,  0.0],
                           [0.0, -1.0,  0.0],
                           [0.0,  0.0, -1.0]], dtype=np.float32)
 
-        R = R_tmp @ self.__Cam_Param_Str.T.Transpose().R
-        t = R_tmp @ ((-1) * self.__Cam_Param_Str.T.Transpose().R @ self.__Cam_Param_Str.T.p.all())
+        # ...
+        R = R_mod @ self.__Cam_Param_Str.T.Transpose().R
+        # t = -R x C
+        # C .. 3D translation
+        # R .. 3D Rotation
+        t = (-1) * R @ self.__Cam_Param_Str.T.p.all()
 
         return np.hstack((R, t.reshape(3, 1)))
 
     def P(self) -> tp.List[tp.List[float]]:
         """
         Description:
-            ...
+            Get the projection matrix {P} of the camera object.
+
+            Equation:
+                P = K x [R | t]
 
         Returns:
-            (1) parameter [Matrix<float> 3x4]: 
+            (1) parameter [Matrix<float> 3x4]: Projection matrix of the camera.
         """
                 
         return self.K() @ self.R_t()
