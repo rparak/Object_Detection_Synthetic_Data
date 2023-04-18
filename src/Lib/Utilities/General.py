@@ -137,9 +137,19 @@ def Get_2D_Coordinates_Bounding_Box(vertices: tp.List[tp.List[float]], P: tp.Lis
 
         # ...
         # x = P x X
-        # x - 2D image point
+        # x - 2D image coordinates x[u, v, 1] = P x X[X, Y, Z, 1]
+        # x - coordinates of the projection point in pixels
+        # x = P x [X, 1]
         # P ...
-        # X ... 3D world point
+        # X ... 3D world coordinates 
+        # z part of the x must be 1
+        # X[X, Y, Z] ... coordinates of a 3D point in the world coordinate space
+        # s[u,v,1](3, 1) = P(3, 4) x [X,Y,Z,1](4, 1)
+
+        # https://en.wikipedia.org/wiki/Camera_resectioning
+        # https://www.cc.gatech.edu/classes/AY2016/cs4476_fall/results/proj3/html/agartia3/index.html
+        # https://docs.opencv.org/2.4/modules/calib3d/doc/camera_calibration_and_3d_reconstruction.html
+
         p = []
         for _, verts_i in enumerate(vertices):
             p_tmp = (P_extended @ np.hstack((np.array(verts_i), 1)))[0:-1]

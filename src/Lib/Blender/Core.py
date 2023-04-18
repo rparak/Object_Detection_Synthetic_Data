@@ -125,7 +125,7 @@ class Camera_Cls(object):
             Equation:
                 K = [[alpha_u,   gamma, u_0],
                      [      0, alpha_v, v_0],
-                     [      0,       0,   0]],
+                     [      0,       0,   1]],
 
                 where (alpha_u, alpha_v) are focal lengths expressed in units of pixels (note: usually the same), (u_0, v_0) are the principal 
                 point (i.e. the central point of the image frame) and gamma is the skew between the axes (note: usually equal to zero).
