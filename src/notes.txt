@@ -12,6 +12,8 @@ conda install -c conda-forge opencv
 conda install pytorch torchvision torchaudio -c pytorch
 # or PyTorch - Preview (Nightly)
 conda install pytorch torchvision torchaudio -c pytorch-nightly
+# Matplotlib
+conda install -c conda-forge matplotlib
 
 # Deactivate environment.
 conda deactivate
