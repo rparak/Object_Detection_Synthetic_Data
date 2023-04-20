@@ -1,0 +1,16 @@
+Python Support for Photoneo 3D Sensors using GenICam:
+https://www.photoneo.com/support/
+
+The requirements to run the Python example with GenICam are:
+ - Python 3.*
+ - PhoXi Control 1.8 or higher
+ - Examples located at (Windows):
+    C:\Program Files\Photoneo\PhoXiControl-x.x.x\API\examples\GenTL\python
+
+Libraries: 
+    - NumPy
+        $ pip3 install numpy
+    - Open3D
+        $ pip3 install open3d
+    - harvesters
+        $ pip3 install harvesters

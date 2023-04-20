@@ -8,6 +8,10 @@ import cv2
 #   ../Lib/Utilities/General
 import Lib.Utilities.General
 
+# add function to auto settings of brightnes and contrast of an image
+#   Note: Get the alpha, beta variables
+
+
 def Draw_Bounding_Box(image: tp.List[tp.List[int]], bounding_box_properties: tp.Tuple[str, str, tp.List[tp.Union[int, float]]], format: str, Color: tp.List[int], 
                       fill_box: bool, show_info: bool) -> tp.List[tp.List[int]]:
     """

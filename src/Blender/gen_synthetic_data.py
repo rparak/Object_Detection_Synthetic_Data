@@ -5,6 +5,8 @@ if '../' + 'src' not in sys.path:
     sys.path.append('../' + 'src')
 # Numpy (Array computing) [pip3 install numpy]
 import numpy as np
+# OS (Operating system interfaces)
+import os
 # Custom Library:
 #   ../Lib/Blender/Core & Utilities
 import Lib.Blender.Core
@@ -74,6 +76,9 @@ def main():
     try:
         assert np.sum(list(CONST_PARTITION_DATASET.values())) == 100
 
+        # Locate the path to the Desktop folder.
+        desktop_path = os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop')
+
         # Generates data up to the desired maximum number of iterations, which is given by the constant {CONST_NUM_OF_GEN_DATA}.
         i = 0; id_partition = 0; percentage_stored_data = 0
         while CONST_NUM_OF_GEN_DATA > i:
@@ -95,7 +100,7 @@ def main():
             partition_name = list(CONST_PARTITION_DATASET.keys())[id_partition]
 
             # Save the image with the corresponding label.
-            Lib.Blender.Utilities.Save_Synthetic_Data(f'../Data/{partition_name}', f'{CONST_INIT_INDEX + (i + 1):05}', Object_Str.Id, list(bounding_box_2d.values()), 
+            Lib.Blender.Utilities.Save_Synthetic_Data(f'{desktop_path}/Data/{partition_name}', f'{CONST_INIT_INDEX + (i + 1):05}', Object_Str.Id, list(bounding_box_2d.values()), 
                                                     'txt', 'png')
             i += 1; percentage_stored_data += 1
             
