@@ -43,8 +43,10 @@ def main():
     # Load a label (annotation) from a file.
     label_data = File_IO.Load(f'{file_path}/Labels/ID_{CONST_OBJECT_ID}/Label_{CONST_SCAN_ITERATION:05}', 'txt', ' ')[0]
 
-    # Resize the raw image for better clarity.
-    #   High resolution of the Photoneo scanner: High{'x': 2064px, 'y': 1544px}
+    # Resize the raw image for better clarity of the evaluated results.
+    #   High resolution of the Photoneo scanner: 
+    #       - Low{'x': 1032px, 'y': 772px}
+    #       - High{'x': 2064px, 'y': 1544px}
     resized_image = cv2.resize(raw_image, (2064, 1544)) 
     
     # Create a bounding box from the label data.
