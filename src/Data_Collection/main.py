@@ -3,8 +3,6 @@ import sys
 #   Add access if it is not in the system path.
 if '../' + 'src' not in sys.path:
     sys.path.append('../' + 'src')
-# Numpy (Array computing) [pip3 install numpy]
-import numpy as np
 # OS (Operating system interfaces)
 import os
 # Time (Time access and conversions)
@@ -110,7 +108,7 @@ def main():
                 # Convert a 16-bit image to 8-bit.
                 image_8bit = (image_normalized/256).astype('uint8')
 
-                # Save the image to a file.
+                # Saves the image to the specified file.
                 cv2.imwrite(file_path, image_8bit)
 
                 # Display information.

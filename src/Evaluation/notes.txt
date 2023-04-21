@@ -1,0 +1,3 @@
+Addition of the show_histrogram of the images in ...
+- Camera_Data
+- Synthetic_Data
