@@ -45,12 +45,8 @@ def main():
         Additional notes can be found in the Notes.txt file.
     """
 
-    # Locate the path to the Desktop folder.
-    desktop_path = os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop')
-
     # The specified path to the folder where the image will be saved.
-    #file_path = f'{desktop_path}/Data/Photoneo/Raw/Images/ID_{CONST_SCANNED_OBJ_ID}/Image_{(CONST_INIT_INDEX):05}.png'
-    file_path = f'{desktop_path}/Data/ID_{CONST_SCANNED_OBJ_ID}/Raw/Image_{CONST_INIT_INDEX:05}.png'
+    file_path = f'../../Data/Photoneo/Raw/Images/ID_{CONST_SCANNED_OBJ_ID}/Image_{(CONST_INIT_INDEX):05}.png'
 
     # Set the path to the destination CTI file.
     cti_file_path = os.getenv('PHOXI_CONTROL_PATH') + "/API/bin/photoneo.cti"

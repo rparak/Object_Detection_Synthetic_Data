@@ -3,8 +3,6 @@ import sys
 #   Add access if it is not in the system path.
 if '../' + 'src' not in sys.path:
     sys.path.append('../..')
-# OS (Operating system interfaces)
-import os
 # OpenCV (Computer Vision) [pip3 install opencv-python]
 import cv2
 # Custom Library:
@@ -32,11 +30,8 @@ def main():
         A simple script to evaluate synthetic data (image with corresponding label) generated from Blender.
     """
 
-    # Locate the path to the Desktop folder.
-    desktop_path = os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop')
-
     # The specified path of the file.
-    file_path = f'{desktop_path}/Data/Train'    
+    file_path = f'../../../Data/Train'    
 
     # Load a raw image from a file.
     raw_image  = cv2.imread(f'{file_path}/Images/ID_{CONST_OBJECT_ID}/Image_{CONST_SCAN_ITERATION:05}.png')

@@ -37,9 +37,6 @@ def main():
                 ./Data_Collection/main.py
     """
 
-    # Locate the path to the Desktop folder.
-    desktop_path = os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop')
-
     # Processes the data up to the desired maximum number of iterations, which is given by the constant {CONST_NUM_OF_DATA}.
     i = 0
     while CONST_NUM_OF_DATA > i:
@@ -47,20 +44,20 @@ def main():
         t_0 = time.time()
 
         # The specified path to the folder from which the image will be loaded (*_in) and where the image will be saved (*_out).
-        file_path_in  = f'{desktop_path}/Data/Raw/Images/ID_{CONST_OBJECT_ID}/Image_{(i + 1):05}.png'
-        file_path_out = f'{desktop_path}/Data/Processed/Images/ID_{CONST_OBJECT_ID}/Image_{(i + 1):05}.png'
+        file_path_in  = f'../../../Data/Photoneo/Raw/Images/ID_{CONST_OBJECT_ID}/Image_{(i + 1):05}.png'
+        file_path_out = f'../../../Data/Photoneo/Processed/Images/ID_{CONST_OBJECT_ID}/Image_{(i + 1):05}.png'
 
         # Loads the image to the specified file.
         image_in = cv2.imread(file_path_in)
 
         # Function to adjust the contrast and brightness parameters of the input image 
         # by clipping the histogram.
-        (alpha, beta) = Lib.Utilities.Image_Processing.Get_Alpha_Beta_Parameters(image_in, 1.0)
-
+        (alpha_custom, beta_custom) = Lib.Utilities.Image_Processing.Get_Alpha_Beta_Parameters(image_in, 1.0)
+        
         # Adjust the contrast and brightness of the image using the alpha and beta parameters.
         #   Equation:
         #       g(i, j) = alpha * f(i, j) + beta
-        image_out = cv2.convertScaleAbs(image_in, alpha, beta)
+        image_out = cv2.convertScaleAbs(image_in, alpha=alpha_custom, beta=beta_custom)
 
         # Saves the image to the specified file.
         cv2.imwrite(file_path_out, image_out)

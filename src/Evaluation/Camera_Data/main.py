@@ -3,8 +3,6 @@ import sys
 #   Add access if it is not in the system path.
 if '../' + 'src' not in sys.path:
     sys.path.append('../..')
-# OS (Operating system interfaces)
-import os
 # Numpy (Array computing) [pip3 install numpy]
 import numpy as np
 # Matplotlib (Visualization) [pip3 install matplotlib]
@@ -35,19 +33,14 @@ def main():
                 ../Lib/Photoneo/image_processing.py
     """
 
-    # Locate the path to the Desktop folder.
-    desktop_path = os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop')
-
     # The specified path of the file.
-    file_path = f'{desktop_path}/Data/'    
+    file_path = f'../../../Data/Photoneo'    
 
     # Loads an image from the specified file.
     #   Raw images:
-    #image_raw = cv2.imread(f'{file_path}/Raw/Images/ID_{CONST_OBJECT_ID}/Image_{CONST_SCAN_ITERATION:05}.png', 0)
-    image_raw = cv2.imread(f'{file_path}/Raw/Image_{CONST_SCAN_ITERATION:05}.png')
+    image_raw = cv2.imread(f'{file_path}/Raw/Images/ID_{CONST_OBJECT_ID}/Image_{CONST_SCAN_ITERATION:05}.png')
     #   Processed images:
-    #image_processed = cv2.imread(f'{file_path}/Processed/Images/ID_{CONST_OBJECT_ID}/Image_{CONST_SCAN_ITERATION:05}.png', 0)
-    image_processed = cv2.imread(f'{file_path}/Processed/Image_{CONST_SCAN_ITERATION:05}.png')
+    image_processed = cv2.imread(f'{file_path}/Processed/Images/ID_{CONST_OBJECT_ID}/Image_{CONST_SCAN_ITERATION:05}.png')
 
     # Matplotlib Method:
     if CONST_SHOW_IMG_MATPLOTLIB == True:
