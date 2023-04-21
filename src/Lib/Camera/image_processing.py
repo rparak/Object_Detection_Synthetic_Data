@@ -32,7 +32,7 @@ def main():
 
         Note:
             The raw images were collected using the script here:
-                ./Data_Collection/{Camera_Name}/main.py
+                ./Data_Collection/main.py
     """
 
     # Processes the data up to the desired maximum number of iterations, which is given by the constant {CONST_NUM_OF_DATA}.

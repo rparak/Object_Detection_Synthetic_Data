@@ -46,7 +46,7 @@ def main():
     """
 
     # The specified path to the folder where the image will be saved.
-    file_path = f'../../../Data/Camera/Raw/Images/ID_{CONST_SCANNED_OBJ_ID}/Image_{(CONST_INIT_INDEX):05}.png'
+    file_path = f'../../Data/Camera/Raw/Images/ID_{CONST_SCANNED_OBJ_ID}/Image_{(CONST_INIT_INDEX):05}.png'
 
     # Set the path to the destination CTI file.
     cti_file_path = os.getenv('PHOXI_CONTROL_PATH') + "/API/bin/photoneo.cti"
