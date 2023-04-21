@@ -101,7 +101,7 @@ def main():
 
             # Save the image with the corresponding label.
             Lib.Blender.Utilities.Save_Synthetic_Data(f'{desktop_path}/Data/{partition_name}', f'{CONST_INIT_INDEX + (i + 1):05}', Object_Str.Id, list(bounding_box_2d.values()), 
-                                                    'txt', 'png')
+                                                     'txt', 'png')
             i += 1; percentage_stored_data += 1
             
     except AssertionError as error:

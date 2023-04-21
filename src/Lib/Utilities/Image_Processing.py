@@ -8,9 +8,55 @@ import cv2
 #   ../Lib/Utilities/General
 import Lib.Utilities.General
 
-# add function to auto settings of brightnes and contrast of an image
-#   Note: Get the alpha, beta variables
+def Get_Alpha_Beta_Parameters(image: tp.List[tp.List[int]], clip_limit: float) -> tp.Tuple[float, float]:
+    """
+    Description:
+        Function to adjust the contrast and brightness parameters of the input image by clipping the histogram.
 
+        The main core of the function is to obtain the alpha and beta parameters 
+        to determine the equation:
+            g(i, j) = alpha * f(i, j) + beta,
+
+            where g(i, j) are the input (source) pixels of the image, f(i, j) are the output pixels 
+            of the image, and alpha, beta are the contrast and brightness parameters.
+
+    Args:
+        (1) image [Vector<float> Image Shape {Resolution<x, y>}]: Input raw image.
+        (2) clip_limit [float]: Parameter for histogram clipping in percentage.
+
+    Returns:
+        (1) parameter [float]: A gain (contrast) parameter called alpha.
+        (2) parameter [float]: A bias (brightness) parameter called beta.
+    """
+
+    image_copy = image.copy()
+
+    # Calculate the grayscale histogram of the image.
+    image_hist = cv2.calcHist([image_copy], [0], None, [256], [0, 256])
+
+    # Get the cumulative sum of the elements (histogram).
+    c_hist = np.cumsum(image_hist)
+
+    # Modify the percentage to clip the histogram.
+    c_hist_max = c_hist[-1]
+    clip_limit_mod = clip_limit * (c_hist_max/float(100.0*2.0))
+
+    # Clip the histogram if the values are outside the limit.
+    min_value = 0; max_value = c_hist.size - 1
+    for _, c_hist_i in enumerate(c_hist):
+        if c_hist_i < clip_limit_mod:
+            min_value += 1
+
+        if c_hist_i >= (c_hist_max - clip_limit_mod):
+            max_value -= 1
+
+    # Express the alpha and beta parameters.
+    #   Gain (contrast) parameter.
+    alpha = 255 / (max_value - min_value)
+    #   Bias (brightness) parameter.
+    beta  = (-1) * (min_value * alpha)
+
+    return (alpha, beta)
 
 def Draw_Bounding_Box(image: tp.List[tp.List[int]], bounding_box_properties: tp.Tuple[str, str, tp.List[tp.Union[int, float]]], format: str, Color: tp.List[int], 
                       fill_box: bool, show_info: bool) -> tp.List[tp.List[int]]:

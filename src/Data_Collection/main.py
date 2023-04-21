@@ -31,7 +31,7 @@ CONST_IMAGE_RESOLUTION = [2064, 1544]
 #   Note:
 #       It can be found in the device details when the PhoXi 
 #       Control software is opened.
-CONST_DEVICE_ID = 'PhotoneoTL_DEV_' + 'New folder'
+CONST_DEVICE_ID = 'PhotoneoTL_DEV_' + 'Desktop'
 
 def main():
     """
@@ -50,7 +50,7 @@ def main():
 
     # The specified path to the folder where the image will be saved.
     #file_path = f'{desktop_path}/Data/Photoneo/Raw/Images/ID_{CONST_SCANNED_OBJ_ID}/Image_{(CONST_INIT_INDEX):05}.png'
-    file_path = f'{desktop_path}/Data/Raw/Image_{(CONST_INIT_INDEX):05}.png'
+    file_path = f'{desktop_path}/Data/ID_{CONST_SCANNED_OBJ_ID}/Raw/Image_{CONST_INIT_INDEX:05}.png'
 
     # Set the path to the destination CTI file.
     cti_file_path = os.getenv('PHOXI_CONTROL_PATH') + "/API/bin/photoneo.cti"
@@ -112,7 +112,7 @@ def main():
                 cv2.imwrite(file_path, image_8bit)
 
                 # Display information.
-                print(f'[INFO] The image with index {int(CONST_INIT_INDEX)} was successfully saved to the folder.')
+                print(f'[INFO] The image with index {CONST_INIT_INDEX} was successfully saved to the folder.')
                 print(f'[INFO]  - Path: {file_path}')
                 print(f'[INFO] Time: {(time.time() - t_0):0.05f} in seconds.')
 

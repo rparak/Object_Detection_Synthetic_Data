@@ -56,8 +56,8 @@ def main():
         fig.suptitle(f'The name of the processed image: ../Image_{CONST_SCAN_ITERATION:05}.png', fontsize = 20)
 
         # Calculate the grayscale histogram of the raw image and the processed image.
-        raw_image_hist = cv2.calcHist([image_raw],[0],None,[256],[0,256])
-        processed_image_hist = cv2.calcHist([image_processed],[0],None,[256],[0,256])
+        raw_image_hist = cv2.calcHist([image_raw], [0], None, [256], [0, 256])
+        processed_image_hist = cv2.calcHist([image_processed], [0], None, [256], [0, 256])
 
         # Display data as an image.
         ax[0, 0].imshow(image_raw)
