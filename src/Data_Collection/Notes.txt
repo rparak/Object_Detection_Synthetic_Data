@@ -12,5 +12,7 @@ Libraries:
         $ pip3 install numpy
     - Open3D
         $ pip3 install open3d
+        Note: 
+            Only if 3D data processing is used.
     - harvesters
         $ pip3 install harvesters

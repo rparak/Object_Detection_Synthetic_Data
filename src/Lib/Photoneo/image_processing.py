@@ -29,8 +29,10 @@ def main():
     # Locate the path to the Desktop folder.
     desktop_path = os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop')
 
-
-    full_path = f'{desktop_path}/Data/Photoneo/Processed/Images/ID_{CONST_SCANNED_OBJ_ID}/Image_{(CONST_INIT_INDEX + 1):05}'
+    # The specified path to the folder from which the image will be loaded (*_in) and where the image will be saved (*_out).
+    #file_path = f'{desktop_path}/Data/Photoneo/Processed/Images/ID_{CONST_SCANNED_OBJ_ID}/Image_{(CONST_INIT_INDEX):05}'
+    file_path_in  = f'{desktop_path}/Data/Raw/Image_{(CONST_INIT_INDEX):05}.png'
+    file_path_out = f'{desktop_path}/Data/Processed/Image_{(CONST_INIT_INDEX):05}.png'
 
 if __name__ == '__main__':
     sys.exit(main())
