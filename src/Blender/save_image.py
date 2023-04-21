@@ -56,10 +56,10 @@ def main():
     Object_Cls.Visibility(True)
     
     # Locate the path to the Desktop folder.
-    desktop_path = os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop')
+    file_path = os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop')
 
     # Save the image to a file.
-    bpy.context.scene.render.filepath = f'{desktop_path}/Image_{Object_Str.Name}.png'
+    bpy.context.scene.render.filepath = f'{file_path}/Image_{Object_Str.Name}.png'
     bpy.ops.render.render(animation=False, write_still=True)
     
     # Disable (turn off) visibility of the object.

@@ -23,6 +23,8 @@ CONST_OBJECT_ID = 0
 CONST_OBJECT_NAME = ['T_Joint', 'Metal_Blank']
 # Iteration of the scanning process.
 CONST_SCAN_ITERATION = 1
+# Name of the dataset.
+CONST_DATASET_NAME = 'Dataset_0'
 
 def main():
     """
@@ -31,7 +33,7 @@ def main():
     """
 
     # The specified path of the file.
-    file_path = f'../../../Data/Train'    
+    file_path = f'../../../Data/{CONST_DATASET_NAME}/Train'    
 
     # Load a raw image from a file.
     raw_image  = cv2.imread(f'{file_path}/Images/ID_{CONST_OBJECT_ID}/Image_{CONST_SCAN_ITERATION:05}.png')

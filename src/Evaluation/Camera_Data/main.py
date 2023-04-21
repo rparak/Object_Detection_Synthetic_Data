@@ -34,7 +34,7 @@ def main():
     """
 
     # The specified path of the file.
-    file_path = f'../../../Data/Photoneo'    
+    file_path = f'../../../Data/Camera'    
 
     # Loads an image from the specified file.
     #   Raw images:
@@ -58,7 +58,7 @@ def main():
 
         # Display histogram data of a single image.
         ax[1, 0].plot(raw_image_hist, '-', linewidth=1.0, color=[0.2,0.4,0.6,0.75], label='Raw Image')
-        ax[1, 1].plot(processed_image_hist, '-', linewidth=1.0, color=[0.2,0.4,0.6,0.75], label='Processed Imaage')
+        ax[1, 1].plot(processed_image_hist, '-', linewidth=1.0, color=[0.2,0.4,0.6,0.75], label='Processed Image')
 
         # Calculate the maximum raw image (histogram) number to resize 
         # the y-axis of the histogram.

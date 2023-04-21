@@ -36,7 +36,11 @@ Description:
 CONST_SCANNED_OBJ_ID = 0
 # Number of synthetic data to be generated.
 CONST_NUM_OF_GEN_DATA = 300
+# Name of the dataset.
+CONST_DATASET_NAME = 'Dataset_0'
 # Partition the dataset into training, validation, and test sets in percentages.
+#   Note:
+#       The sum of the values in the partitions must equal 100.
 CONST_PARTITION_DATASET = {'Train': 80, 'Valid': 10, 'Test': 10}
 # Initial index (iteration) for data generation.
 #   0 - Data storage starts from 1 (Name_001, etc.)
@@ -89,7 +93,6 @@ def main():
             # Calculate the current percentage of stored data.
             if percentage_stored_data == (CONST_NUM_OF_GEN_DATA * (list(CONST_PARTITION_DATASET.values())[id_partition]/100)):
                 id_partition += 1; percentage_stored_data = 0
-
                 if list(CONST_PARTITION_DATASET.values())[id_partition] == 0:
                     id_partition += 1
 
@@ -97,8 +100,8 @@ def main():
             partition_name = list(CONST_PARTITION_DATASET.keys())[id_partition]
 
             # Save the image with the corresponding label.
-            Lib.Blender.Utilities.Save_Synthetic_Data(f'../Data/{partition_name}', f'{CONST_INIT_INDEX + (i + 1):05}', Object_Str.Id, list(bounding_box_2d.values()), 
-                                                      'txt', 'png')
+            Lib.Blender.Utilities.Save_Synthetic_Data(f'../Data/{CONST_DATASET_NAME}/{partition_name}', f'{CONST_INIT_INDEX + (i + 1):05}', 
+                                                      Object_Str.Id, list(bounding_box_2d.values()), 'txt', 'png')
             i += 1; percentage_stored_data += 1
             
     except AssertionError as error:

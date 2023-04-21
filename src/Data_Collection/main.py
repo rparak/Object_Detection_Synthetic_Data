@@ -36,7 +36,7 @@ CONST_DEVICE_ID = 'PhotoneoTL_DEV_' + 'Desktop'
 def main():
     """
     Description:
-        A simple script to get a raw image (2D) from a photoneo sensor. In our case, it is a Photoneo 
+        A simple script to get a raw image (2D) from a Photoneo sensor. In our case, it is a Photoneo 
         PhoXi 3D scanner M.
 
         Note:
@@ -46,7 +46,7 @@ def main():
     """
 
     # The specified path to the folder where the image will be saved.
-    file_path = f'../../Data/Photoneo/Raw/Images/ID_{CONST_SCANNED_OBJ_ID}/Image_{(CONST_INIT_INDEX):05}.png'
+    file_path = f'../../Data/Camera/Raw/Images/ID_{CONST_SCANNED_OBJ_ID}/Image_{(CONST_INIT_INDEX):05}.png'
 
     # Set the path to the destination CTI file.
     cti_file_path = os.getenv('PHOXI_CONTROL_PATH') + "/API/bin/photoneo.cti"
