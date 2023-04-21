@@ -3,8 +3,6 @@ import sys
 #   Add access if it is not in the system path.
 if '../../../' + 'src' not in sys.path:
     sys.path.append('../../../' + 'src')
-# OS (Operating system interfaces)
-import os
 # Time (Time access and conversions)
 import time
 # OpenCV (Computer Vision) [pip3 install opencv-python]

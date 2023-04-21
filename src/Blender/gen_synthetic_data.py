@@ -5,8 +5,6 @@ if '../' + 'src' not in sys.path:
     sys.path.append('../' + 'src')
 # Numpy (Array computing) [pip3 install numpy]
 import numpy as np
-# OS (Operating system interfaces)
-import os
 # Custom Library:
 #   ../Lib/Blender/Core & Utilities
 import Lib.Blender.Core
