@@ -42,12 +42,12 @@ def main():
         t_0 = time.time()
 
         # The specified path to the folder from which the image will be loaded (*_in) and where the image will be saved (*_out).
-        file_path_in  = f'../../../../Data/Camera/Raw/Images/ID_{CONST_OBJECT_ID}/Image_{(i + 1):05}.png'
-        file_path_out = f'../../../../Data/Camera/Processed/Images/ID_{CONST_OBJECT_ID}/Image_{(i + 1):05}.png'
+        file_path_in  = f'../../../Data/Camera/Raw/Images/ID_{CONST_OBJECT_ID}/Image_{(i + 1):05}.png'
+        file_path_out = f'../../../Data/Camera/Processed/Images/ID_{CONST_OBJECT_ID}/Image_{(i + 1):05}.png'
 
         # Loads the image to the specified file.
         image_in = cv2.imread(file_path_in)
-
+        
         # Function to adjust the contrast and brightness parameters of the input image 
         # by clipping the histogram.
         (alpha_custom, beta_custom) = Lib.Utilities.Image_Processing.Get_Alpha_Beta_Parameters(image_in, 1.0)
