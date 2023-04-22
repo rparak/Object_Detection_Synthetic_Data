@@ -162,6 +162,27 @@ class Camera_Cls(object):
             Get the extrinsic matrix {[R | t]}, which is the combination of the rotation matrix {R} and a translation 
             vector {t}.
 
+            The standard form of the homogeneous transformation matrix {T}:
+                T = [R_{3x3}, t_{3x1}
+                     0_{1x3}, 1_{1x1}],
+
+                where R is a rotation matrix and t is a translation vector.
+
+            The inverse form of the homogeneous transformation matrix:
+                T^(-1) = [R^T_{3x3}, -R^T_{3x3} x t_{3x1}
+                            0_{1x3},              1_{1x1}]
+
+            The relationship between the extrinsic matrix parameters and the position 
+            of the camera is:
+                [R | t] = [R_{C} | C]^(-1),
+                
+                where C is a column vector describing the position of the camera center in world coordinates 
+                and R_{C} is a rotation matrix describing the camera orientation.
+
+            then we can express the parameters R, t as:
+                R = R_{C}^T
+                t = -R_{C}^T x C
+            
         Returns:
             (1) parameter [Matrix<float> 3x4]: Extrinsic matrix of the camera.
         """
@@ -171,11 +192,8 @@ class Camera_Cls(object):
                           [0.0, -1.0,  0.0],
                           [0.0,  0.0, -1.0]], dtype=np.float32)
 
-        # ...
+        # Expression of the parameters R, t of the extrinsic matrix.
         R = R_mod @ self.__Cam_Param_Str.T.Transpose().R
-        # t = -R x C
-        # C .. 3D translation
-        # R .. 3D Rotation
         t = (-1) * R @ self.__Cam_Param_Str.T.p.all()
 
         return np.hstack((R, t.reshape(3, 1)))

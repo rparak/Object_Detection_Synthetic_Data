@@ -39,10 +39,6 @@ def main():
     T_0 = Transformation.Homogeneous_Transformation_Matrix_Cls(None, np.float32)
     
     for obj in bpy.data.objects:
-        # .... if exist, than remove ...
-        # ...
-
-
         # Reset the position and rotation of the object in the scene.
         Lib.Blender.Utilities.Set_Object_Transformation(obj.name, T_0)
 

@@ -1241,8 +1241,9 @@ class Homogeneous_Transformation_Matrix_Cls(object):
                 where R is a rotation matrix and p is a translation vector.
 
             The inverse form of the homogeneous transformation matrix:
-                T^(-1) = [R^(-1)_{3x3}, R^(-1)_{3x3} x p_{3x1}
-                               0_{1x3},                1_{1x1}]
+                T^(-1) = [R^(-1)_{3x3}, -R^(-1)_{3x3} x p_{3x1}
+                               0_{1x3},                 1_{1x1}]
+            
             Note:
                 The inverse of the rotation matrix is equal to its transpose.
                     R^(-1) = R^T
