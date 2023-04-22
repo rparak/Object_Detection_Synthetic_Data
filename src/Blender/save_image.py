@@ -55,11 +55,11 @@ def main():
     # Enable (turn on) visibility of the object.
     Object_Cls.Visibility(True)
     
-    # Locate the path to the Desktop folder.
-    file_path = os.path.join(os.path.join(os.path.expanduser('~')), 'Desktop')
+    # Locate the path to the project folder
+    project_folder = os.getcwd().split('Blender_Synthetic_Data')[0] + 'Blender_Synthetic_Data'
 
-    # Save the image to a file.
-    bpy.context.scene.render.filepath = f'{file_path}/Image_{Object_Str.Name}.png'
+    # Save the image to the file.
+    bpy.context.scene.render.filepath = f'{project_folder}/images/Image_{Object_Str.Name}.png'
     bpy.ops.render.render(animation=False, write_still=True)
     
     # Disable (turn off) visibility of the object.

@@ -5,6 +5,8 @@ if '../' + 'src' not in sys.path:
     sys.path.append('../' + 'src')
 # Numpy (Array computing) [pip3 install numpy]
 import numpy as np
+# OS (Operating system interfaces)
+import os
 # Custom Library:
 #   ../Lib/Blender/Core & Utilities
 import Lib.Blender.Core
@@ -97,8 +99,11 @@ def main():
             # Get the name of the partition where the data will be stored.
             partition_name = list(CONST_PARTITION_DATASET.keys())[id_partition]
 
+            # Locate the path to the project folder
+            project_folder = os.getcwd().split('Blender_Synthetic_Data')[0] + 'Blender_Synthetic_Data'
+
             # Save the image with the corresponding label.
-            Lib.Blender.Utilities.Save_Synthetic_Data(f'../Data/{CONST_DATASET_NAME}/{partition_name}', f'{CONST_INIT_INDEX + (i + 1):05}', 
+            Lib.Blender.Utilities.Save_Synthetic_Data(f'{project_folder}/Data/{CONST_DATASET_NAME}/{partition_name}', f'{CONST_INIT_INDEX + (i + 1):05}', 
                                                       Object_Str.Id, list(bounding_box_2d.values()), 'txt', 'png')
             i += 1; percentage_stored_data += 1
             

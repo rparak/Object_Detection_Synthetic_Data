@@ -5,6 +5,8 @@ if '../' + 'src' not in sys.path:
     sys.path.append('../..')
 # Numpy (Array computing) [pip3 install numpy]
 import numpy as np
+# OS (Operating system interfaces)
+import os
 # Matplotlib (Visualization) [pip3 install matplotlib]
 import matplotlib.pyplot as plt
 # OpenCV (Computer Vision) [pip3 install opencv-python]
@@ -33,8 +35,11 @@ def main():
                 ../Lib/Photoneo/image_processing.py
     """
 
+    # Locate the path to the project folder
+    project_folder = os.getcwd().split('Blender_Synthetic_Data')[0] + 'Blender_Synthetic_Data'
+
     # The specified path of the file.
-    file_path = f'../../../Data/Camera'    
+    file_path = f'{project_folder}/Data/Camera'    
 
     # Loads an image from the specified file.
     #   Raw images:

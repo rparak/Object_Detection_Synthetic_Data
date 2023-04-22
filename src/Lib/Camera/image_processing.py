@@ -5,6 +5,8 @@ if '../../../' + 'src' not in sys.path:
     sys.path.append('../../../' + 'src')
 # Time (Time access and conversions)
 import time
+# OS (Operating system interfaces)
+import os
 # OpenCV (Computer Vision) [pip3 install opencv-python]
 import cv2
 # Custom Library:
@@ -35,6 +37,9 @@ def main():
                 ./Data_Collection/main.py
     """
 
+    # Locate the path to the project folder
+    project_folder = os.getcwd().split('Blender_Synthetic_Data')[0] + 'Blender_Synthetic_Data'
+
     # Processes the data up to the desired maximum number of iterations, which is given by the constant {CONST_NUM_OF_DATA}.
     i = 0
     while CONST_NUM_OF_DATA > i:
@@ -42,8 +47,8 @@ def main():
         t_0 = time.time()
 
         # The specified path to the folder from which the image will be loaded (*_in) and where the image will be saved (*_out).
-        file_path_in  = f'../../../Data/Camera/Raw/Images/ID_{CONST_OBJECT_ID}/Image_{(i + 1):05}.png'
-        file_path_out = f'../../../Data/Camera/Processed/Images/ID_{CONST_OBJECT_ID}/Image_{(i + 1):05}.png'
+        file_path_in  = f'{project_folder}/Data/Camera/Raw/Images/ID_{CONST_OBJECT_ID}/Image_{(i + 1):05}.png'
+        file_path_out = f'{project_folder}/Data/Camera/Processed/Images/ID_{CONST_OBJECT_ID}/Image_{(i + 1):05}.png'
 
         # Loads the image to the specified file.
         image_in = cv2.imread(file_path_in)
