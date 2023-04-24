@@ -33,15 +33,17 @@ Description:
 # The ID of the object to be scanned.
 #   ID{0} = 'T_Joint'
 #   ID{1} = 'Metal_Blank'
-CONST_SCANNED_OBJ_ID = 0
+CONST_OBJECT_ID = 0
+# The identification number of the dataset type.
+CONST_DATASET_TYPE = 0
 # Number of synthetic data to be generated.
 CONST_NUM_OF_GEN_DATA = 300
 # Name of the dataset.
-CONST_DATASET_NAME = 'Dataset_0'
+CONST_DATASET_NAME = F'Dataset_Type_{CONST_DATASET_TYPE}_Obj_ID_{CONST_OBJECT_ID}'
 # Partition the dataset into training, validation, and test sets in percentages.
 #   Note:
 #       The sum of the values in the partitions must equal 100.
-CONST_PARTITION_DATASET = {'Train': 80, 'Valid': 10, 'Test': 10}
+CONST_PARTITION_DATASET = {'train': 80, 'valid': 10, 'test': 10}
 # Initial index (iteration) for data generation.
 #   0 - Data storage starts from 1 (Name_001, etc.)
 #   10 - Data storage start from 11 (Name_011, etc.)
@@ -66,7 +68,7 @@ def main():
 
     # Select the structure of the scanned object.
     Object_Str = [Lib.Parameters.Object.T_Joint_001_Str, 
-                  Lib.Parameters.Object.Metal_Blank_001_Str][CONST_SCANNED_OBJ_ID]
+                  Lib.Parameters.Object.Metal_Blank_001_Str][CONST_OBJECT_ID]
     
     # Initialize the camera to scan an object in the scene.
     #   The main parameters of the camera can be found at: ../Lib/Parameters/Camera
@@ -103,7 +105,7 @@ def main():
             project_folder = os.getcwd().split('Blender_Synthetic_Data')[0] + 'Blender_Synthetic_Data'
 
             # Save the image with the corresponding label.
-            Lib.Blender.Utilities.Save_Synthetic_Data(f'{project_folder}/Data/{CONST_DATASET_NAME}/{partition_name}', f'{CONST_INIT_INDEX + (i + 1):05}', 
+            Lib.Blender.Utilities.Save_Synthetic_Data(f'{project_folder}/Data/{CONST_DATASET_NAME}/', partition_name, f'{CONST_INIT_INDEX + (i + 1):05}', 
                                                       Object_Str.Id, list(bounding_box_2d.values()), 'txt', 'png')
             i += 1; percentage_stored_data += 1
             

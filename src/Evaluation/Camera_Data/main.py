@@ -43,9 +43,9 @@ def main():
 
     # Loads an image from the specified file.
     #   Raw images:
-    image_raw = cv2.imread(f'{file_path}/Raw/Images/ID_{CONST_OBJECT_ID}/Image_{CONST_SCAN_ITERATION:05}.png')
+    image_raw = cv2.imread(f'{file_path}/ID_{CONST_OBJECT_ID}/Raw/Images/Image_{CONST_SCAN_ITERATION:05}.png')
     #   Processed images:
-    image_processed = cv2.imread(f'{file_path}/Processed/Images/ID_{CONST_OBJECT_ID}/Image_{CONST_SCAN_ITERATION:05}.png')
+    image_processed = cv2.imread(f'{file_path}/ID_{CONST_OBJECT_ID}/Processed/Images/Image_{CONST_SCAN_ITERATION:05}.png')
 
     # Matplotlib Method:
     if CONST_SHOW_IMG_MATPLOTLIB == True:

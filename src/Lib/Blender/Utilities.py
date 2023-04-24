@@ -227,7 +227,7 @@ def Get_Vertices_From_Object(name: str) -> tp.List[tp.List[float]]:
 
     return [bpy.data.objects[name].matrix_world @ vertex_i.co for vertex_i in bpy.data.objects[name].data.vertices]
 
-def Save_Synthetic_Data(file_path: str, iteration: int, object_id: int, bounding_box: tp.List[tp.Union[int, float]], label_format: str, 
+def Save_Synthetic_Data(file_path: str, partition_name: str, iteration: int, object_id: int, bounding_box: tp.List[tp.Union[int, float]], label_format: str, 
                         image_format: str) -> None:
     """
     Description:
@@ -236,6 +236,7 @@ def Save_Synthetic_Data(file_path: str, iteration: int, object_id: int, bounding
 
     Args:
         (1) file_path [string]: The specified path of the file without extension (format).
+        (2) partition_name [string]: ....
         (2) iteration [int]: The current iteration of the process.
         (3) object_id [int]: The identification number of the scanned object.
         (4) bounding_box [Vector<float> 1x4]: The bounding box data (2D) in the specific format (YOLO, PASCAL_VOC, etc.)
@@ -251,14 +252,14 @@ def Save_Synthetic_Data(file_path: str, iteration: int, object_id: int, bounding
     t_0 = time.time()
 
     # Save the label data to a file.
-    File_IO.Save(f'{file_path}/Labels/ID_{object_id}/Label_{iteration}', np.hstack((object_id, bounding_box)), label_format.lower(), ' ')
+    File_IO.Save(f'{file_path}/labels/{partition_name}/Image_{iteration}', np.hstack((object_id, bounding_box)), label_format.lower(), ' ')
     
     # Save the image to a file.
-    bpy.context.scene.render.filepath = f'{file_path}/Images/ID_{object_id}/Image_{iteration}.{image_format.lower()}'
+    bpy.context.scene.render.filepath = f'{file_path}/images/{partition_name}/Image_{iteration}.{image_format.lower()}'
     bpy.ops.render.render(animation=False, write_still=True)
 
     # Display information.
     print(f'[INFO] The data in iteration {int(iteration)} was successfully saved to the folder {file_path}.')
-    print(f'[INFO]  - Image: /Images/ID_{object_id}/Image_{iteration}.{image_format.lower()}')
-    print(f'[INFO]  - Label: /Labels/ID_{object_id}/Label_{iteration}.txt')
+    print(f'[INFO]  - Image: /images/{partition_name}/Image_{iteration}.{image_format.lower()}')
+    print(f'[INFO]  - Label: /labels/{partition_name}/Image_{iteration}.txt')
     print(f'[INFO] Time: {(time.time() - t_0):0.05f} in seconds.')

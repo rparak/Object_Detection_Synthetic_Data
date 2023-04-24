@@ -25,8 +25,14 @@ CONST_OBJECT_ID = 0
 CONST_OBJECT_NAME = ['T_Joint', 'Metal_Blank']
 # Iteration of the scanning process.
 CONST_SCAN_ITERATION = 1
+# The name of the partition of the dataset.
+#   Note:
+#      Possible names to choose from: ['train', 'valid', 'test']
+CONST_PARTITION_DATASET = 'train'
+# The identification number of the dataset type.
+CONST_DATASET_TYPE = 0
 # Name of the dataset.
-CONST_DATASET_NAME = 'Dataset_0'
+CONST_DATASET_NAME = F'Dataset_Type_{CONST_DATASET_TYPE}_Obj_ID_{CONST_OBJECT_ID}'
 
 def main():
     """
@@ -37,13 +43,10 @@ def main():
     # Locate the path to the project folder
     project_folder = os.getcwd().split('Blender_Synthetic_Data')[0] + 'Blender_Synthetic_Data'
 
-    # The specified path of the file.
-    file_path = f'{project_folder}/Data/{CONST_DATASET_NAME}/Train'    
-
     # Load a raw image from a file.
-    raw_image  = cv2.imread(f'{file_path}/Images/ID_{CONST_OBJECT_ID}/Image_{CONST_SCAN_ITERATION:05}.png')
+    raw_image  = cv2.imread(f'{project_folder}/Data/{CONST_DATASET_NAME}/images/{CONST_PARTITION_DATASET}/Image_{CONST_SCAN_ITERATION:05}.png')
     # Load a label (annotation) from a file.
-    label_data = File_IO.Load(f'{file_path}/Labels/ID_{CONST_OBJECT_ID}/Label_{CONST_SCAN_ITERATION:05}', 'txt', ' ')[0]
+    label_data = File_IO.Load(f'{project_folder}/Data/{CONST_DATASET_NAME}/labels/{CONST_PARTITION_DATASET}/Image_{CONST_SCAN_ITERATION:05}.png')[0]
 
     # Create a bounding box from the label data.
     Bounding_Box_Properties = {'Name': f'{CONST_OBJECT_NAME[int(label_data[0])]}', 'Accuracy': '99.99', 

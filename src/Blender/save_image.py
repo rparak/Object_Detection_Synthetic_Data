@@ -31,7 +31,7 @@ Description:
 # The ID of the object to be scanned.
 #   ID{0} = 'T_Joint'
 #   ID{1} = 'Metal_Blank'
-CONST_SCANNED_OBJ_ID = 0
+CONST_OBJECT_ID = 0
 
 def main():
     """
@@ -44,7 +44,7 @@ def main():
 
     # Select the structure of the scanned object.
     Object_Str = [Lib.Parameters.Object.T_Joint_001_Str, 
-                  Lib.Parameters.Object.Metal_Blank_001_Str][CONST_SCANNED_OBJ_ID]
+                  Lib.Parameters.Object.Metal_Blank_001_Str][CONST_OBJECT_ID]
     
     # Initialize the camera to scan an object in the scene.
     #   The main parameters of the camera can be found at: ../Lib/Parameters/Camera
