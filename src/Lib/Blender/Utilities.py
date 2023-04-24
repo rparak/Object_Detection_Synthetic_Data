@@ -236,7 +236,7 @@ def Save_Synthetic_Data(file_path: str, partition_name: str, iteration: int, obj
 
     Args:
         (1) file_path [string]: The specified path of the file without extension (format).
-        (2) partition_name [string]: ....
+        (2) partition_name [string]: The name of the partition of the dataset.
         (2) iteration [int]: The current iteration of the process.
         (3) object_id [int]: The identification number of the scanned object.
         (4) bounding_box [Vector<float> 1x4]: The bounding box data (2D) in the specific format (YOLO, PASCAL_VOC, etc.)
