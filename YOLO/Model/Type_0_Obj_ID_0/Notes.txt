@@ -1,0 +1,29 @@
+# Conda instructions (Mac M1/M2)
+https://blog.roboflow.com/m1-opencv/
+
+# Set up a new virtual environment called {name} with python {version}.
+conda create -n {name} python={version}
+conda activate {name}
+
+# Install dependencies.
+#   OpenCV
+conda install -c conda-forge opencv
+#   PyTorch - Stable
+conda install pytorch torchvision torchaudio -c pytorch
+# or PyTorch - Preview (Nightly)
+conda install pytorch torchvision torchaudio -c pytorch-nightly
+#   Matplotlib
+conda install -c conda-forge matplotlib
+
+# Deactivate environment.
+conda deactivate
+
+# Remove environment.
+conda remove -name {name} --all
+
+# To verify that the environment was removed, in your terminal window or an Anaconda Prompt, run:
+conda info --envs
+
+# Rename the environment from the old name to the new one.
+conda rename -n {old_name} {name_name} 
+
