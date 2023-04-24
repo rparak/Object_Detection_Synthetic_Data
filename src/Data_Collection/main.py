@@ -49,7 +49,7 @@ def main():
     project_folder = os.getcwd().split('Blender_Synthetic_Data')[0] + 'Blender_Synthetic_Data'
 
     # The specified path to the folder where the image will be saved.
-    file_path = f'{project_folder}/Data/Camera/ID_{CONST_OBJECT_ID}/Raw/Images/Image_{(CONST_INIT_INDEX):05}.png'
+    file_path = f'{project_folder}/Data/Camera/ID_{CONST_OBJECT_ID}/raw/images/Image_{(CONST_INIT_INDEX):05}.png'
 
     # Set the path to the destination CTI file.
     cti_file_path = os.getenv('PHOXI_CONTROL_PATH') + "/API/bin/photoneo.cti"

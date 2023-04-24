@@ -25,7 +25,7 @@ CONST_OBJECT_ID = 0
 # Note:
 #   It must be equal to the number of data 
 #   in the raw images folder.
-CONST_NUM_OF_DATA = 10
+CONST_NUM_OF_DATA = 36
 
 def main():
     """
@@ -47,8 +47,8 @@ def main():
         t_0 = time.time()
 
         # The specified path to the folder from which the image will be loaded (*_in) and where the image will be saved (*_out).
-        file_path_in  = f'{project_folder}/Data/Camera/ID_{CONST_OBJECT_ID}/Raw/Images/Image_{(i + 1):05}.png'
-        file_path_out = f'{project_folder}/Data/Camera/ID_{CONST_OBJECT_ID}/Processed/Images/Image_{(i + 1):05}.png'
+        file_path_in  = f'{project_folder}/Data/Camera/ID_{CONST_OBJECT_ID}/raw/images/Image_{(i + 1):05}.png'
+        file_path_out = f'{project_folder}/Data/Camera/ID_{CONST_OBJECT_ID}/processed/images/Image_{(i + 1):05}.png'
 
         # Loads the image to the specified file.
         image_in = cv2.imread(file_path_in)
