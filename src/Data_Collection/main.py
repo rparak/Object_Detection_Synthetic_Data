@@ -19,7 +19,7 @@ Description:
 # The ID of the object to be scanned.
 #   ID{0} = 'T_Joint'
 #   ID{1} = 'Metal_Blank'
-CONST_SCANNED_OBJ_ID = 0
+CONST_OBJECT_ID = 0
 # The identification number of the iteration to save the image. It starts with the number 1.
 #   1 = 'Image_001', 2 = 'Image_002', etc.
 CONST_INIT_INDEX = 1
@@ -31,7 +31,7 @@ CONST_IMAGE_RESOLUTION = [2064, 1544]
 #   Note:
 #       It can be found in the device details when the PhoXi 
 #       Control software is opened.
-CONST_DEVICE_ID = 'PhotoneoTL_DEV_' + 'Desktop'
+CONST_DEVICE_ID = 'PhotoneoTL_DEV_' + '2019-06-011-LC3'
 
 def main():
     """
@@ -45,11 +45,11 @@ def main():
         Additional notes can be found in the Notes.txt file.
     """
 
-    # Locate the path to the main GitHub folder.
-    github_folder = os.path.join(os.path.join(os.path.expanduser('~')), 'Blender_Synthetic_Data')
-    
+    # Locate the path to the project folder
+    project_folder = os.getcwd().split('Blender_Synthetic_Data')[0] + 'Blender_Synthetic_Data'
+
     # The specified path to the folder where the image will be saved.
-    file_path = f'{github_folder}/Data/Camera/ID_{CONST_SCANNED_OBJ_ID}/Raw/Images/Image_{(CONST_INIT_INDEX):05}.png'
+    file_path = f'{project_folder}/Data/Camera/ID_{CONST_OBJECT_ID}/Raw/Images/Image_{(CONST_INIT_INDEX):05}.png'
 
     # Set the path to the destination CTI file.
     cti_file_path = os.getenv('PHOXI_CONTROL_PATH') + "/API/bin/photoneo.cti"
