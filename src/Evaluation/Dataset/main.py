@@ -37,7 +37,8 @@ CONST_DATASET_NAME = F'Dataset_Type_{CONST_DATASET_TYPE}_Obj_ID_{CONST_OBJECT_ID
 def main():
     """
     Description:
-        A simple script to evaluate synthetic data (image with corresponding label) generated from Blender.
+        A simple script to evaluate synthetic data (image with corresponding label) generated from Blender 
+        or mixed data (synthetic data with real camera data).
     """
 
     # Locate the path to the project folder
