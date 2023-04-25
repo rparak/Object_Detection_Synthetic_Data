@@ -46,7 +46,7 @@ def main():
     # Load a raw image from a file.
     raw_image  = cv2.imread(f'{project_folder}/Data/{CONST_DATASET_NAME}/images/{CONST_PARTITION_DATASET}/Image_{CONST_SCAN_ITERATION:05}.png')
     # Load a label (annotation) from a file.
-    label_data = File_IO.Load(f'{project_folder}/Data/{CONST_DATASET_NAME}/labels/{CONST_PARTITION_DATASET}/Image_{CONST_SCAN_ITERATION:05}.png')[0]
+    label_data = File_IO.Load(f'{project_folder}/Data/{CONST_DATASET_NAME}/labels/{CONST_PARTITION_DATASET}/Image_{CONST_SCAN_ITERATION:05}', 'txt', ' ')[0]
 
     # Create a bounding box from the label data.
     Bounding_Box_Properties = {'Name': f'{CONST_OBJECT_NAME[int(label_data[0])]}', 'Accuracy': '99.99', 
