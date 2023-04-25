@@ -52,7 +52,7 @@ def main():
     # Create a bounding box from the label data.
     Bounding_Box_Properties = {'Name': f'{CONST_OBJECT_NAME[int(label_data[0])]}', 'Accuracy': '99.99', 
                                'Data': {'x_c': label_data[1], 'y_c': label_data[2], 'width': label_data[3], 'height': label_data[4]}}
-    
+
     # Draw the bounding box of the object with additional dependencies (name, precision, etc.) in 
     # the raw image.
     eval_image = Lib.Utilities.Image_Processing.Draw_Bounding_Box(raw_image, Bounding_Box_Properties, 'YOLO', (0, 255, 0), True, True)
