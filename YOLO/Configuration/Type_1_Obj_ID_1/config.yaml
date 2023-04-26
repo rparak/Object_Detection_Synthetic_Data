@@ -10,7 +10,7 @@
 #       The ID of the object to be processed.
 #     dataset_type: 
 #       The identification number of the dataset type.
-path: '/content/drive/MyDrive/YOLOv8_Custom_Dataset/Data/Dataset_Type_0_Obj_ID_0'
+path: '/content/drive/MyDrive/YOLOv8_Custom_Dataset/Data/Dataset_Type_1_Obj_ID_1'
 
 # The absolute path to the specified partition folder (train, validation, test) that contains 
 # the dataset images as well as the labels.
@@ -22,4 +22,4 @@ test: images/test
 #   The total number of classes in the dataset.
 nc: 1 
 #   ID name of each class.
-names: ['T_Joint']
+names: ['Metal_Blank']
