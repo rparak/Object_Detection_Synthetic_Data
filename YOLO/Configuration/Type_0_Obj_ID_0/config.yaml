@@ -1,17 +1,15 @@
 # Description:
-#   The contents of the configuration data, such as the path to the train/valid directory, the total 
+#   The contents of the configuration data, such as the specified partition path, the total 
 #   number of classes in the dataset, and the name of each class.
 
-# https://pyimagesearch.com/2022/06/20/training-the-yolov5-object-detector-on-a-custom-dataset/
-# https://towardsai.net/p/computer-vision/yolo-v5-object-detection-on-a-custom-dataset
-# https://blog.ovhcloud.com/object-detection-train-yolov5-on-a-custom-dataset/
-# https://blog.roboflow.com/how-to-train-yolov5-on-a-custom-dataset/
-
+# The path to the main directory of the dataset.
 path: '/content/drive/MyDrive/Synthetic_Data/coco128'
 
-# The specified path to the train/validation folder with images/labels of the dataset.
+# The absolute path to the specified partition folder (train, validation, test) that contains 
+# the dataset images as well as the labels.
 train: images/train2017
 val: images/train2017
+test: images/train2017
 
 # Parameters:
 #   The total number of classes in the dataset.
