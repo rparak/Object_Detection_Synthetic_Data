@@ -25,7 +25,6 @@ img = Image.fromarray(img_raw)
 # Load Data
 tsf = torchvision.transforms.Compose(
     [
-    #torchvision.transforms.RandomRotation([8,8]),
     torchvision.transforms.ColorJitter(brightness=(0.5, 1.5), contrast=(0.5, 1.5), saturation=(0.1, 0.5)),
     torchvision.transforms.GaussianBlur(kernel_size=(5, 5), sigma=(0.01, 1.0)),
     torchvision.transforms.RandomAffine(degrees = 0, translate = (0.025, 0.025)),
