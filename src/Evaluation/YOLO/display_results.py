@@ -30,7 +30,7 @@ def main():
     # [0.2,0.4,0.6,0.75] -> blue
     fig, ax = plt.subplots()
 
-    ax.plot(epoch, train['box_loss'], '-', color=[0.2,0.4,0.6,0.75], linewidth=2.0, marker = 'o', ms = 5.0, mfc = [1.0,1.0,1.0], markeredgecolor = [0.2,0.4,0.6], mew = 2.5)
+    ax.plot(epoch, df[df.columns[1]], '-', color=[0.2,0.4,0.6,0.75], linewidth=2.0, marker = 'o', ms = 5.0, mfc = [1.0,1.0,1.0], markeredgecolor = [0.2,0.4,0.6], mew = 2.5)
 
     # Set parameters of the visualization.
     ax.set_title(f'text ...')

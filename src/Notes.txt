@@ -1,25 +1,27 @@
 # Conda instructions (Mac M1/M2)
-https://blog.roboflow.com/m1-opencv/
+# https://blog.roboflow.com/m1-opencv/
 
 # Set up a new virtual environment called {name} with python {version}.
-conda create -n {name} python={version}
-conda activate {name}
+{user_name} % conda create -n {name} python={version}
+{user_name} % conda activate {name}
 
 # Install dependencies.
-#   OpenCV
-conda install -c conda-forge opencv
-#   Matplotlib
-conda install -c conda-forge matplotlib
+#   - OpenCV
+{user_name} % conda install -c conda-forge opencv
+#   - Matplotlib
+{user_name} % conda install -c conda-forge matplotlib
+#   - Pandas
+{user_name} % conda install -c conda-forge pandas
 
 # Deactivate environment.
-conda deactivate
+{user_name} % conda deactivate
 
 # Remove environment.
-conda remove -name {name} --all
+{user_name} % conda remove -name {name} --all
 
 # To verify that the environment was removed, in your terminal window or an Anaconda Prompt, run:
-conda info --envs
+{user_name} % conda info --envs
 
 # Rename the environment from the old name to the new one.
-conda rename -n {old_name} {name_name} 
+{user_name} % conda rename -n {old_name} {name_name} 
 
