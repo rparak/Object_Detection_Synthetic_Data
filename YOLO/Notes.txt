@@ -1,11 +1,6 @@
 # Description:
 #   ...
 
-# Augmentation Parameters:
-# Crop: 0% (minimum zoom), 2% (maximum zoom)
-# Brightness: -25% .. 25%
-# Exposure: -5% .. 5%
-
 # Configuration/Type_{}_Obj_ID_{}
 #   Note:
 #       ....
