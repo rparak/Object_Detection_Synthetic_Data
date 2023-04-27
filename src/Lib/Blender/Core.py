@@ -116,6 +116,24 @@ class Camera_Cls(object):
             bpy.context.scene.render.image_settings.color_mode = 'RGBA'
         # The format to save the rendered image.
         bpy.context.scene.render.image_settings.file_format = self.__image_format
+        # Set the type of device to be used to render the image.
+        bpy.context.scene.cycles.device = 'GPU'
+        # Set additional rendering parameters.
+        #   Note:
+        #       Non-ideal parameters of the rendering process can be useful in training.
+        if bpy.context.scene.cycles.use_adaptive_sampling == False:
+            bpy.context.scene.cycles.use_adaptive_sampling = True
+        # Ideal parameters:
+        #   adaptive_threshold = 0.001
+        #   samples = 512
+        # Non-Ideal parameters (images with additional noise):
+        #   adaptive_threshold = 0.025
+        #   samples = 128
+        bpy.context.scene.cycles.adaptive_threshold = 0.025
+        bpy.context.scene.cycles.samples = 128
+        
+        #  Update the scene.
+        self.__Update()
 
     def K(self) -> tp.List[tp.List[float]]:
         """
