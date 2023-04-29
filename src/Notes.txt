@@ -10,6 +10,8 @@
 {user_name} % conda install -c conda-forge opencv
 #   - Matplotlib
 {user_name} % conda install -c conda-forge matplotlib
+#   - SciencePlots
+{user_name} % conda install -c conda-forge scienceplots
 #   - Pandas
 {user_name} % conda install -c conda-forge pandas
 

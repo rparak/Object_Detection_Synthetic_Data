@@ -7,6 +7,8 @@ if '../' + 'src' not in sys.path:
 import numpy as np
 # OS (Operating system interfaces)
 import os
+# SciencePlots (Matplotlib styles for scientific plotting) [pip3 install SciencePlots]
+import scienceplots
 # Matplotlib (Visualization) [pip3 install matplotlib]
 import matplotlib.pyplot as plt
 # OpenCV (Computer Vision) [pip3 install opencv-python]
@@ -47,6 +49,9 @@ def main():
     #   Processed images:
     image_processed = cv2.imread(f'{file_path}/ID_{CONST_OBJECT_ID}/Processed/Images/Image_{CONST_SCAN_ITERATION:05}.png')
 
+    # Set the parameters for the scientific style.
+    plt.style.use('science')
+    
     # Matplotlib Method:
     if CONST_SHOW_IMG_MATPLOTLIB == True:
         # Create a figure with 4 subplots.
