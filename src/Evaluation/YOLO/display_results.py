@@ -30,7 +30,7 @@ def main():
     """
     Description:
         A simple script to display result data from training a dataset. Metrics such as Generalized Intersection over Union (GIoU), Mean
-        Average Precision (mAP), Precision, etc. have been used to evaluate the performance of the proposed network.
+        Average Precision (mAP), Precision, etc. were used to evaluate the performance of the proposed network.
     """
         
     # Locate the path to the project folder
@@ -93,9 +93,10 @@ def main():
     ax[4].grid(linewidth = 0.75, linestyle = '--')
     ax[4].legend(fontsize=10.0)
 
-    # Display the result
+    # Display the results as a graph (plot).
     plt.show()
 
+    # Display the results as the values shown in the console.
     print('[INFO] Evaluation Criteria: YOLOv8')
     print(f'[INFO] The name of the dataset: {CONST_DATASET_NAME}')
     print('[INFO]  Generalized Intersection over Union (GIoU)')

@@ -89,7 +89,7 @@ def main():
             ax[1, i].grid(linewidth = 0.75, linestyle = '--')
             ax[1, i].legend(fontsize=10.0)
 
-        # Display the result
+        # Display the results.
         plt.show()
     else:
         # OpenCV Method:
