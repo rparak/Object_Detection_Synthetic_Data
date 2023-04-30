@@ -20,7 +20,7 @@ Description:
 
     Terminal:
         $ cd Documents/GitHub/Blender_Synthetic_Data/Blender
-        $ Blender Object_Bounding_Box.blend
+        $ blender Object_Bounding_Box.blend
 """
 
 def main():

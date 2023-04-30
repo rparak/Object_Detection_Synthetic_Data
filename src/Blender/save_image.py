@@ -21,7 +21,7 @@ Description:
 
     Terminal:
         $ cd Documents/GitHub/Blender_Synthetic_Data/Blender
-        $ Blender Camera_View.blend
+        $ blender Gen_Synthetic_Data.blend
 """
 
 """
