@@ -42,7 +42,7 @@ def main():
     # Load a raw image from a file.
     image_data = cv2.imread(f'{project_folder}/Data/Camera/ID_{CONST_OBJECT_ID}/processed/images/Image_{CONST_SCAN_ITERATION:05}.png')
     # Load a label (annotation) from a file.
-    label_data = File_IO.Load(f'{project_folder}/Data/Camera/ID_{CONST_OBJECT_ID}/processed/labels/Image_{CONST_SCAN_ITERATION:05}', 'txt', ' ')[0]
+    label_data = File_IO.Load(f'{project_folder}/Data/Camera/ID_{CONST_OBJECT_ID}/processed/labels/Image_{CONST_SCAN_ITERATION:05}', 'txt', ' ')
 
     for i, label_data_i in enumerate(label_data):
         # Create a bounding box from the label data.

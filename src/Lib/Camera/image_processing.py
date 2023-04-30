@@ -37,7 +37,7 @@ def main():
 
         Note:
             The raw images were collected using the script here:
-                ./Data_Collection/main.py
+                ./Data_Collection/scan.py
     """
 
     # Locate the path to the project folder
