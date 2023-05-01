@@ -30,7 +30,7 @@ CONST_SCAN_ITERATION = 1
 #      Possible names to choose from: ['train', 'valid', 'test']
 CONST_PARTITION_DATASET = 'train'
 # The identification number of the dataset type.
-CONST_DATASET_TYPE = 0
+CONST_DATASET_TYPE = 1
 # Name of the dataset.
 CONST_DATASET_NAME = F'Dataset_Type_{CONST_DATASET_TYPE}_Obj_ID_{CONST_OBJECT_ID}'
 
@@ -52,7 +52,7 @@ def main():
     for i, label_data_i in enumerate(label_data):
         # Create a bounding box from the label data.
         Bounding_Box_Properties = {'Name': f'{CONST_OBJECT_NAME[int(label_data_i[0])]}_{i}', 'Accuracy': '99.99', 
-                                   'Data': {'x_c': label_data_i[1], 'y_c': label_data_i[2], 'width': label_data_i[3], 'height': label_data_i[4]}}
+                                'Data': {'x_c': label_data_i[1], 'y_c': label_data_i[2], 'width': label_data_i[3], 'height': label_data_i[4]}}
 
         # Draw the bounding box of the object with additional dependencies (name, precision, etc.) in 
         # the raw image.

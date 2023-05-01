@@ -251,7 +251,7 @@ def Save_Synthetic_Data(file_path: str, partition_name: str, iteration: int, obj
     # Start the timer.
     t_0 = time.time()
 
-    # Save the label data to a file.
+    # Save the label data (bounding box) to a file.
     File_IO.Save(f'{file_path}/labels/{partition_name}/Image_{iteration}', np.hstack((object_id, bounding_box)), label_format.lower(), ' ')
     
     # Save the image to a file.
