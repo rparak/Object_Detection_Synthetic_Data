@@ -16,6 +16,7 @@ def get_output_layers(net):
 # Load Model
 net = cv2.dnn.readNet('yolov8s_custom.onnx')
 
+# https://www.thepythoncode.com/code/yolo-object-detection-with-opencv-and-pytorch-in-python?utm_content=cmp-true
 
 INPUT_WIDTH = 640
 INPUT_HEIGHT = 640
@@ -24,7 +25,7 @@ NMS_THRESHOLD = 0.4
 CONFIDENCE_THRESHOLD = 0.4
 
 # load the image from disk
-image = cv2.imread('Image_00041.png')
+image = cv2.imread('Image_00031.png')
 
 blob = cv2.dnn.blobFromImage(image, 1/255.0, (INPUT_WIDTH, INPUT_HEIGHT), swapRB=True, crop=False)
 
@@ -49,11 +50,11 @@ for i in range(rows):
     _,_,_, max_idx = cv2.minMaxLoc(classes_score)
     class_id = max_idx[1]
     #print(classes_score[class_id])
-    if (classes_score[class_id] > .80):
+    if (classes_score[class_id] > .5):
         confs.append(conf)
         #label = CLASESS_YOLO[int(class_id)]
         #class_ids.append(label)
-        
+
         #extract boxes
         x, y, w, h = row[0].item(), row[1].item(), row[2].item(), row[3].item() 
         left = int((x - 0.5 * w) * x_factor)
@@ -67,6 +68,7 @@ r_class_ids, r_confs, r_boxes = list(), list(), list()
 
 indexes = cv2.dnn.NMSBoxes(boxes, confs, 0.25, 0.45) 
 for i in indexes:
+    #print(class_ids[i])
     #r_class_ids.append(class_ids[i])
     r_confs.append(confs[i])
     r_boxes.append(boxes[i])
