@@ -17,6 +17,15 @@ def get_output_layers(net):
 net = cv2.dnn.readNet('yolov8s_custom.onnx')
 
 # https://www.thepythoncode.com/code/yolo-object-detection-with-opencv-and-pytorch-in-python?utm_content=cmp-true
+# https://mkadric.medium.com/how-to-use-yolo-object-detection-model-1604cf9bbaed
+# https://gilberttanner.com/blog/yolo-object-detection-with-opencv/
+# https://datagen.tech/guides/face-recognition/face-detection-with-opencv-2-quick-tutorials/
+# https://dontrepeatyourself.org/post/object-detection-with-python-deep-learning-and-opencv/
+# https://github.com/opencv/opencv/issues/19252
+# https://medium.com/@vsreedharachari/practical-implementation-of-object-detection-on-image-with-opencv-and-yolo-v3-pre-trained-weights-d65d6c13401b
+# https://thinkinfi.com/yolo-object-detection-using-python-opencv/
+# https://stackoverflow.com/questions/59004046/saving-bounding-box-coordinates-and-images-based-on-the-class-type-into-a-differ
+
 
 INPUT_WIDTH = 640
 INPUT_HEIGHT = 640
