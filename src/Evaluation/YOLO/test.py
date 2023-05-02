@@ -5,7 +5,6 @@ from PIL import Image
 # https://alimustoofaa.medium.com/how-to-load-model-yolov8-onnx-cv2-dnn-3e176cde16e6
 # https://github.com/Alimustoofaa/yolov8-custom-dataset/blob/main/YoloV8_Train_Detection.ipynb
 
-
 def get_output_layers(net):
     layer_names = net.getLayerNames()
 
@@ -15,7 +14,9 @@ def get_output_layers(net):
 
 # https://alimustoofaa.medium.com/how-to-load-model-yolov8-onnx-cv2-dnn-3e176cde16e6
 # Load Model
-net = cv2.dnn.readNet('yolov8s.onnx')
+net = cv2.dnn.readNet('yolov8s_custom.onnx')
+
+
 INPUT_WIDTH = 640
 INPUT_HEIGHT = 640
 SCORE_THRESHOLD = 0.2
@@ -23,8 +24,10 @@ NMS_THRESHOLD = 0.4
 CONFIDENCE_THRESHOLD = 0.4
 
 # load the image from disk
-image = cv2.imread('zidane.jpg')
+image = cv2.imread('Image_00041.png')
+
 blob = cv2.dnn.blobFromImage(image, 1/255.0, (INPUT_WIDTH, INPUT_HEIGHT), swapRB=True, crop=False)
+
 net.setInput(blob)
 preds = net.forward()
 preds = preds.transpose((0, 2, 1))
@@ -68,7 +71,6 @@ for i in indexes:
     r_confs.append(confs[i])
     r_boxes.append(boxes[i])
 
-print(r_confs)
 for i in indexes:
     box = boxes[i]
     left = box[0]
