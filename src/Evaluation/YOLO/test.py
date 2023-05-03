@@ -12,8 +12,12 @@ y_factor = image_height / 640
 blob = cv2.dnn.blobFromImage(image, 1/255.0, (640, 640), swapRB=True, crop=False)
 net.setInput(blob)
 
+#ln = net.getLayerNames()
+#ln = [ln[i - 1] for i in net.getUnconnectedOutLayers()]
+
 output = net.forward()
 output = output.transpose((0, 2, 1))
+
 
 # loop over the number of detected objects
 for detection in output[0, :, :]: # output[0, 0, :, :] has a shape of: (100, 7)
