@@ -1,6 +1,14 @@
 import cv2
 import numpy as np
 from PIL import Image
+# System (Default)
+import sys
+#   Add access if it is not in the system path.
+if '../' + 'src' not in sys.path:
+    sys.path.append('../..')
+# Custom Library:
+#   ../Lib/Utilities/General
+import Lib.Utilities.General
 
 # https://alimustoofaa.medium.com/how-to-load-model-yolov8-onnx-cv2-dnn-3e176cde16e6
 # https://github.com/Alimustoofaa/yolov8-custom-dataset/blob/main/YoloV8_Train_Detection.ipynb
@@ -34,6 +42,7 @@ NMS_THRESHOLD = 0.4
 CONFIDENCE_THRESHOLD = 0.4
 
 # load the image from disk
+# 031: 
 image = cv2.imread('Image_00031.png')
 
 blob = cv2.dnn.blobFromImage(image, 1/255.0, (INPUT_WIDTH, INPUT_HEIGHT), swapRB=True, crop=False)
@@ -41,6 +50,7 @@ blob = cv2.dnn.blobFromImage(image, 1/255.0, (INPUT_WIDTH, INPUT_HEIGHT), swapRB
 net.setInput(blob)
 preds = net.forward()
 preds = preds.transpose((0, 2, 1))
+
 
 # Extract output detection
 class_ids, confs, boxes = list(), list(), list()
@@ -63,7 +73,6 @@ for i in range(rows):
         confs.append(conf)
         #label = CLASESS_YOLO[int(class_id)]
         #class_ids.append(label)
-
         #extract boxes
         x, y, w, h = row[0].item(), row[1].item(), row[2].item(), row[3].item() 
         left = int((x - 0.5 * w) * x_factor)
@@ -89,6 +98,7 @@ for i in indexes:
     width = box[2]
     height = box[3]
     
+    print((left, top), (left + width, top + height))
     cv2.rectangle(image, (left, top), (left + width, top + height), (0,255,0), 3)
 
 # Displays the image in the window.
