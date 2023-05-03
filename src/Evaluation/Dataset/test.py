@@ -30,7 +30,7 @@ CONST_SCAN_ITERATION = 1
 #      Possible names to choose from: ['train', 'valid', 'test']
 CONST_PARTITION_DATASET = 'train'
 # The identification number of the dataset type.
-CONST_DATASET_TYPE = 1
+CONST_DATASET_TYPE = 0
 # Name of the dataset.
 CONST_DATASET_NAME = F'Dataset_Type_{CONST_DATASET_TYPE}_Obj_ID_{CONST_OBJECT_ID}'
 
