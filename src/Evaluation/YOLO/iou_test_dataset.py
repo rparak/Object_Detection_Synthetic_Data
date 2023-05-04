@@ -20,7 +20,13 @@ import torchvision.ops.boxes
 import Lib.Utilities.General
 
 def main():
-    pass
+    # Locate the path to the project folder
+    project_folder = os.getcwd().split('Blender_Synthetic_Data')[0] + 'Blender_Synthetic_Data'
+
+    # Average Intersection over Union (AIoU)
+    # Average Confidence (AC)
+    # x - Image Idenfication Number (ID)
+    # y - Score
 
 if __name__ == '__main__':
     sys.exit(main())
