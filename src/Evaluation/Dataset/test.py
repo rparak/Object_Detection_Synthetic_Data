@@ -18,7 +18,7 @@ Description:
     Initialization of constants.
 """
 # The ID of the object to be processed.
-CONST_OBJECT_ID = 0
+CONST_OBJECT_ID = 1
 # Available objects.
 #   ID{0} = 'T_Joint'
 #   ID{1} = 'Metal_Blank'

@@ -42,6 +42,9 @@ class Object_Parameters_Str:
     # The name of the object in Blender.
     Name: str = ''
     # Identification number.
+    #   Note:
+    #       If the number of synthetic data generation objects 
+    #       in the dataset is 1, the ID must be 0.
     Id: int = 0
     # Homogeneous transformation matrix of the initial position of the object.
     T: tp.List[tp.List[float]] = field(default_factory=list)
@@ -68,7 +71,7 @@ T_Joint_001_Str.Limit.Rotation = {'x': None, 'y': None, 'z': [-Mathematics.CONST
 Description:
     The main parameters of the object: Metan Blank
 """
-Metal_Blank_001_Str = Object_Parameters_Str(Name='Metal_Blank_001', Id=1)
+Metal_Blank_001_Str = Object_Parameters_Str(Name='Metal_Blank_001', Id=0)
 # Homogeneous transformation matrix {T} of the object.
 Metal_Blank_001_Str.T = Transformation.Homogeneous_Transformation_Matrix_Cls(None, np.float32).Rotation([0.0, 0.0, 0.0], 
                                                                                                         'ZYX').Translation([0.175, 0.0, 0.001])
