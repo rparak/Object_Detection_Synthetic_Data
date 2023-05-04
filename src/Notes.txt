@@ -16,6 +16,10 @@
 {user_name} % conda install -c conda-forge pandas
 #   - Albumentations
 {user_name} % conda install -c conda-forge albumentations
+#   - PyTorch, Torchvision, etc.
+{user_name} % conda install pytorch::pytorch torchvision torchaudio -c pytorch
+or 
+{user_name} % conda install pytorch-nightly::pytorch torchvision torchaudio -c pytorch-nightly
 
 # Deactivate environment.
 {user_name} % conda deactivate
