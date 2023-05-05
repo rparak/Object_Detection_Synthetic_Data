@@ -104,7 +104,7 @@ def Draw_Bounding_Box(image: tp.List[tp.List[int]], bounding_box_properties: tp.
 
     if fill_box == True:
         # Transparency coefficient.
-        alpha = 0.10
+        alpha = 0.1
 
         # The main rectangle that bounds the object.
         cv2.rectangle(image_out, (x_min, y_min), (x_max, y_max), Color, -1)
@@ -157,8 +157,8 @@ def Draw_Bounding_Box(image: tp.List[tp.List[int]], bounding_box_properties: tp.
         cv2.rectangle(image_out, (x_max + offset, y_min - (int(box_h/4.0) + offset)), (x_max + offset + int(box_w/2.0), y_min - offset), 
                       Color, line_width)
         # For precision, we use the same method as for the name.
-        txt_name_boundary = cv2.getTextSize(bounding_box_properties['Precision'] + ' %', txt_font, 0.5, line_width)[0]
+        txt_name_boundary = cv2.getTextSize(bounding_box_properties['Precision'], txt_font, 0.5, line_width)[0]
         f = np.array([int(box_w/2.0)/2.0, int(box_h/4.0)/2]) - np.array([txt_name_boundary[0]/2, txt_name_boundary[1]/2])
-        cv2.putText(image_out, bounding_box_properties['Precision'] + ' %', (x_max + offset + int(f[0]), (y_min - offset) - int(f[1])), txt_font, 0.5, Color, line_width)
+        cv2.putText(image_out, bounding_box_properties['Precision'], (x_max + offset + int(f[0]), (y_min - offset) - int(f[1])), txt_font, 0.5, Color, line_width)
 
     return image_out
