@@ -37,7 +37,7 @@ def main():
     project_folder = os.getcwd().split('Blender_Synthetic_Data')[0] + 'Blender_Synthetic_Data'
 
     # The specified path of the file.
-    file_path = f'{project_folder}/YOLO/Result/Type_{CONST_DATASET_TYPE}_Obj_ID_{CONST_OBJECT_ID}/train'  
+    file_path = f'{project_folder}/YOLO/Results/Type_{CONST_DATASET_TYPE}_Obj_ID_{CONST_OBJECT_ID}'  
 
     #  Read data from the file {*.csv}.
     data = pd.read_csv(f'{file_path}/results.csv')
