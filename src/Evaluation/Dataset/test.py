@@ -51,8 +51,8 @@ def main():
 
     for i, label_data_i in enumerate(label_data):
         # Create a bounding box from the label data.
-        Bounding_Box_Properties = {'Name': f'{CONST_OBJECT_NAME[int(label_data_i[0])]}_{i}', 'Confidence': '99.99', 
-                                'Data': {'x_c': label_data_i[1], 'y_c': label_data_i[2], 'width': label_data_i[3], 'height': label_data_i[4]}}
+        Bounding_Box_Properties = {'Name': f'{CONST_OBJECT_NAME[int(label_data_i[0])]}_{i}', 'Precision': '99.99', 
+                                   'Data': {'x_c': label_data_i[1], 'y_c': label_data_i[2], 'width': label_data_i[3], 'height': label_data_i[4]}}
 
         # Draw the bounding box of the object with additional dependencies (name, precision, etc.) in 
         # the raw image.

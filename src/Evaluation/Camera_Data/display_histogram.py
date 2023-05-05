@@ -67,8 +67,8 @@ def main():
         ax[0, 1].imshow(image_processed)
 
         # Display histogram data of a single image.
-        ax[1, 0].plot(raw_image_hist, '-', linewidth=1.0, color=[0.2,0.4,0.6,0.75], label='Raw Image')
-        ax[1, 1].plot(processed_image_hist, '-', linewidth=1.0, color=[0.2,0.4,0.6,0.75], label='Processed Image')
+        ax[1, 0].plot(raw_image_hist, '-', linewidth=1.0, color=[0.525,0.635,0.8,1.0], label='Raw Image')
+        ax[1, 1].plot(processed_image_hist, '-', linewidth=1.0, color=[0.525,0.635,0.8,1.0], label='Processed Image')
 
         # Calculate the maximum raw image (histogram) number to resize 
         # the y-axis of the histogram.

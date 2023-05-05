@@ -62,11 +62,11 @@ def Draw_Bounding_Box(image: tp.List[tp.List[int]], bounding_box_properties: tp.
                       fill_box: bool, show_info: bool) -> tp.List[tp.List[int]]:
     """
     Description:
-        Function to draw the bounding box of an object with additional dependencies (name, accuracy, etc.) in the raw image.
+        Function to draw the bounding box of an object with additional dependencies (name, precision, etc.) in the raw image.
 
     Args:
         (1) image [Vector<float> Image Shape {Resolution<x, y>}]: Input raw image.
-        (2) bounding_box_properties [Dictionary {'Name': string, 'Accuracy', string, 
+        (2) bounding_box_properties [Dictionary {'Name': string, 'Precision', string, 
                                                  'Data': Vector<int/float> 1x4}]: Bounding box properties.
         (3) format [string]: The format of the bounding box input data. Available formats: YOLO, Pascal_VOC.
         (4) Color [Vector<float> 1x3]: Color of the box and other dependencies.
@@ -77,7 +77,7 @@ def Draw_Bounding_Box(image: tp.List[tp.List[int]], bounding_box_properties: tp.
         (1) parameter [Vector<float> Image Shape {Resolution<x, y>}]: Output image extended with bounding box and other dependencies.
 
     Example:
-        image_out = Draw_Bounding_Box(image, bounding_box_properties = {'Name': 'Obj_Name_Id_0', 'Accuracy': '100', 'Data': None}, format = 'YOLO/Pascal_VOC', 
+        image_out = Draw_Bounding_Box(image, bounding_box_properties = {'Name': 'Obj_Name_Id_0', 'Precision': '100', 'Data': None}, format = 'YOLO/Pascal_VOC', 
                                       Color = (0, 255, 0), fill_box = False, show_info = False)
     """
 
@@ -153,12 +153,12 @@ def Draw_Bounding_Box(image: tp.List[tp.List[int]], bounding_box_properties: tp.
         f = np.array([box_w/2.0, int(box_h/4.0)/2]) - np.array([txt_name_boundary[0]/2, txt_name_boundary[1]/2])
         cv2.putText(image_out, bounding_box_properties['Name'], (x_min + int(f[0]), (y_min - offset) - int(f[1])), txt_font, 0.5, Color, line_width)
 
-        # A rectangle indicating the accuracy of the match.
+        # A rectangle indicating the precision of the match.
         cv2.rectangle(image_out, (x_max + offset, y_min - (int(box_h/4.0) + offset)), (x_max + offset + int(box_w/2.0), y_min - offset), 
                       Color, line_width)
-        # For accuracy, we use the same method as for the name.
-        txt_name_boundary = cv2.getTextSize(bounding_box_properties['Accuracy'] + ' %', txt_font, 0.5, line_width)[0]
+        # For precision, we use the same method as for the name.
+        txt_name_boundary = cv2.getTextSize(bounding_box_properties['Precision'] + ' %', txt_font, 0.5, line_width)[0]
         f = np.array([int(box_w/2.0)/2.0, int(box_h/4.0)/2]) - np.array([txt_name_boundary[0]/2, txt_name_boundary[1]/2])
-        cv2.putText(image_out, bounding_box_properties['Accuracy'] + ' %', (x_max + offset + int(f[0]), (y_min - offset) - int(f[1])), txt_font, 0.5, Color, line_width)
+        cv2.putText(image_out, bounding_box_properties['Precision'] + ' %', (x_max + offset + int(f[0]), (y_min - offset) - int(f[1])), txt_font, 0.5, Color, line_width)
 
     return image_out
