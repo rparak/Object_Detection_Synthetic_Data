@@ -25,6 +25,10 @@ CONST_SCAN_ITERATION = 1
 # Displays an image using the matplotlib library 
 # with histograms.
 CONST_SHOW_IMG_MATPLOTLIB = True
+# The type of image folder to be processed.
+#   'DATASET': Images for the dataset.
+#   'ADDITIONAL': Images for additional tests.
+CONST_IMAGE_FOLDER_TYPE = 'ADDITIONAL'
 
 def main():
     """
@@ -41,13 +45,17 @@ def main():
     project_folder = os.getcwd().split('Blender_Synthetic_Data')[0] + 'Blender_Synthetic_Data'
 
     # The specified path of the file.
-    file_path = f'{project_folder}/Data/Camera'    
+    file_path = f'{project_folder}/Data'    
 
-    # Loads an image from the specified file.
-    #   Raw images:
-    image_raw = cv2.imread(f'{file_path}/ID_{CONST_OBJECT_ID}/Raw/Images/Image_{CONST_SCAN_ITERATION:05}.png')
-    #   Processed images:
-    image_processed = cv2.imread(f'{file_path}/ID_{CONST_OBJECT_ID}/Processed/Images/Image_{CONST_SCAN_ITERATION:05}.png')
+    # Loads images from the specified file.
+    #   Note:
+    #       Related raw/processed images.
+    if CONST_IMAGE_FOLDER_TYPE == 'DATASET':
+        image_raw = cv2.imread(f'{file_path}/Camera/ID_{CONST_OBJECT_ID}/raw/images/Image_{CONST_SCAN_ITERATION:05}.png')
+        image_processed = cv2.imread(f'{file_path}/Camera/ID_{CONST_OBJECT_ID}/processed/images/Image_{CONST_SCAN_ITERATION:05}.png')
+    elif CONST_IMAGE_FOLDER_TYPE == 'ADDITIONAL':
+        image_raw = cv2.imread(f'{file_path}/Additional/ID_{CONST_OBJECT_ID}/raw/Image_{CONST_SCAN_ITERATION:05}.png')
+        image_processed = cv2.imread(f'{file_path}/Additional/ID_{CONST_OBJECT_ID}/processed/Image_{CONST_SCAN_ITERATION:05}.png')
 
     # Set the parameters for the scientific style.
     plt.style.use('science')

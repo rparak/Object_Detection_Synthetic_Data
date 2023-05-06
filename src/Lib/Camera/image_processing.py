@@ -29,6 +29,10 @@ CONST_NUM_OF_DATA = 46
 # Specified parameter of each object for histogram 
 # clipping in percentage.
 CONST_CLIP_LIMIT = [0.75, 1.25]
+# The type of image folder to be processed.
+#   'DATASET': Images for the dataset.
+#   'ADDITIONAL': Images for additional tests.
+CONST_IMAGE_FOLDER_TYPE = 'ADDITIONAL'
 
 def main():
     """
@@ -50,8 +54,12 @@ def main():
         t_0 = time.time()
 
         # The specified path to the folder from which the image will be loaded (*_in) and where the image will be saved (*_out).
-        file_path_in  = f'{project_folder}/Data/Camera/ID_{CONST_OBJECT_ID}/raw/images/Image_{(i + 1):05}.png'
-        file_path_out = f'{project_folder}/Data/Camera/ID_{CONST_OBJECT_ID}/processed/images/Image_{(i + 1):05}.png'
+        if CONST_IMAGE_FOLDER_TYPE == 'DATASET':
+            file_path_in  = f'{project_folder}/Data/Camera/ID_{CONST_OBJECT_ID}/raw/images/Image_{(i + 1):05}.png'
+            file_path_out = f'{project_folder}/Data/Camera/ID_{CONST_OBJECT_ID}/processed/images/Image_{(i + 1):05}.png'
+        elif CONST_IMAGE_FOLDER_TYPE == 'ADDITIONAL':
+            file_path_in  = f'{project_folder}/Data/Additional/ID_{CONST_OBJECT_ID}/raw/Image_{(i + 1):05}.png'
+            file_path_out = f'{project_folder}/Data/Additional/ID_{CONST_OBJECT_ID}/processed/Image_{(i + 1):05}.png'          
 
         # Loads the image to the specified file.
         image_in = cv2.imread(file_path_in)
