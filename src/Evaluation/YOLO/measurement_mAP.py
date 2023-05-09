@@ -29,14 +29,20 @@ import Lib.Utilities.File_IO as File_IO
 Description:
     Initialization of constants.
 """
-# The ID of the object to be processed.
+# The ID of the object to be tested.
 CONST_OBJECT_ID = 0
+# Available objects.
+#   ID{0} = 'T_Joint'
+#   ID{1} = 'Metal_Blank'
+CONST_OBJECT_NAME = ['T_Joint', 'Metal_Blank']
 # The identification number of the dataset type.
 CONST_DATASET_TYPE = 0
 # Name of the dataset.
 CONST_DATASET_NAME = f'Dataset_Type_{CONST_DATASET_TYPE}_Obj_ID_{CONST_OBJECT_ID}'
 # Number of data to be tested.
 CONST_NUM_OF_TEST_DATA = 15
+# Iteration of the testing process.
+CONST_SCAN_ITERATION = 1
 
 # Mean Average Precision (mAP)
 # x - Image Idenfication Number (ID)
