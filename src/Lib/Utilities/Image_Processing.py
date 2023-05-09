@@ -185,8 +185,9 @@ def YOLO_Object_Detection(image: tp.List[tp.List[int]], model_onnx: str, image_s
     
     Returns:
         (1) parameter [float or Vector<float> 1xn]: The actual object confidence threshold for detection.
-        (2) parameter [Dictionary {'x_min': int, 'y_min': int, 'x_max': int, 'y_max': int} x n]: Bounding box in the PASCAL VOC 
-                                                                                                 format.
+        (2) parameter [Dictionary {'x_min': int, 'y_min': int, 
+                                   'x_max': int, 'y_max': int} x n]: Bounding box in the PASCAL VOC format 
+                                                                     on the actual image size.
         Note:
             Where n is the number of detected objects.
     """
