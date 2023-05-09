@@ -55,7 +55,7 @@ def main():
     # Enable (turn on) visibility of the object.
     Object_Cls.Visibility(True)
     
-    # Locate the path to the project folder
+    # Locate the path to the project folder.
     project_folder = os.getcwd().split('Blender_Synthetic_Data')[0] + 'Blender_Synthetic_Data'
 
     # Save the image to the file.

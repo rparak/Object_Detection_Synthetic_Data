@@ -44,7 +44,7 @@ def main():
                 ./Data_Collection/scan.py
     """
 
-    # Locate the path to the project folder
+    # Locate the path to the project folder.
     project_folder = os.getcwd().split('Blender_Synthetic_Data')[0] + 'Blender_Synthetic_Data'
 
     # Processes the data up to the desired maximum number of iterations, which is given by the constant {CONST_NUM_OF_DATA}.

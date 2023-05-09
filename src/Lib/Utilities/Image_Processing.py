@@ -205,7 +205,7 @@ def YOLO_Object_Detection(image: tp.List[tp.List[int]], model_onnx: str, image_s
     CONST_THRESHOLD = 0.5
     
     # Create a blob from the input image.
-    blob = cv2.dnn.blobFromImage(image, 1 / 255.0, (image_size, image_size), swapRB=True, crop=False)
+    blob = cv2.dnn.blobFromImage(image, 1.0/255.0, (image_size, image_size), swapRB=True, crop=False)
 
     # Get the names of the output layers.
     layer_names = model_onnx.getLayerNames()
@@ -245,7 +245,7 @@ def YOLO_Object_Detection(image: tp.List[tp.List[int]], model_onnx: str, image_s
     
     # At least one detection should be successful, otherwise just report a failed detection.
     if isinstance(indexes, np.ndarray):
-        print(f'[INFO] The model found {indexes.size} objects in the input image.')
+        print(f'[INFO] The model found {indexes.size} object in the input image.')
 
         # Store parameters over specific indexes.
         class_ids_out = []; bounding_boxes_out = []; confidences_out = []
@@ -261,7 +261,7 @@ def YOLO_Object_Detection(image: tp.List[tp.List[int]], model_onnx: str, image_s
         return (class_ids_out, bounding_boxes_out, confidences_out)
 
     else:
-        print('[INFO] The model did not find objects in the input image.')
+        print('[INFO] The model did not find object in the input image.')
         return (None, None, None)
 
     

@@ -49,7 +49,7 @@ def main():
         Additional notes can be found in the Notes.txt file.
     """
 
-    # Locate the path to the project folder
+    # Locate the path to the project folder.
     project_folder = os.getcwd().split('Blender_Synthetic_Data')[0] + 'Blender_Synthetic_Data'
 
     # The specified path to the folder where the image will be saved.

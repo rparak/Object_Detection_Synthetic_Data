@@ -2,7 +2,7 @@
 import sys
 #   Add access if it is not in the system path.
 if '../' + 'src' not in sys.path:
-    sys.path.append('../..')
+    sys.path.append('../../..')
 # OS (Operating system interfaces)
 import os
 # Numpy (Array computing) [pip3 install numpy]
@@ -26,11 +26,11 @@ CONST_OBJECT_ID = 0
 #   ID{1} = 'Metal_Blank'
 CONST_OBJECT_NAME = ['T_Joint', 'Metal_Blank']
 # The identification number of the dataset type.
-CONST_DATASET_TYPE = 2
+CONST_DATASET_TYPE = 0
 # Name of the dataset.
 CONST_DATASET_NAME = f'Dataset_Type_{CONST_DATASET_TYPE}_Obj_ID_{CONST_OBJECT_ID}'
 # Number of data to be tested.
-CONST_NUM_OF_TEST_DATA = 1
+CONST_NUM_OF_TEST_DATA = 15
 # Iteration of the testing process.
 CONST_SCAN_ITERATION = 30
 # The type of image folder to be processed.
@@ -38,7 +38,7 @@ CONST_SCAN_ITERATION = 30
 #   'ADDITIONAL': Images for additional tests.
 CONST_IMAGE_FOLDER_TYPE = 'DATASET'
 # Determine whether or not to save the images.
-CONST_SAVE_IMAGES = False
+CONST_SAVE_IMAGES = True
 
 def main():
     """
@@ -46,7 +46,7 @@ def main():
         ...
     """
         
-    # Locate the path to the project folder
+    # Locate the path to the project folder.
     project_folder = os.getcwd().split('Blender_Synthetic_Data')[0] + 'Blender_Synthetic_Data'
 
     # Load a pre-trained YOLO model in the *.onnx format.
@@ -86,11 +86,11 @@ def main():
             # Loads images from the specified file.
             if CONST_IMAGE_FOLDER_TYPE == 'DATASET':
                 # Save the image to a file.
-                cv2.imwrite(f'{project_folder}/Data/Results/{CONST_DATASET_NAME}/images/Image_{(CONST_SCAN_ITERATION + (n_i + 1)):05}.png', image_data)
-                print(f'[INFO] The data in iteration {int(n_i)} was successfully saved to the folder {project_folder}/Data/Results/{CONST_DATASET_NAME}.')
+                cv2.imwrite(f'{project_folder}/Data/Results/ONNX/{CONST_DATASET_NAME}/images/Image_{(CONST_SCAN_ITERATION + (n_i + 1)):05}.png', image_data)
+                print(f'[INFO] The data in iteration {int(n_i)} was successfully saved to the folder {project_folder}/Data/Results/ONNX/{CONST_DATASET_NAME}.')
             elif CONST_IMAGE_FOLDER_TYPE == 'ADDITIONAL':
                 # Save the image to a file.
-                cv2.imwrite(f'/Additional/ID_{CONST_OBJECT_ID}/results/Image_{(CONST_SCAN_ITERATION + (n_i + 1)):05}.png', image_data)
+                cv2.imwrite(f'/Additional/ID_{CONST_OBJECT_ID}/results/ONNX/Image_{(CONST_SCAN_ITERATION + (n_i + 1)):05}.png', image_data)
                 print(f'[INFO] The data in iteration {int(n_i)} was successfully saved to the folder /Additional/ID_{CONST_OBJECT_ID}/results/.')
 
             # Display information.

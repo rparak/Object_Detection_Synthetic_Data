@@ -36,7 +36,7 @@ def main():
             https://github.com/heartexlabs/labelImg?ref=blog.roboflow.com
     """
 
-    # Locate the path to the project folder
+    # Locate the path to the project folder.
     project_folder = os.getcwd().split('Blender_Synthetic_Data')[0] + 'Blender_Synthetic_Data'
 
     # Load a raw image from a file.

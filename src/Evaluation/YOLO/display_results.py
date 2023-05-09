@@ -33,7 +33,7 @@ def main():
         Average Precision (mAP), Precision, etc. were used to evaluate the performance of the proposed network.
     """
         
-    # Locate the path to the project folder
+    # Locate the path to the project folder.
     project_folder = os.getcwd().split('Blender_Synthetic_Data')[0] + 'Blender_Synthetic_Data'
 
     # The specified path of the file.

@@ -101,7 +101,7 @@ def main():
             # Get the name of the partition where the data will be stored.
             partition_name = list(CONST_PARTITION_DATASET.keys())[id_partition]
 
-            # Locate the path to the project folder
+            # Locate the path to the project folder.
             project_folder = os.getcwd().split('Blender_Synthetic_Data')[0] + 'Blender_Synthetic_Data'
 
             # Save the image with the corresponding label.
