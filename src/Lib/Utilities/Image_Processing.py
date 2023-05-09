@@ -165,3 +165,30 @@ def Draw_Bounding_Box(image: tp.List[tp.List[int]], bounding_box_properties: tp.
         cv2.putText(image_out, bounding_box_properties['Precision'], (x_max + offset + int(f[0]), (y_min - offset) - int(f[1])), txt_font, 0.55, (0, 0, 0), int(line_width/2), cv2.LINE_AA)
 
     return image_out
+
+def YOLO_Object_Detection(image: tp.List[tp.List[int]], model_onnx: str, image_size: int, confidence: float):
+    """
+    Description:
+        Function for object detection using the trained YOLO model. The model in our case must be in *.onnx format, converted 
+        from the official *.pt model.
+
+        More information about training, validation, etc. of the model can be found here:
+            ../Lib/YOLO/YOLOv8_Train_Custom_Dataset.ipynb
+
+    Args:
+        (1) image [Vector<float> Image Shape {Resolution<x, y>}]: Input image to be used for object detection.
+        (2) model_onnx [str]: Input model in *.onnx format.
+                              Note:
+                                More information about the onnx format can be found at: https://onnx.ai
+        (3) image_size [int]: Image size as scalar. The size must match the size of the image when training the model.
+        (4) confidence [float]: The required minimum object confidence threshold for detection.
+    
+    Returns:
+        (1) parameter [float or Vector<float> 1xn]: The actual object confidence threshold for detection.
+        (2) parameter [Dictionary {'x_min': int, 'y_min': int, 'x_max': int, 'y_max': int} x n]: Bounding box in the PASCAL VOC 
+                                                                                                 format.
+        Note:
+            Where n is the number of detected objects.
+    """
+
+    pass
