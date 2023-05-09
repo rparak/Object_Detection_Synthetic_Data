@@ -11,10 +11,6 @@ import numpy as np
 import time
 # OpenCV (Computer Vision) [pip3 install opencv-python]
 import cv2
-# PyTorch (Tensors and Dynamic neural networks) [pip3 install torch]
-import torch
-# Torchvision (Image and video datasets and models) [pip3 install torchvision]
-import torchvision.ops.boxes
 # Custom Library:
 #   ../Lib/Utilities/Image_Processing
 import Lib.Utilities.Image_Processing
@@ -36,7 +32,7 @@ CONST_DATASET_NAME = f'Dataset_Type_{CONST_DATASET_TYPE}_Obj_ID_{CONST_OBJECT_ID
 # Number of data to be tested.
 CONST_NUM_OF_TEST_DATA = 1
 # Iteration of the testing process.
-CONST_SCAN_ITERATION = 43
+CONST_SCAN_ITERATION = 30
 # The type of image folder to be processed.
 #   'DATASET': Images for the dataset.
 #   'ADDITIONAL': Images for additional tests.

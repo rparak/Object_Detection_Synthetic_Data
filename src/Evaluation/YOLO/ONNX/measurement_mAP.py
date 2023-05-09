@@ -9,8 +9,6 @@ import matplotlib.pyplot as plt
 import os
 # SciencePlots (Matplotlib styles for scientific plotting) [pip3 install SciencePlots]
 import scienceplots
-# Time (Time access and conversions)
-import time
 # OpenCV (Computer Vision) [pip3 install opencv-python]
 import cv2
 # PyTorch (Tensors and Dynamic neural networks) [pip3 install torch]
@@ -22,8 +20,6 @@ import torchvision.ops.boxes
 import Lib.Utilities.Image_Processing
 #   ../Lib/Utilities/General
 import Lib.Utilities.General
-#   ../Lib/Utilities/File_IO
-import Lib.Utilities.File_IO as File_IO
 
 """
 Description:
@@ -42,7 +38,7 @@ CONST_DATASET_NAME = f'Dataset_Type_{CONST_DATASET_TYPE}_Obj_ID_{CONST_OBJECT_ID
 # Number of data to be tested.
 CONST_NUM_OF_TEST_DATA = 15
 # Iteration of the testing process.
-CONST_SCAN_ITERATION = 1
+CONST_SCAN_ITERATION = 30
 
 # Mean Average Precision (mAP)
 # x - Image Idenfication Number (ID)
@@ -58,13 +54,18 @@ def main():
     project_folder = os.getcwd().split('Blender_Synthetic_Data')[0] + 'Blender_Synthetic_Data'
 
     # Load a pre-trained YOLO model in the *.onnx format.
-    model = cv2.dnn.readNet('yolov8s_custom.onnx')
+    model = cv2.dnn.readNet(f'{project_folder}/YOLO/Model/Type_{CONST_DATASET_TYPE}_Obj_ID_{CONST_OBJECT_ID}/yolov8s_custom.onnx')
 
-    for i in range(CONST_NUM_OF_TEST_DATA):
-        # Load a raw image from a file.
-        image_data = cv2.imread(f'{project_folder}/Data/{CONST_DATASET_NAME}/images/test/Image_{(i + 1):05}.png')
-        # Load a label (annotation) from a file.
-        label_data = File_IO.Load(f'{project_folder}/Data/{CONST_DATASET_NAME}/labels/test/Image_{(i + 1):05}', 'txt', ' ')
+    for n_i in range(CONST_NUM_OF_TEST_DATA):
+        # Loads images from the specified file.
+        image_data = cv2.imread(f'{project_folder}/Data/{CONST_DATASET_NAME}/images/test/Image_{(CONST_SCAN_ITERATION + (n_i + 1)):05}.png')
+
+        # Object detection using the trained YOLO model.
+        (class_id, bounding_box, confidence) = Lib.Utilities.Image_Processing.YOLO_Object_Detection(image_data, model, 640, 0.5)
+
+        if class_id != None:
+            for _, (class_id_i, bounding_box_i, confidence_i) in enumerate(zip(class_id, bounding_box, confidence)):
+                print(confidence_i)
 
 if __name__ == '__main__':
     sys.exit(main())

@@ -228,7 +228,6 @@ def YOLO_Object_Detection(image: tp.List[tp.List[int]], model_onnx: str, image_s
             # Consider only predictions that are higher than the desired confidence value specified 
             # by the function input.
             if confidence_tmp > confidence:
-                print(confidence_tmp)
                 # Add the class id and confidence to the list. 
                 class_ids.append(class_id_tmp); confidences.append(confidence_tmp[0])
                 # Extract the coordinates (YOLO) of the bounding box.

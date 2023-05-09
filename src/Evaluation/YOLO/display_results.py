@@ -39,7 +39,7 @@ def main():
     # The specified path of the file.
     file_path = f'{project_folder}/YOLO/Results/Type_{CONST_DATASET_TYPE}_Obj_ID_{CONST_OBJECT_ID}'  
 
-    #  Read data from the file {*.csv}.
+    # Read data from the file {*.csv}.
     data = pd.read_csv(f'{file_path}/results.csv')
 
     # Assign data to variables.
