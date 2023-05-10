@@ -54,8 +54,8 @@ def main():
         image_raw = cv2.imread(f'{file_path}/Camera/ID_{CONST_OBJECT_ID}/raw/images/Image_{CONST_SCAN_ITERATION:05}.png')
         image_processed = cv2.imread(f'{file_path}/Camera/ID_{CONST_OBJECT_ID}/processed/images/Image_{CONST_SCAN_ITERATION:05}.png')
     elif CONST_IMAGE_FOLDER_TYPE == 'ADDITIONAL':
-        image_raw = cv2.imread(f'{file_path}/Additional/ID_{CONST_OBJECT_ID}/raw/Image_{CONST_SCAN_ITERATION:05}.png')
-        image_processed = cv2.imread(f'{file_path}/Additional/ID_{CONST_OBJECT_ID}/processed/Image_{CONST_SCAN_ITERATION:05}.png')
+        image_raw = cv2.imread(f'{project_folder}/Additional/ID_{CONST_OBJECT_ID}/raw/Image_{CONST_SCAN_ITERATION:05}.png')
+        image_processed = cv2.imread(f'{project_folder}/Additional/ID_{CONST_OBJECT_ID}/processed/Image_{CONST_SCAN_ITERATION:05}.png')
 
     # Set the parameters for the scientific style.
     plt.style.use('science')

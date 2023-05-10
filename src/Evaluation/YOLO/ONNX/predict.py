@@ -57,7 +57,7 @@ def main():
         if CONST_IMAGE_FOLDER_TYPE == 'DATASET':
             image_data = cv2.imread(f'{project_folder}/Data/{CONST_DATASET_NAME}/images/test/Image_{(CONST_SCAN_ITERATION + (n_i + 1)):05}.png')
         elif CONST_IMAGE_FOLDER_TYPE == 'ADDITIONAL':
-            image_data = cv2.imread(f'/Additional/ID_{CONST_OBJECT_ID}/processed/Image_{(CONST_SCAN_ITERATION + (n_i + 1)):05}.png')
+            image_data = cv2.imread(f'{project_folder}/Additional/ID_{CONST_OBJECT_ID}/processed/Image_{(CONST_SCAN_ITERATION + (n_i + 1)):05}.png')
 
         # Start the timer.
         t_0 = time.time()
@@ -90,8 +90,8 @@ def main():
                 print(f'[INFO] The data in iteration {int(n_i)} was successfully saved to the folder {project_folder}/Data/Results/ONNX/{CONST_DATASET_NAME}.')
             elif CONST_IMAGE_FOLDER_TYPE == 'ADDITIONAL':
                 # Save the image to a file.
-                cv2.imwrite(f'/Additional/ID_{CONST_OBJECT_ID}/results/ONNX/Image_{(CONST_SCAN_ITERATION + (n_i + 1)):05}.png', image_data)
-                print(f'[INFO] The data in iteration {int(n_i)} was successfully saved to the folder /Additional/ID_{CONST_OBJECT_ID}/results/.')
+                cv2.imwrite(f'{project_folder}/Additional/ID_{CONST_OBJECT_ID}/results/ONNX/Image_{(CONST_SCAN_ITERATION + (n_i + 1)):05}.png', image_data)
+                print(f'[INFO] The data in iteration {int(n_i)} was successfully saved to the folder {project_folder}/Additional/ID_{CONST_OBJECT_ID}/results/.')
 
             # Display information.
             print(f'[INFO]  - Image: Image_{(CONST_SCAN_ITERATION + (n_i + 1)):05}.png')

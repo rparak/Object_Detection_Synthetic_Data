@@ -58,8 +58,8 @@ def main():
             file_path_in  = f'{project_folder}/Data/Camera/ID_{CONST_OBJECT_ID}/raw/images/Image_{(i + 1):05}.png'
             file_path_out = f'{project_folder}/Data/Camera/ID_{CONST_OBJECT_ID}/processed/images/Image_{(i + 1):05}.png'
         elif CONST_IMAGE_FOLDER_TYPE == 'ADDITIONAL':
-            file_path_in  = f'{project_folder}/Data/Additional/ID_{CONST_OBJECT_ID}/raw/Image_{(i + 1):05}.png'
-            file_path_out = f'{project_folder}/Data/Additional/ID_{CONST_OBJECT_ID}/processed/Image_{(i + 1):05}.png'          
+            file_path_in  = f'{project_folder}/Additional/ID_{CONST_OBJECT_ID}/raw/Image_{(i + 1):05}.png'
+            file_path_out = f'{project_folder}/Additional/ID_{CONST_OBJECT_ID}/processed/Image_{(i + 1):05}.png'          
 
         # Loads the image to the specified file.
         image_in = cv2.imread(file_path_in)
