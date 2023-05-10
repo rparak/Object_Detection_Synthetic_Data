@@ -76,7 +76,7 @@ def main():
             if class_id != None:
                 for i, (class_id_i, bounding_box_i, confidence_i) in enumerate(zip(class_id, bounding_box, confidence)):
                     # Create a bounding box from the label data.
-                    Bounding_Box_Properties = {'Name': f'{CONST_OBJECT_NAME[CONST_OBJECT_ID]}_{i}', 'Precision': f'{str(np.round(confidence_i, 2)):02}', 
+                    Bounding_Box_Properties = {'Name': f'{CONST_OBJECT_NAME[CONST_OBJECT_ID]}_{i}', 'Precision': f'{str(np.round(confidence_i, 2))}', 
                                                'Data': bounding_box_i}
                     
                     # Draw the bounding box of the object with additional dependencies (name, precision, etc.) in 
@@ -87,11 +87,11 @@ def main():
             if CONST_IMAGE_FOLDER_TYPE == 'DATASET':
                 # Save the image to a file.
                 cv2.imwrite(f'{project_folder}/Data/Results/ONNX/{CONST_DATASET_NAME}/images/Image_{(CONST_SCAN_ITERATION + (n_i + 1)):05}.png', image_data)
-                print(f'[INFO] The data in iteration {int(n_i)} was successfully saved to the folder {project_folder}/Data/Results/ONNX/{CONST_DATASET_NAME}.')
+                print(f'[INFO] The data in iteration {int(n_i)} was successfully saved to the folder {project_folder}/Data/Results/ONNX/{CONST_DATASET_NAME}/images/.')
             elif CONST_IMAGE_FOLDER_TYPE == 'ADDITIONAL':
                 # Save the image to a file.
                 cv2.imwrite(f'{project_folder}/Additional/ID_{CONST_OBJECT_ID}/results/ONNX/Image_{(CONST_SCAN_ITERATION + (n_i + 1)):05}.png', image_data)
-                print(f'[INFO] The data in iteration {int(n_i)} was successfully saved to the folder {project_folder}/Additional/ID_{CONST_OBJECT_ID}/results/.')
+                print(f'[INFO] The data in iteration {int(n_i)} was successfully saved to the folder {project_folder}/Additional/ID_{CONST_OBJECT_ID}/results/ONNX/.')
 
             # Display information.
             print(f'[INFO]  - Image: Image_{(CONST_SCAN_ITERATION + (n_i + 1)):05}.png')
