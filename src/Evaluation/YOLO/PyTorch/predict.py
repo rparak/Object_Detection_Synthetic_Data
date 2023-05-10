@@ -43,7 +43,7 @@ CONST_SCAN_ITERATION = 30
 #   'ADDITIONAL': Images for additional tests.
 CONST_IMAGE_FOLDER_TYPE = 'DATASET'
 # Determine whether or not to save the images.
-CONST_SAVE_IMAGES = True
+CONST_SAVE_IMAGES = False
 
 def main():
     """
