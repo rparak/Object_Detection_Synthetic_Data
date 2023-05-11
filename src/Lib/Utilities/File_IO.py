@@ -4,6 +4,8 @@ import numpy as np
 import typing as tp
 # Pickle (Python object serialization)
 import pickle as pkl
+# Python YAML (Read/Write YAML files) [pip3 install pyyaml]
+import yaml
 
 def Load(file_path: str, format: str, separator: str) -> tp.List[float]:
     """
@@ -29,6 +31,7 @@ def Load(file_path: str, format: str, separator: str) -> tp.List[float]:
         with open(file_path + f'.{format}', 'rb') as f:
             # Load the data from the file using the file object (f).
             data = pkl.load(f)
+
     elif format == 'txt':
         data_tmp = []
         with open(file_path + f'.{format}', 'r') as f:
@@ -41,9 +44,15 @@ def Load(file_path: str, format: str, separator: str) -> tp.List[float]:
         # Convert a list to an array.
         data = np.array(data_tmp, dtype=np.float32)
 
+    elif format == 'yaml':
+        # Open the file in 'r' mode (read).
+        with open(file_path + f'.{format}', 'r') as f:
+            # Load the data from the file.
+            data = yaml.load(f, Loader=yaml.loader.SafeLoader)
+    
     # Close the file after loading the data.
     f.close()
-    
+
     return data
 
 def Save(file_path: str, data: tp.List[float], format: str, separator: str) -> None:

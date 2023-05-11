@@ -21,10 +21,10 @@ import Lib.Utilities.File_IO as File_IO
 Description:
     Initialization of constants.
 """
-# The ID of the object to be processed.
+# The ID of the object to be augmented.
 CONST_OBJECT_ID = 1
 # The identification number of the dataset type.
-CONST_DATASET_TYPE = 1
+CONST_DATASET_TYPE = 3
 # Name of the dataset.
 CONST_DATASET_NAME = F'Dataset_Type_{CONST_DATASET_TYPE}_Obj_ID_{CONST_OBJECT_ID}'
 # Number of augmented data to be generated.

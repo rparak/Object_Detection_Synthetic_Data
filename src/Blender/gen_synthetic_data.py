@@ -30,7 +30,7 @@ Description:
 Description:
     Initialization of constants.
 """
-# The ID of the object to be scanned.
+# The ID of the object to be generated.
 #   ID{0} = 'T_Joint'
 #   ID{1} = 'Metal_Blank'
 CONST_OBJECT_ID = 0
