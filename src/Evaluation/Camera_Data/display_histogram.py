@@ -20,7 +20,7 @@ Description:
 """
 # The ID of the object to be processed.
 CONST_OBJECT_ID = 0
-# Iteration of the scanning process.
+# Initial iteration of the scanning process.
 CONST_SCAN_ITERATION = 1
 # Displays an image using the matplotlib library 
 # with histograms.

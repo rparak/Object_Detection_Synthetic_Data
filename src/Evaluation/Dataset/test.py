@@ -23,7 +23,7 @@ CONST_OBJECT_ID = 0
 #   ID{0} = 'T_Joint'
 #   ID{1} = 'Metal_Blank'
 CONST_OBJECT_NAME = ['T_Joint', 'Metal_Blank']
-# Iteration of the scanning process.
+# Initial iteration of the scanning process.
 CONST_SCAN_ITERATION = 1
 # The name of the partition of the dataset.
 #   Note:

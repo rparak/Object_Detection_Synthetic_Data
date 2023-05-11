@@ -36,7 +36,7 @@ CONST_DATASET_TYPE = 0
 CONST_DATASET_NAME = f'Dataset_Type_{CONST_DATASET_TYPE}_Obj_ID_{CONST_OBJECT_ID}'
 # Number of data to be tested.
 CONST_NUM_OF_TEST_DATA = 15
-# Iteration of the testing process.
+# Initial iteration of the scanning process.
 CONST_SCAN_ITERATION = 30
 # The type of image folder to be processed.
 #   'DATASET': Images for the dataset.
@@ -68,10 +68,14 @@ def main():
 
         # Start the timer.
         t_0 = time.time()
-        
+
         # Predict (test) the model on a test dataset.
         result = model.predict(source=image_file_path, imgsz=640, conf=0.5)
 
+        # Display information.
+        print(f'[INFO]  - Image: Image_{(CONST_SCAN_ITERATION + (n_i + 1)):05}.png')
+        print(f'[INFO] Time: {(time.time() - t_0):0.05f} in seconds.')
+        
         if CONST_SAVE_IMAGES == True:
             print(f'[INFO] Iteration: {n_i + 1}')
 
@@ -79,6 +83,7 @@ def main():
             t_0 = time.time()
 
             if result[0].boxes.shape[0] >= 1:
+                # A bounding box (in yolo format) with an associated confidence value. 
                 bounding_box = result[0].boxes.xywhn.cpu().numpy()
                 confidence   = result[0].boxes.conf.cpu().numpy()
                 print(f'[INFO] The model found {bounding_box.shape[0]} object in the input image.')
@@ -95,7 +100,6 @@ def main():
                     image_data = Lib.Utilities.Image_Processing.Draw_Bounding_Box(image_data, Bounding_Box_Properties, 'YOLO', (0, 255, 0), True, True)
             else:
                 print('[INFO] The model did not find object in the input image.')
-
 
             # Loads images from the specified file.
             if CONST_IMAGE_FOLDER_TYPE == 'DATASET':

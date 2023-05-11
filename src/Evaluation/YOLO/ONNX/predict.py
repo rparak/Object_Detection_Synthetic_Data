@@ -31,14 +31,14 @@ CONST_DATASET_TYPE = 0
 CONST_DATASET_NAME = f'Dataset_Type_{CONST_DATASET_TYPE}_Obj_ID_{CONST_OBJECT_ID}'
 # Number of data to be tested.
 CONST_NUM_OF_TEST_DATA = 15
-# Iteration of the testing process.
+# Initial iteration of the scanning process.
 CONST_SCAN_ITERATION = 30
 # The type of image folder to be processed.
 #   'DATASET': Images for the dataset.
 #   'ADDITIONAL': Images for additional tests.
 CONST_IMAGE_FOLDER_TYPE = 'DATASET'
 # Determine whether or not to save the images.
-CONST_SAVE_IMAGES = True
+CONST_SAVE_IMAGES = False
 
 def main():
     """

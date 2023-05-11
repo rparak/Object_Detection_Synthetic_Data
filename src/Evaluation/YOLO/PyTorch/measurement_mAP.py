@@ -46,7 +46,7 @@ CONST_DATASET_TYPE = 0
 CONST_DATASET_NAME = f'Dataset_Type_{CONST_DATASET_TYPE}_Obj_ID_{CONST_OBJECT_ID}'
 # Number of data to be tested.
 CONST_NUM_OF_TEST_DATA = 15
-# Iteration of the testing process.
+# Initial iteration of the scanning process.
 CONST_SCAN_ITERATION = 30
 
 # Mean Average Precision (mAP)
@@ -69,7 +69,7 @@ def main():
     # Load a pre-trained custom YOLO model.
     model = YOLO(f'{project_folder}/YOLO/Model/Type_{CONST_DATASET_TYPE}_Obj_ID_{CONST_OBJECT_ID}/yolov8s_custom.pt')
 
-    score_confidence = []; score_iou = []; num_of_data = 0
+    score_confidence = []; score_iou = []; total_num_of_data = 0; num_of_data = []
     for n_i in range(CONST_NUM_OF_TEST_DATA):
         image_file_path = f'{project_folder}/Data/{CONST_DATASET_NAME}/images/test/Image_{(CONST_SCAN_ITERATION + (n_i + 1)):05}.png'
 
@@ -80,37 +80,38 @@ def main():
         label_data = File_IO.Load(f'{project_folder}/Data/{CONST_DATASET_NAME}/labels/test/Image_{(CONST_SCAN_ITERATION + (n_i + 1)):05}', 'txt', ' ')
 
         # ...
-        y_desired = []
+        bounding_box_desired = []
         for _, label_data_i in enumerate(label_data):
             bounding_box_desired_tmp = Lib.Utilities.General.Convert_Boundig_Box_Data('YOLO', 'PASCAL_VOC', 
                                                                                       {'x_c': label_data_i[1], 
                                                                                        'y_c': label_data_i[2], 
                                                                                        'width': label_data_i[3], 
                                                                                        'height': label_data_i[4]}, {'x': image_data.shape[1], 'y': image_data.shape[0]})
-            y_desired.append(list(bounding_box_desired_tmp.values()))
+            bounding_box_desired.append(list(bounding_box_desired_tmp.values()))
 
-        # ...
-        num_of_data += len(y_desired)
+        # Calculate the number of data in the current row and the total number of data.
+        total_num_of_data += len(bounding_box_desired)
+        num_of_data.append(len(bounding_box_desired))
         
         # Predict (test) the model on a test dataset.
         result = model.predict(source=image_file_path, imgsz=640, conf=0.5)
 
         # ...
         if result[0].boxes.shape[0] >= 1:
-            bounding_box_predicted = result[0].boxes.xyxy.cpu().numpy()
-            confidence_predicted   = result[0].boxes.conf.cpu().numpy()
-            y_predicted = []
-            for _, (bounding_box_i, confidence_i) in enumerate(zip(bounding_box_predicted, confidence_predicted)):
-                y_predicted.append(bounding_box_i); score_confidence.append(confidence_i)
+            bounding_box_predicted_tmp = result[0].boxes.xyxy.cpu().numpy()
+            confidence_predicted_tmp   = result[0].boxes.conf.cpu().numpy()
+            bounding_box_predicted = []
+            for _, (bounding_box_predicted_tmp_i, confidence_predicted_tmp_i) in enumerate(zip(bounding_box_predicted_tmp, confidence_predicted_tmp)):
+                bounding_box_predicted.append(bounding_box_predicted_tmp_i); score_confidence.append(confidence_predicted_tmp_i)
         else:
-            y_predicted = [[0] * 4]; score_confidence.append(0.0)
+            bounding_box_predicted = [[0] * 4]; score_confidence.append(0.0)
                 
         # ...
-        for _, y_desired_i in enumerate(y_desired):
+        for _, bounding_box_desired_i in enumerate(bounding_box_desired):
             score_iou_tmp = []
-            for _, y_predicted_i in enumerate(y_predicted):
-                score_iou_tmp.append(torchvision.ops.boxes.box_iou(torch.tensor([y_desired_i], dtype=torch.float),
-                                                                   torch.tensor([y_predicted_i], dtype=torch.float)).numpy()[0, 0])
+            for _, bounding_box_predicted_i in enumerate(bounding_box_predicted):
+                score_iou_tmp.append(torchvision.ops.boxes.box_iou(torch.tensor([bounding_box_desired_i], dtype=torch.float),
+                                                                   torch.tensor([bounding_box_predicted_i], dtype=torch.float)).numpy()[0, 0])
             score_iou.append(Mathematics.Max(score_iou_tmp)[1])
 
     #print(num_of_data)

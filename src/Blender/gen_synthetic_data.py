@@ -35,7 +35,7 @@ Description:
 #   ID{1} = 'Metal_Blank'
 CONST_OBJECT_ID = 0
 # The identification number of the dataset type.
-CONST_DATASET_TYPE = 2
+CONST_DATASET_TYPE = 0
 # Number of synthetic data to be generated.
 CONST_NUM_OF_GEN_DATA = 300
 # Name of the dataset.
