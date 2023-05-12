@@ -108,8 +108,8 @@ def main():
                 print(f'[INFO] The data in iteration {int(n_i + 1)} was successfully saved to the folder {project_folder}/Data/Results/PyTorch/{CONST_DATASET_NAME}/images/.')
             elif CONST_IMAGE_FOLDER_TYPE == 'ADDITIONAL':
                 # Save the image to a file.
-                cv2.imwrite(f'{project_folder}/Additional/ID_{CONST_OBJECT_ID}/results/PyTorch/Image_{(CONST_SCAN_ITERATION + (n_i + 1)):05}.png', image_data)
-                print(f'[INFO] The data in iteration {int(n_i + 1)} was successfully saved to the folder {project_folder}/Additional/ID_{CONST_OBJECT_ID}/results/PyTorch/.')
+                cv2.imwrite(f'{project_folder}/Additional/ID_{CONST_OBJECT_ID}/results/PyTorch/{CONST_DATASET_NAME}/images/Image_{(CONST_SCAN_ITERATION + (n_i + 1)):05}.png', image_data)
+                print(f'[INFO] The data in iteration {int(n_i + 1)} was successfully saved to the folder {project_folder}/Additional/ID_{CONST_OBJECT_ID}/results/PyTorch/{CONST_DATASET_NAME}/images/.')
 
             # Display information.
             print(f'[INFO]  - Image: Image_{(CONST_SCAN_ITERATION + (n_i + 1)):05}.png')
