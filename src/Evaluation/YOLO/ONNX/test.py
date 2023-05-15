@@ -32,12 +32,12 @@ fig.suptitle(f'The name ...', fontsize = 20)
 
 for i, (bd_i, bp_i) in enumerate(zip(box_desired, box_predicted)):
     if isinstance(bd_i, list):
-        ax.scatter([i] * len(bd_i), bd_i, c = 'b')
+        ax.scatter(i, np.sum(bd_i)/len(bd_i), c = 'b')
     else:
         ax.scatter(i, bd_i, c = 'b')
 
     if isinstance(bp_i, list):
-        ax.scatter([i] * len(bp_i), bp_i, c = 'r')
+        ax.scatter(i, np.sum(bp_i)/len(bp_i), c = 'r')
     else:
         ax.scatter(i, bp_i, c = 'r')
 
