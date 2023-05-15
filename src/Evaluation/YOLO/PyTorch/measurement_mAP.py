@@ -41,7 +41,7 @@ CONST_OBJECT_ID = 0
 #   ID{1} = 'Metal_Blank'
 CONST_OBJECT_NAME = ['T_Joint', 'Metal_Blank']
 # The identification number of the dataset type.
-CONST_DATASET_TYPE = 0
+CONST_DATASET_TYPE = 1
 # Name of the dataset.
 CONST_DATASET_NAME = f'Dataset_Type_{CONST_DATASET_TYPE}_Obj_ID_{CONST_OBJECT_ID}'
 # Number of data to be tested.
