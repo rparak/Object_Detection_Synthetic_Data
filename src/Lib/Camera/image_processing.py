@@ -25,7 +25,7 @@ CONST_OBJECT_ID = 0
 # Note:
 #   It must be equal to the number of data 
 #   in the raw images folder.
-CONST_NUM_OF_DATA = 46
+CONST_NUM_OF_DATA = 5
 # Specified parameter of each object for histogram 
 # clipping in percentage.
 CONST_CLIP_LIMIT = [0.75, 1.25]
