@@ -22,7 +22,7 @@ Description:
 CONST_OBJECT_ID = 0
 # The identification number of the iteration to save the image. It starts with the number 1.
 #   1 = 'Image_001', 2 = 'Image_002', etc.
-CONST_INIT_INDEX = 1
+CONST_INIT_INDEX = 10
 # Camera resolution in pixels (x, y).
 # Note: 
 #   Low{'x': 1032px, 'y': 772px}, High{'x': 2064px, 'y': 1544px}
