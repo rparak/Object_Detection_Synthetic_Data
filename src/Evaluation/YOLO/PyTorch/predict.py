@@ -31,19 +31,19 @@ CONST_OBJECT_ID = 0
 #   ID{1} = 'Metal_Blank'
 CONST_OBJECT_NAME = ['T_Joint', 'Metal_Blank']
 # The identification number of the dataset type.
-CONST_DATASET_TYPE = 0
+CONST_DATASET_TYPE = 5
 # Name of the dataset.
 CONST_DATASET_NAME = f'Dataset_Type_{CONST_DATASET_TYPE}_Obj_ID_{CONST_OBJECT_ID}'
 # Number of data to be tested.
-CONST_NUM_OF_TEST_DATA = 15
+CONST_NUM_OF_TEST_DATA = 1
 # Initial iteration of the scanning process.
-CONST_SCAN_ITERATION = 30
+CONST_SCAN_ITERATION = 0
 # The type of image folder to be processed.
 #   'DATASET': Images for the dataset.
 #   'ADDITIONAL': Images for additional tests.
-CONST_IMAGE_FOLDER_TYPE = 'DATASET'
+CONST_IMAGE_FOLDER_TYPE = 'ADDITIONAL'
 # Determine whether or not to save the images.
-CONST_SAVE_IMAGES = False
+CONST_SAVE_IMAGES = True
 
 def main():
     """
@@ -70,7 +70,7 @@ def main():
         t_0 = time.time()
 
         # Predict (test) the model on a test dataset.
-        result = model.predict(source=image_file_path, imgsz=640, conf=0.5)
+        result = model.predict(source=image_file_path, imgsz=(480, 640), conf=0.5)
 
         # Display information.
         print(f'[INFO]  - Image: Image_{(CONST_SCAN_ITERATION + (n_i + 1)):05}.png')
@@ -83,13 +83,17 @@ def main():
             t_0 = time.time()
 
             if result[0].boxes.shape[0] >= 1:
+                print(result[0].boxes.cls.cpu().numpy())
+                #print(result[0].boxes)
+                print(result[0].boxes.conf.cpu().numpy())
+
                 # A bounding box (in yolo format) with an associated confidence value. 
                 bounding_box = result[0].boxes.xywhn.cpu().numpy()
                 confidence   = result[0].boxes.conf.cpu().numpy()
-                print(f'[INFO] The model found {bounding_box.shape[0]} object in the input image.')
+                #print(f'[INFO] The model found {bounding_box.shape[0]} object in the input image.')
                 for i, (bounding_box_i, confidence_i) in enumerate(zip(bounding_box, confidence)):
-                    print(f'[INFO]  - Bounding Box (xywhn): {bounding_box_i}')
-                    print(f'[INFO]  - Confidence: {str(np.round(confidence_i, 2))}')
+                    #print(f'[INFO]  - Bounding Box (xywhn): {bounding_box_i}')
+                    #print(f'[INFO]  - Confidence: {str(np.round(confidence_i, 2))}')
                 
                     # Create a bounding box from the label data.
                     Bounding_Box_Properties = {'Name': f'{CONST_OBJECT_NAME[CONST_OBJECT_ID]}_{i}', 'Precision': f'{str(np.round(confidence_i, 2))}', 
@@ -101,6 +105,7 @@ def main():
             else:
                 print('[INFO] The model did not find object in the input image.')
 
+            """
             # Loads images from the specified file.
             if CONST_IMAGE_FOLDER_TYPE == 'DATASET':
                 # Save the image to a file.
@@ -110,7 +115,7 @@ def main():
                 # Save the image to a file.
                 cv2.imwrite(f'{project_folder}/Additional/ID_{CONST_OBJECT_ID}/results/PyTorch/{CONST_DATASET_NAME}/images/Image_{(CONST_SCAN_ITERATION + (n_i + 1)):05}.png', image_data)
                 print(f'[INFO] The data in iteration {int(n_i + 1)} was successfully saved to the folder {project_folder}/Additional/ID_{CONST_OBJECT_ID}/results/PyTorch/{CONST_DATASET_NAME}/images/.')
-
+            """
             # Display information.
             print(f'[INFO]  - Image: Image_{(CONST_SCAN_ITERATION + (n_i + 1)):05}.png')
             print(f'[INFO] Time: {(time.time() - t_0):0.05f} in seconds.')
