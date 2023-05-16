@@ -22,7 +22,7 @@ Description:
 CONST_OBJECT_ID = 0
 # The identification number of the iteration to save the image. It starts with the number 1.
 #   1 = 'Image_001', 2 = 'Image_002', etc.
-CONST_INIT_INDEX = 10
+CONST_INIT_INDEX = 1
 # Camera resolution in pixels (x, y).
 # Note: 
 #   Low{'x': 1032px, 'y': 772px}, High{'x': 2064px, 'y': 1544px}
@@ -54,9 +54,9 @@ def main():
 
     # The specified path to the folder where the image will be saved.
     if CONST_IMAGE_FOLDER_TYPE == 'DATASET':
-        file_path = f'{project_folder}/Data/Camera/ID_{CONST_OBJECT_ID}/raw/images/Image_{(CONST_INIT_INDEX):05}.png'
+        file_path = f'{project_folder}/Data/Camera/raw/images/Object_ID_{CONST_OBJECT_ID}_{(CONST_INIT_INDEX):05}.png'
     elif CONST_IMAGE_FOLDER_TYPE == 'ADDITIONAL':
-        file_path = f'{project_folder}/Additional/ID_{CONST_OBJECT_ID}/raw/Image_{(CONST_INIT_INDEX):05}.png'
+        file_path = f'{project_folder}/Additional/raw/images/Object_ID_{CONST_OBJECT_ID}_{(CONST_INIT_INDEX):05}.png'
 
     # Set the path to the destination CTI file.
     cti_file_path = os.getenv('PHOXI_CONTROL_PATH') + "/API/bin/photoneo.cti"

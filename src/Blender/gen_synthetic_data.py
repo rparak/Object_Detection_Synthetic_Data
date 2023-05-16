@@ -35,15 +35,15 @@ Description:
 #   ID{1} = 'Metal_Blank'
 CONST_OBJECT_ID = 0
 # The identification number of the dataset type.
-CONST_DATASET_TYPE = 0
+CONST_DATASET_TYPE = 3
 # Number of synthetic data to be generated.
 CONST_NUM_OF_GEN_DATA = 300
 # Name of the dataset.
-CONST_DATASET_NAME = F'Dataset_Type_{CONST_DATASET_TYPE}_Obj_ID_{CONST_OBJECT_ID}'
+CONST_DATASET_NAME = f'Dataset_Type_{CONST_DATASET_TYPE}'
 # Partition the dataset into training, validation, and test sets in percentages.
 #   Note:
 #       The sum of the values in the partitions must equal 100.
-CONST_PARTITION_DATASET = {'train': 80, 'valid': 10, 'test': 10}
+CONST_PARTITION_DATASET = {'train': 80, 'valid': 20, 'test': 0}
 # Initial index (iteration) for data generation.
 #   0 - Data storage starts from 1 (Name_001, etc.)
 #   10 - Data storage start from 11 (Name_011, etc.)
@@ -85,6 +85,9 @@ def main():
         # Generates data up to the desired maximum number of iterations, which is given by the constant {CONST_NUM_OF_GEN_DATA}.
         i = 0; id_partition = 0; percentage_stored_data = 0
         while CONST_NUM_OF_GEN_DATA > i:
+            # Generate random camera and lighting properties.
+            Camera_Cls.Random()
+            
             # Generate a random position of the object.
             Object_Cls.Random()
 

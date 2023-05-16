@@ -40,7 +40,7 @@ CONST_OBJECT_NAME = ['T_Joint', 'Metal_Blank']
 # The identification number of the dataset type.
 CONST_DATASET_TYPE = 0
 # Name of the dataset.
-CONST_DATASET_NAME = f'Dataset_Type_{CONST_DATASET_TYPE}_Obj_ID_{CONST_OBJECT_ID}'
+CONST_DATASET_NAME = f'Dataset_Type_{CONST_DATASET_TYPE}'
 # Number of data to be tested.
 CONST_NUM_OF_TEST_DATA = 15
 # Initial iteration of the scanning process.
@@ -64,15 +64,19 @@ def main():
     project_folder = os.getcwd().split('Blender_Synthetic_Data')[0] + 'Blender_Synthetic_Data'
 
     # Load a pre-trained YOLO model in the *.onnx format.
-    model = cv2.dnn.readNet(f'{project_folder}/YOLO/Model/Type_{CONST_DATASET_TYPE}_Obj_ID_{CONST_OBJECT_ID}/yolov8s_custom.onnx')
+    model = cv2.dnn.readNet(f'{project_folder}/YOLO/Model/Type_{CONST_DATASET_TYPE}/yolov8s_custom.onnx')
 
     score_confidence = []; score_iou = []; total_num_of_data = 0; num_of_data = []
     for n_i in range(CONST_NUM_OF_TEST_DATA):
+        image_file_path = f'{project_folder}/Data/{CONST_DATASET_NAME}/images/test/ \
+                          Object_ID_{CONST_OBJECT_ID}_{(CONST_SCAN_ITERATION + (n_i + 1)):05}.png'
+
         # Loads images from the specified file.
-        image_data = cv2.imread(f'{project_folder}/Data/{CONST_DATASET_NAME}/images/test/Image_{(CONST_SCAN_ITERATION + (n_i + 1)):05}.png')
+        image_data = cv2.imread(image_file_path)
 
         # Loads labels (annotations) from the specified file.
-        label_data = File_IO.Load(f'{project_folder}/Data/{CONST_DATASET_NAME}/labels/test/Image_{(CONST_SCAN_ITERATION + (n_i + 1)):05}', 'txt', ' ')
+        label_data = File_IO.Load(f'{project_folder}/Data/{CONST_DATASET_NAME}/labels/test/ \
+                                  Object_ID_{CONST_OBJECT_ID}_{(CONST_SCAN_ITERATION + (n_i + 1)):05}', 'txt', ' ')
 
         # ...
         bounding_box_desired = []

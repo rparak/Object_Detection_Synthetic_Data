@@ -19,12 +19,10 @@ import Lib.Transformation.Utilities.Mathematics as Mathematics
 Description:
     Initialization of constants.
 """
-# The ID of the object to be processed.
-CONST_OBJECT_ID = 0
 # The identification number of the dataset type.
 CONST_DATASET_TYPE = 0
 # Name of the dataset.
-CONST_DATASET_NAME = f'Dataset_Type_{CONST_DATASET_TYPE}_Obj_ID_{CONST_OBJECT_ID}'
+CONST_DATASET_NAME = f'Dataset_Type_{CONST_DATASET_TYPE}'
 
 def main():
     """
@@ -37,7 +35,7 @@ def main():
     project_folder = os.getcwd().split('Blender_Synthetic_Data')[0] + 'Blender_Synthetic_Data'
 
     # The specified path of the file.
-    file_path = f'{project_folder}/YOLO/Results/Type_{CONST_DATASET_TYPE}_Obj_ID_{CONST_OBJECT_ID}'  
+    file_path = f'{project_folder}/YOLO/Results/Type_{CONST_DATASET_TYPE}'  
 
     # Read data from the file {*.csv}.
     data = pd.read_csv(f'{file_path}/results.csv')

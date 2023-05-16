@@ -25,7 +25,7 @@ CONST_OBJECT_ID = 0
 # Note:
 #   It must be equal to the number of data 
 #   in the raw images folder.
-CONST_NUM_OF_DATA = 5
+CONST_NUM_OF_DATA = 10
 # Specified parameter of each object for histogram 
 # clipping in percentage.
 CONST_CLIP_LIMIT = [0.75, 1.25]
@@ -55,18 +55,21 @@ def main():
 
         # The specified path to the folder from which the image will be loaded (*_in) and where the image will be saved (*_out).
         if CONST_IMAGE_FOLDER_TYPE == 'DATASET':
-            file_path_in  = f'{project_folder}/Data/Camera/ID_{CONST_OBJECT_ID}/raw/images/Image_{(i + 1):05}.png'
-            file_path_out = f'{project_folder}/Data/Camera/ID_{CONST_OBJECT_ID}/processed/images/Image_{(i + 1):05}.png'
+            file_path_in  = f'{project_folder}/Data/Camera/raw/images/Object_ID_{CONST_OBJECT_ID}_{(i + 1):05}.png'
+            file_path_out = f'{project_folder}/Data/Camera/processed/images/Object_ID_{CONST_OBJECT_ID}_{(i + 1):05}.png'
         elif CONST_IMAGE_FOLDER_TYPE == 'ADDITIONAL':
-            file_path_in  = f'{project_folder}/Additional/ID_{CONST_OBJECT_ID}/raw/Image_{(i + 1):05}.png'
-            file_path_out = f'{project_folder}/Additional/ID_{CONST_OBJECT_ID}/processed/Image_{(i + 1):05}.png'          
+            file_path_in  = f'{project_folder}/Additional/raw/images/Image_{(i + 1):05}.png'
+            file_path_out = f'{project_folder}/Additional/processed/images/Image_{(i + 1):05}.png'          
 
         # Loads the image to the specified file.
         image_in = cv2.imread(file_path_in)
         
         # Function to adjust the contrast and brightness parameters of the input image 
         # by clipping the histogram.
-        (alpha_custom, beta_custom) = Lib.Utilities.Image_Processing.Get_Alpha_Beta_Parameters(image_in, CONST_CLIP_LIMIT[CONST_OBJECT_ID])
+        if CONST_IMAGE_FOLDER_TYPE == 'DATASET':
+            (alpha_custom, beta_custom) = Lib.Utilities.Image_Processing.Get_Alpha_Beta_Parameters(image_in, CONST_CLIP_LIMIT[CONST_OBJECT_ID])
+        elif CONST_IMAGE_FOLDER_TYPE == 'ADDITIONAL':
+            (alpha_custom, beta_custom) = Lib.Utilities.Image_Processing.Get_Alpha_Beta_Parameters(image_in, 1.5)    
         
         # Adjust the contrast and brightness of the image using the alpha and beta parameters.
         #   Equation:

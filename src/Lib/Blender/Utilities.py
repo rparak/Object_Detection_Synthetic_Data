@@ -252,14 +252,14 @@ def Save_Synthetic_Data(file_path: str, partition_name: str, iteration: int, obj
     t_0 = time.time()
 
     # Save the label data (bounding box) to a file.
-    File_IO.Save(f'{file_path}/labels/{partition_name}/Image_{iteration}', np.hstack((object_id, bounding_box)), label_format.lower(), ' ')
+    File_IO.Save(f'{file_path}/labels/{partition_name}/Object_ID_{object_id}_{iteration}', np.hstack((object_id, bounding_box)), label_format.lower(), ' ')
     
     # Save the image to a file.
-    bpy.context.scene.render.filepath = f'{file_path}/images/{partition_name}/Image_{iteration}.{image_format.lower()}'
+    bpy.context.scene.render.filepath = f'{file_path}/images/{partition_name}/Object_ID_{object_id}_{iteration}.{image_format.lower()}'
     bpy.ops.render.render(animation=False, write_still=True)
 
     # Display information.
     print(f'[INFO] The data in iteration {int(iteration)} was successfully saved to the folder {file_path}.')
-    print(f'[INFO]  - Image: /images/{partition_name}/Image_{iteration}.{image_format.lower()}')
-    print(f'[INFO]  - Label: /labels/{partition_name}/Image_{iteration}.txt')
+    print(f'[INFO]  - Image: /images/{partition_name}/Object_ID_{object_id}_{iteration}.{image_format.lower()}')
+    print(f'[INFO]  - Label: /labels/{partition_name}/Object_ID_{object_id}_{iteration}.txt')
     print(f'[INFO] Time: {(time.time() - t_0):0.05f} in seconds.')

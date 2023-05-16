@@ -69,6 +69,11 @@ class Camera_Cls(object):
             # The format to save the rendered image.
             self.__image_format = image_format
 
+            # Copy the translation of the camera part. 
+            #   Note:
+            #       Used for random generation
+            self.__p_0 = self.__Cam_Param_Str.T.p.all().copy()
+
             # Set the main parameters of the camera object.
             self.__Set_Camera_Parameters()
 
@@ -229,6 +234,43 @@ class Camera_Cls(object):
         """
                 
         return self.K() @ self.R_t()
+    
+    def Random(self) -> None:
+        """
+        Description:
+            A function to randomly generate camera properties (transformation, noise, etc.) as well as to generate illumination.
+
+            Note:
+                The function can be easily modified/extended with additional functions.
+        """
+
+        # The strength of the light (the material of the object to be used for illumination).
+        bpy.data.materials['Light'].node_tree.nodes['Emission'].inputs[1].default_value = np.float32(np.random.uniform(7.5 - 1.0, 
+                                                                                                                       7.5 + 1.0))
+
+
+        # Randomly generate the translation part of the camera.
+        self.__Cam_Param_Str.T.p[0] = np.float32(np.random.uniform(self.__p_0[0] - 0.001, 
+                                                                   self.__p_0[0] + 0.001))
+        self.__Cam_Param_Str.T.p[1] = np.float32(np.random.uniform(self.__p_0[1] - 0.001, 
+                                                                   self.__p_0[1] + 0.001))
+        self.__Cam_Param_Str.T.p[2] = np.float32(np.random.uniform(self.__p_0[2] - 0.001, 
+                                                                   self.__p_0[2] + 0.001))
+        
+        # Set the transformation of the object (camera)
+        Lib.Blender.Utilities.Set_Object_Transformation(self.__name, self.__Cam_Param_Str.T)
+        self.__Update()
+
+        # Non-Ideal parameters (images with additional noise):
+        #   adaptive_threshold = 0.023 .. 0.027
+        #   samples = 112 .. 144
+        bpy.context.scene.cycles.adaptive_threshold = np.float32(np.random.uniform(0.025 - 0.002, 
+                                                                                   0.025 + 0.002))
+        bpy.context.scene.cycles.samples = int(np.random.uniform(128 - 16, 
+                                                                 128 + 16))
+
+        #  Update the scene.
+        self.__Update()
 
 class Object_Cls(object):
     """

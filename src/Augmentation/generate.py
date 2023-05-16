@@ -22,11 +22,11 @@ Description:
     Initialization of constants.
 """
 # The ID of the object to be augmented.
-CONST_OBJECT_ID = 1
+CONST_OBJECT_ID = 0
 # The identification number of the dataset type.
-CONST_DATASET_TYPE = 3
+CONST_DATASET_TYPE = 1
 # Name of the dataset.
-CONST_DATASET_NAME = F'Dataset_Type_{CONST_DATASET_TYPE}_Obj_ID_{CONST_OBJECT_ID}'
+CONST_DATASET_NAME = F'Dataset_Type_{CONST_DATASET_TYPE}'
 # Number of augmented data to be generated.
 CONST_NUM_OF_GEN_DATA = 270
 # Explanation of the dictionary of dataset partitions.
@@ -47,7 +47,7 @@ def main():
         augmentations.
 
         A small dataset for the augmentation can be found here:
-            ../Data/Dataset_Type_0_Obj_ID_{0, 1}/..
+            ../Data/Dataset_Type_0/..
 
         Note:
             The principle of augmented data can be changed by modifying the declaration 
@@ -86,9 +86,9 @@ def main():
             file_path_save_data = f'{project_folder}/Data/{CONST_DATASET_NAME}'
 
             # Load a raw image from a file.
-            image_data = cv2.imread(f'{file_path_load_data}/images/{partition_name}/Image_{iter_load_data:05}.png')
+            image_data = cv2.imread(f'{file_path_load_data}/images/{partition_name}/Object_ID_{CONST_OBJECT_ID}_{iter_load_data:05}.png')
             # Load a label (annotation) from a file.
-            label_data = File_IO.Load(f'{file_path_load_data}/labels/{partition_name}/Image_{iter_load_data:05}', 'txt', ' ')[0]
+            label_data = File_IO.Load(f'{file_path_load_data}/labels/{partition_name}/Object_ID_{CONST_OBJECT_ID}_{iter_load_data:05}', 'txt', ' ')[0]
             
             # The transformation declaration used to augment the image/bounding box.
             #   More information on the transformation can be found here:

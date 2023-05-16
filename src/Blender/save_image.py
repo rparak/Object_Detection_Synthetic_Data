@@ -59,7 +59,7 @@ def main():
     project_folder = os.getcwd().split('Blender_Synthetic_Data')[0] + 'Blender_Synthetic_Data'
 
     # Save the image to the file.
-    bpy.context.scene.render.filepath = f'{project_folder}/images/Image_{Object_Str.Name}.png'
+    bpy.context.scene.render.filepath = f'{project_folder}/images/Object_ID_{Object_Str.Id}_{Object_Str.Name}.png'
     bpy.ops.render.render(animation=False, write_still=True)
     
     # Disable (turn off) visibility of the object.
