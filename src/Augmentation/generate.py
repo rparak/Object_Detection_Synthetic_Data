@@ -24,9 +24,9 @@ Description:
 # The ID of the object to be augmented.
 CONST_OBJECT_ID = 0
 # The identification number of the dataset type.
-CONST_DATASET_TYPE = 1
+CONST_DATASET_TYPE = 3
 # Name of the dataset.
-CONST_DATASET_NAME = F'Dataset_Type_{CONST_DATASET_TYPE}'
+CONST_DATASET_NAME = f'Dataset_Type_{CONST_DATASET_TYPE}'
 # Number of augmented data to be generated.
 CONST_NUM_OF_GEN_DATA = 270
 # Explanation of the dictionary of dataset partitions.
@@ -94,7 +94,8 @@ def main():
             #   More information on the transformation can be found here:
             #       http://albumentations.ai  
             transformation = A.Compose([A.Affine(translate_px={'x': (-50, 50), 'y': (-50, 50)}, rotate=(-2, 2), p = 0.75),
-                                        A.ColorJitter(brightness=(0.25, 1.5), contrast=(0.25, 1.5), saturation=(0.1, 1.0), always_apply=True),
+                                        A.ColorJitter(brightness=(0.25, 1.5), contrast=(0.25, 1.5), saturation=(0.1, 1.0), 
+                                                      always_apply=True),
                                         A.GaussianBlur(blur_limit=(5, 5), sigma_limit=(0.01, 1.0), p = 0.5),
                                         A.RandomResizedCrop(height= 1544, width = 2064, scale = (0.95, 1.0), p = 0.5)], 
                                         bbox_params=A.BboxParams(format='yolo', label_fields=['class_labels']))
@@ -103,16 +104,16 @@ def main():
             augmented = transformation(image = image_data, bboxes = [label_data[1::]], class_labels=[label_data[0]])
     
             # Save the label data (bounding box) to a file.
-            File_IO.Save(f'{file_path_save_data}/labels/{partition_name}/Image_{iter_save_data:05}', 
+            File_IO.Save(f'{file_path_save_data}/labels/{partition_name}/Object_ID_{CONST_OBJECT_ID}_{iter_save_data:05}', 
                          np.hstack((int(augmented['class_labels'][0]), augmented['bboxes'][0])), 'txt', ' ')
 
             # Save the image to a file.
-            cv2.imwrite(f'{file_path_save_data}/images/{partition_name}/Image_{iter_save_data:05}.png', augmented['image'])
+            cv2.imwrite(f'{file_path_save_data}/images/{partition_name}/Object_ID_{CONST_OBJECT_ID}_{iter_save_data:05}.png', augmented['image'])
 
             # Display information.
             print(f'[INFO] The data in iteration {int(i)} was successfully saved to the folder {file_path_save_data}.')
-            print(f'[INFO]  - Image: /images/{partition_name}/Image_{iter_save_data:05}.png')
-            print(f'[INFO]  - Label: /labels/{partition_name}/Image_{iter_save_data:05}.txt')
+            print(f'[INFO]  - Image: /images/{partition_name}/Object_ID_{CONST_OBJECT_ID}_{iter_save_data:05}.png')
+            print(f'[INFO]  - Label: /labels/{partition_name}/Object_ID_{CONST_OBJECT_ID}_{iter_save_data:05}.txt')
             print(f'[INFO] Time: {(time.time() - t_0):0.05f} in seconds.')
 
             i += 1; percentage_stored_data += 1
