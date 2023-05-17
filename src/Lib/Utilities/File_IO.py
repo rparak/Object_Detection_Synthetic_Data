@@ -5,7 +5,7 @@ import typing as tp
 # Pickle (Python object serialization)
 import pickle as pkl
 
-def Load(file_path: str, format: str, separator: str) -> tp.List[float]:
+def Load(file_path: str, format: str, separator: str) -> tp.List[tp.Union[float, bool]]:
     """
     Description:
         A simple function to read data from the file.
@@ -47,7 +47,7 @@ def Load(file_path: str, format: str, separator: str) -> tp.List[float]:
 
     return data
 
-def Save(file_path: str, data: tp.List[float], format: str, separator: str) -> None:
+def Save(file_path: str, data: tp.List[tp.Union[float, bool]], format: str, separator: str) -> None:
     """
     Description:
         A simple function to write data to the file.
