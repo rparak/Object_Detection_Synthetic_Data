@@ -63,7 +63,7 @@ def main():
         if CONST_IMAGE_FOLDER_TYPE == 'DATASET':
             image_file_path = f'{project_folder}/Data/{CONST_DATASET_NAME}/images/test/Object_ID_{CONST_OBJECT_ID}_{(CONST_SCAN_ITERATION + (n_i + 1)):05}.png'
         elif CONST_IMAGE_FOLDER_TYPE == 'ADDITIONAL':
-            image_file_path = f'{project_folder}/Additional/processed/images/Object_ID_{CONST_OBJECT_ID}_{(CONST_SCAN_ITERATION + (n_i + 1)):05}.png'
+            image_file_path = f'{project_folder}/Additional/processed/images/Image_{(CONST_SCAN_ITERATION + (n_i + 1)):05}.png'
         
         # Loads images from the specified file.
         image_data = cv2.imread(image_file_path)
@@ -107,7 +107,7 @@ def main():
             elif CONST_IMAGE_FOLDER_TYPE == 'ADDITIONAL':
                 # Save the image to a file.
                 cv2.imwrite(f'{project_folder}/Additional/results/PyTorch/Type_{CONST_DATASET_TYPE}/images/' +
-                            f'Object_ID_{CONST_OBJECT_ID}_{(CONST_SCAN_ITERATION + (n_i + 1)):05}.png', image_data)
+                            f'Image_{(CONST_SCAN_ITERATION + (n_i + 1)):05}.png', image_data)
                 print(f'[INFO] The data in iteration {int(n_i + 1)} was successfully saved to the folder {project_folder}/Additional/results/PyTorch/Type_{CONST_DATASET_TYPE}/images/.')
 
             # Display information.

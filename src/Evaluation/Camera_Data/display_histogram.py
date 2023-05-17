@@ -51,11 +51,13 @@ def main():
     #   Note:
     #       Related raw/processed images.
     if CONST_IMAGE_FOLDER_TYPE == 'DATASET':
-        image_raw = cv2.imread(f'{file_path}/Camera/raw/images/Object_ID_{CONST_OBJECT_ID}_{CONST_SCAN_ITERATION:05}.png')
-        image_processed = cv2.imread(f'{file_path}/Camera/processed/images/Object_ID_{CONST_OBJECT_ID}_{CONST_SCAN_ITERATION:05}.png')
+        image_name = f'Object_ID_{CONST_OBJECT_ID}_{CONST_SCAN_ITERATION:05}'
+        image_raw = cv2.imread(f'{file_path}/Camera/raw/images/{image_name}.png')
+        image_processed = cv2.imread(f'{file_path}/Camera/processed/images/{image_name}.png')
     elif CONST_IMAGE_FOLDER_TYPE == 'ADDITIONAL':
-        image_raw = cv2.imread(f'{project_folder}/Additional/raw/images/Object_ID_{CONST_OBJECT_ID}_{CONST_SCAN_ITERATION:05}.png')
-        image_processed = cv2.imread(f'{project_folder}/Additional/images/processed/Object_ID_{CONST_OBJECT_ID}_{CONST_SCAN_ITERATION:05}.png')
+        image_name = f'Image_{CONST_SCAN_ITERATION:05}'
+        image_raw = cv2.imread(f'{project_folder}/Additional/raw/images/{image_name}.png')
+        image_processed = cv2.imread(f'{project_folder}/Additional/images/processed/{image_name}.png')
 
     # Set the parameters for the scientific style.
     plt.style.use('science')
@@ -64,7 +66,7 @@ def main():
     if CONST_SHOW_IMG_MATPLOTLIB == True:
         # Create a figure with 4 subplots.
         fig, ax = plt.subplots(2, 2)
-        fig.suptitle(f'The name of the processed image: ../Object_ID_{CONST_OBJECT_ID}_{CONST_SCAN_ITERATION:05}.png', fontsize = 20)
+        fig.suptitle(f'The name of the processed image: ../{image_name}.png', fontsize = 20)
 
         # Calculate the grayscale histogram of the raw image and the processed image.
         raw_image_hist = cv2.calcHist([image_raw], [0], None, [256], [0, 256])

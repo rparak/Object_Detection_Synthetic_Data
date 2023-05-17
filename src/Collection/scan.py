@@ -56,7 +56,7 @@ def main():
     if CONST_IMAGE_FOLDER_TYPE == 'DATASET':
         file_path = f'{project_folder}/Data/Camera/raw/images/Object_ID_{CONST_OBJECT_ID}_{(CONST_INIT_INDEX):05}.png'
     elif CONST_IMAGE_FOLDER_TYPE == 'ADDITIONAL':
-        file_path = f'{project_folder}/Additional/raw/images/Object_ID_{CONST_OBJECT_ID}_{(CONST_INIT_INDEX):05}.png'
+        file_path = f'{project_folder}/Additional/raw/images/Image_{(CONST_INIT_INDEX):05}.png'
 
     # Set the path to the destination CTI file.
     cti_file_path = os.getenv('PHOXI_CONTROL_PATH') + "/API/bin/photoneo.cti"
