@@ -85,9 +85,6 @@ def main():
         # Generates data up to the desired maximum number of iterations, which is given by the constant {CONST_NUM_OF_GEN_DATA}.
         i = 0; id_partition = 0; percentage_stored_data = 0
         while CONST_NUM_OF_GEN_DATA > i:
-            # Generate random camera and lighting properties.
-            Camera_Cls.Random()
-            
             # Generate a random position of the object.
             Object_Cls.Random()
 
