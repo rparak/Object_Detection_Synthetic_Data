@@ -34,7 +34,7 @@ CONST_PARTITION_DATASET = 'train'
 # The identification number of the dataset type.
 CONST_DATASET_TYPE = 0
 # Name of the dataset.
-CONST_DATASET_NAME = F'Dataset_Type_{CONST_DATASET_TYPE}'
+CONST_DATASET_NAME = f'Dataset_Type_{CONST_DATASET_TYPE}'
 
 def main():
     """

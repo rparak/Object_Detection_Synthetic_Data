@@ -34,7 +34,7 @@ Description:
 #   ID{0} = 'T_Joint'
 #   ID{1} = 'Metal_Blank'
 #   ID{'B'} = 'Background'
-CONST_OBJECT_ID = 'B'
+CONST_OBJECT_ID = 0
 # The identification number of the dataset type.
 CONST_DATASET_TYPE = 3
 # Number of synthetic data to be generated.
