@@ -22,9 +22,12 @@ Description:
     Initialization of constants.
 """
 # The ID of the object to be augmented.
+#   ID{0} = 'T_Joint'
+#   ID{1} = 'Metal_Blank'
+#   ID{'B'} = 'Background'
 CONST_OBJECT_ID = 0
 # The identification number of the dataset type.
-CONST_DATASET_TYPE = 3
+CONST_DATASET_TYPE = 1
 # Name of the dataset.
 CONST_DATASET_NAME = f'Dataset_Type_{CONST_DATASET_TYPE}'
 # Number of augmented data to be generated.
@@ -87,25 +90,37 @@ def main():
 
             # Load a raw image from a file.
             image_data = cv2.imread(f'{file_path_load_data}/images/{partition_name}/Object_ID_{CONST_OBJECT_ID}_{iter_load_data:05}.png')
-            # Load a label (annotation) from a file.
-            label_data = File_IO.Load(f'{file_path_load_data}/labels/{partition_name}/Object_ID_{CONST_OBJECT_ID}_{iter_load_data:05}', 'txt', ' ')[0]
+
+            if CONST_OBJECT_ID != 'B':
+                # Load a label (annotation) from a file.
+                label_data = File_IO.Load(f'{file_path_load_data}/labels/{partition_name}/Object_ID_{CONST_OBJECT_ID}_{iter_load_data:05}', 'txt', ' ')[0]
+        
+                # The transformation declaration used to augment the image/bounding box.
+                #   More information on the transformation can be found here:
+                #       http://albumentations.ai  
+                transformation = A.Compose([A.Affine(translate_px={'x': (-10, 10), 'y': (-10, 10)}, p = 0.75),
+                                            A.ColorJitter(brightness=(0.25, 1.5), contrast=(0.25, 1.5), saturation=(0.1, 1.0), 
+                                                          always_apply=True),
+                                            A.GaussianBlur(blur_limit=(5, 5), sigma_limit=(0.01, 1.0), p = 0.5),
+                                            A.RandomResizedCrop(height= 1544, width = 2064, scale = (0.95, 1.0), p = 0.5)], 
+                                            bbox_params=A.BboxParams(format='yolo', label_fields=['class_labels']))
             
-            # The transformation declaration used to augment the image/bounding box.
-            #   More information on the transformation can be found here:
-            #       http://albumentations.ai  
-            transformation = A.Compose([A.Affine(translate_px={'x': (-50, 50), 'y': (-50, 50)}, rotate=(-2, 2), p = 0.75),
-                                        A.ColorJitter(brightness=(0.25, 1.5), contrast=(0.25, 1.5), saturation=(0.1, 1.0), 
-                                                      always_apply=True),
-                                        A.GaussianBlur(blur_limit=(5, 5), sigma_limit=(0.01, 1.0), p = 0.5),
-                                        A.RandomResizedCrop(height= 1544, width = 2064, scale = (0.95, 1.0), p = 0.5)], 
-                                        bbox_params=A.BboxParams(format='yolo', label_fields=['class_labels']))
-            
-            # Argumentation of both the image and the bounding box.
-            augmented = transformation(image = image_data, bboxes = [label_data[1::]], class_labels=[label_data[0]])
+                # Argumentation of both the image and the bounding box.
+                augmented = transformation(image = image_data, bboxes = [label_data[1::]], class_labels=[label_data[0]])
     
-            # Save the label data (bounding box) to a file.
-            File_IO.Save(f'{file_path_save_data}/labels/{partition_name}/Object_ID_{CONST_OBJECT_ID}_{iter_save_data:05}', 
-                         np.hstack((int(augmented['class_labels'][0]), augmented['bboxes'][0])), 'txt', ' ')
+                # Save the label data (bounding box) to a file.
+                File_IO.Save(f'{file_path_save_data}/labels/{partition_name}/Object_ID_{CONST_OBJECT_ID}_{iter_save_data:05}', 
+                             np.hstack((int(augmented['class_labels'][0]), augmented['bboxes'][0])), 'txt', ' ')
+            else:
+                transformation = A.Compose([A.ColorJitter(brightness=(0.25, 1.5), contrast=(0.25, 1.5), saturation=(0.1, 1.0), 
+                                                          always_apply=True),
+                                            A.GaussianBlur(blur_limit=(5, 5), sigma_limit=(0.01, 1.0), p = 0.5)])
+                augmented = transformation(image = image_data)
+
+                # Save the empty data to a file.
+                with open(f'{file_path_save_data}/labels/{partition_name}/Object_ID_{CONST_OBJECT_ID}_{iter_save_data:05}.txt', 'a+') as f:
+                    pass
+                f.close()
 
             # Save the image to a file.
             cv2.imwrite(f'{file_path_save_data}/images/{partition_name}/Object_ID_{CONST_OBJECT_ID}_{iter_save_data:05}.png', augmented['image'])

@@ -33,17 +33,18 @@ Description:
 # The ID of the object to be generated.
 #   ID{0} = 'T_Joint'
 #   ID{1} = 'Metal_Blank'
-CONST_OBJECT_ID = 0
+#   ID{'B'} = 'Background'
+CONST_OBJECT_ID = 'B'
 # The identification number of the dataset type.
 CONST_DATASET_TYPE = 3
 # Number of synthetic data to be generated.
-CONST_NUM_OF_GEN_DATA = 300
+CONST_NUM_OF_GEN_DATA = 240
 # Name of the dataset.
 CONST_DATASET_NAME = f'Dataset_Type_{CONST_DATASET_TYPE}'
 # Partition the dataset into training, validation, and test sets in percentages.
 #   Note:
 #       The sum of the values in the partitions must equal 100.
-CONST_PARTITION_DATASET = {'train': 80, 'valid': 20, 'test': 0}
+CONST_PARTITION_DATASET = {'train': 100, 'valid': 0, 'test': 0}
 # Initial index (iteration) for data generation.
 #   0 - Data storage starts from 1 (Name_001, etc.)
 #   10 - Data storage start from 11 (Name_011, etc.)
@@ -66,6 +67,9 @@ def main():
     # Deselect all objects in the current scene.
     Lib.Blender.Utilities.Deselect_All()
 
+    # Locate the path to the project folder.
+    project_folder = os.getcwd().split('Blender_Synthetic_Data')[0] + 'Blender_Synthetic_Data'
+    
     # Select the structure of the scanned object.
     Object_Str = [Lib.Parameters.Object.T_Joint_001_Str, 
                   Lib.Parameters.Object.Metal_Blank_001_Str][CONST_OBJECT_ID]
@@ -85,6 +89,9 @@ def main():
         # Generates data up to the desired maximum number of iterations, which is given by the constant {CONST_NUM_OF_GEN_DATA}.
         i = 0; id_partition = 0; percentage_stored_data = 0
         while CONST_NUM_OF_GEN_DATA > i:
+            # Generate random camera and lighting properties.
+            Camera_Cls.Random()
+
             # Generate a random position of the object.
             Object_Cls.Random()
 
@@ -100,9 +107,6 @@ def main():
 
             # Get the name of the partition where the data will be stored.
             partition_name = list(CONST_PARTITION_DATASET.keys())[id_partition]
-
-            # Locate the path to the project folder.
-            project_folder = os.getcwd().split('Blender_Synthetic_Data')[0] + 'Blender_Synthetic_Data'
 
             # Save the image with the corresponding label.
             Lib.Blender.Utilities.Save_Synthetic_Data(f'{project_folder}/Data/{CONST_DATASET_NAME}/', partition_name, f'{CONST_INIT_INDEX + (i + 1):05}', 

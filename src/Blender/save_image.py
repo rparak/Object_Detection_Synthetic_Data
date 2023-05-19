@@ -53,7 +53,10 @@ def main():
     #   The main parameters of the object can be found at: ../Lib/Parameters/Object
     Object_Cls = Lib.Blender.Core.Object_Cls(Object_Str, 'ZYX')
     # Enable (turn on) visibility of the object.
-    Object_Cls.Visibility(True)
+    Object_Cls.Visibility(False)
+
+    # Generate random camera and lighting properties.
+    Camera_Cls.Random()
     
     # Locate the path to the project folder.
     project_folder = os.getcwd().split('Blender_Synthetic_Data')[0] + 'Blender_Synthetic_Data'

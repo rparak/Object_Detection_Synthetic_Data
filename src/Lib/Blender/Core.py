@@ -229,6 +229,27 @@ class Camera_Cls(object):
         """
                 
         return self.K() @ self.R_t()
+    
+    def Random(self) -> None:
+        """
+        Description:
+            A function to randomly generate camera properties as well as to generate illumination.
+
+            Note:
+                The function can be easily modified/extended with additional functions.
+        """
+
+        # The strength of the light (the material of the object to be used for illumination).
+        bpy.data.materials['Light'].node_tree.nodes['Emission'].inputs[1].default_value = np.float32(np.random.uniform(7.5 - 1.0, 
+                                                                                                                       7.5 + 1.0))
+
+        # Non-Ideal parameters (images with additional noise):
+        #   adaptive_threshold = 0.02 .. 0.03
+        bpy.context.scene.cycles.adaptive_threshold = np.float32(np.random.uniform(0.025 - 0.005, 
+                                                                                   0.025 + 0.005))
+
+        #  Update the scene.
+        self.__Update()
 
 class Object_Cls(object):
     """

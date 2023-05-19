@@ -252,7 +252,8 @@ def Save_Synthetic_Data(file_path: str, partition_name: str, iteration: int, obj
     t_0 = time.time()
 
     # Save the label data (bounding box) to a file.
-    File_IO.Save(f'{file_path}/labels/{partition_name}/Object_ID_{object_id}_{iteration}', np.hstack((object_id, bounding_box)), label_format.lower(), ' ')
+    label_data = list(np.hstack((object_id, bounding_box))); label_data[0] = int(label_data[0])
+    File_IO.Save(f'{file_path}/labels/{partition_name}/Object_ID_{object_id}_{iteration}', label_data, label_format.lower(), ' ')
     
     # Save the image to a file.
     bpy.context.scene.render.filepath = f'{file_path}/images/{partition_name}/Object_ID_{object_id}_{iteration}.{image_format.lower()}'
