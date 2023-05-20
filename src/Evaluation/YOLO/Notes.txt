@@ -1,0 +1,33 @@
+CUDA:0 (Tesla T4) 14.75G total
+Automatically estimate the best YOLO batch size to use a fraction of the available CUDA memory. 
+
+Image Size: 640x480
+Number of Epochs: 300
+Patience: 100
+
+Type_0_fb_True:
+    Epochs: 300 
+    Training Time: 0.416 hours
+
+Type_1_fb_True:
+    Epochs: 300 
+    Training Time: ... hours
+
+Type_2_fb_True:
+    Epochs: 300 
+    Training Time: 0.337 hours
+
+Type_3_fb_True:
+    Epochs: 300 
+    Training Time: ... hours
+
+Type_4_fb_True:
+    Epochs: 300 
+    Training Time: ... hours
+
+Type_5_fb_True:
+    Epochs: 300 
+    Training Time: ... hours
+
+https://github.com/ultralytics/yolov5/issues/582
+https://github.com/ultralytics/yolov5/issues/8701
