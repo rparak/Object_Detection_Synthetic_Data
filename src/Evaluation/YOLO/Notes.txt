@@ -23,7 +23,7 @@ Type_3_fb_True:
 
 Type_4_fb_True:
     Epochs: 300 
-    Training Time: ... hours
+    Training Time: 2.711 hours
 
 Type_5_fb_True:
     Epochs: 300 
