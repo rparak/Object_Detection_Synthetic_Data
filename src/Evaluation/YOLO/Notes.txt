@@ -27,10 +27,14 @@ Type_4_fb_True:
 
 Type_5_fb_True:
     Epochs: 300 
-    Training Time: ... hours
+    Training Time: 2.778 hours
 
+# Fitness
 https://github.com/ultralytics/yolov5/issues/582
 https://github.com/ultralytics/yolov5/issues/8701
 https://github.com/ultralytics/ultralytics/blob/23fc50641c45b3a3504d6c939bf12666f9f51dc5/ultralytics/yolo/utils/metrics.py
 https://github.com/ultralytics/ultralytics/blob/d1107ca4cb5ef2a94a583e0a0247172f7f972f9a/docs/yolov5/tutorials/hyperparameter_evolution.md
 https://stackoverflow.com/questions/75523057/how-is-the-yolov8-best-loss-model-selected-by-the-trainer-class
+
+# Prediction Speed
+https://docs.ultralytics.com/tasks/detect/
