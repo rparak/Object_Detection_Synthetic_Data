@@ -20,9 +20,9 @@ Description:
     Initialization of constants.
 """
 # The identification number of the dataset type.
-CONST_DATASET_TYPE = 0
+CONST_DATASET_TYPE = 5
 # Name of the dataset.
-CONST_DATASET_NAME = f'Dataset_Type_{CONST_DATASET_TYPE}'
+CONST_DATASET_NAME = f'Type_{CONST_DATASET_TYPE}'
 
 def main():
     """
@@ -44,6 +44,34 @@ def main():
     #   The total number of iterations of the training data.
     epoch = data[data.columns[0]]
 
+    # ...
+    max_mAP = data[data.columns[6]][0]*0.1 + data[data.columns[7]][0]*0.9; idx = 0
+    for i, (mAP_i, mAP_95_i) in enumerate(zip(data[data.columns[6]][1:], data[data.columns[7]][1:])):
+        max_mAP_tmp = mAP_i*0.1 + mAP_95_i*0.9
+        if max_mAP_tmp > max_mAP:
+            max_mAP = max_mAP_tmp
+            idx = i + 1
+
+    # Display the results as the values shown in the console.
+    print('[INFO] Evaluation Criteria: YOLOv8')
+    print(f'[INFO] The name of the dataset: {CONST_DATASET_NAME}')
+    print(f'[INFO] ..... {idx}')
+    print('[INFO]  Generalized Intersection over Union (GIoU):')
+    print(f'[INFO]  - train = {data[data.columns[1]][idx]}')
+    print(f'[INFO]  - valid = {data[data.columns[8]][idx]}')
+    print('[INFO]  Objectness:')
+    print(f'[INFO]  - train = {data[data.columns[2]][idx]}')
+    print(f'[INFO]  - valid = {data[data.columns[9]][idx]}')
+    print('[INFO]  Classification:')
+    print(f'[INFO]  - train = {data[data.columns[3]][idx]}')
+    print(f'[INFO]  - valid = {data[data.columns[10]][idx]}')
+    print('[INFO]  Pr + Rec:')
+    print(f'[INFO]  - precision = {data[data.columns[4]][idx]}')
+    print(f'[INFO]  - recall = {data[data.columns[5]][idx]}')
+    print('[INFO]  Mean Average Precision (mAP):')
+    print(f'[INFO]  - mAP@0.5 = {data[data.columns[6]][idx]}')
+    print(f'[INFO]  - mAP@0.5:0.95 = {data[data.columns[7]][idx]}')
+    
     # Set the parameters for the scientific style.
     plt.style.use('science')
 
@@ -51,9 +79,9 @@ def main():
     fig, ax = plt.subplots(1, 5)
     fig.suptitle(f'The name of the dataset: {CONST_DATASET_NAME}', fontsize = 20)
 
-    # GloU.
-    ax[0].plot(epoch, data[data.columns[1]], 'o-', color=[0.525,0.635,0.8,1.0], linewidth=2.0, ms = 3.0, label='train')
-    ax[0].plot(epoch, data[data.columns[8]], 'o-', color=[1.0,0.75,0.5,1.0], linewidth=2.0, ms = 3.0, label='valid')
+    # Generalized Intersection over Union (GIoU)
+    ax[0].plot(epoch, data[data.columns[1]], 'o--', color=[0.525,0.635,0.8,1.0], linewidth=2.0, ms = 3.0, label='train')
+    ax[0].plot(epoch, data[data.columns[8]], 'o--', color=[1.0,0.75,0.5,1.0], linewidth=2.0, ms = 3.0, label='valid')
     #   Set parameters of the visualization.
     ax[0].set_title('GIoU')
     ax[0].grid(linewidth = 0.75, linestyle = '--')
@@ -93,25 +121,6 @@ def main():
 
     # Display the results as a graph (plot).
     plt.show()
-
-    # Display the results as the values shown in the console.
-    print('[INFO] Evaluation Criteria: YOLOv8')
-    print(f'[INFO] The name of the dataset: {CONST_DATASET_NAME}')
-    print('[INFO]  Generalized Intersection over Union (GIoU)')
-    print(f'[INFO]  - train = {Mathematics.Min(data[data.columns[1]])[1]}')
-    print(f'[INFO]  - valid = {Mathematics.Min(data[data.columns[8]])[1]}')
-    print('[INFO]  Objectness')
-    print(f'[INFO]  - train = {Mathematics.Min(data[data.columns[2]])[1]}')
-    print(f'[INFO]  - valid = {Mathematics.Min(data[data.columns[9]])[1]}')
-    print('[INFO]  Classification')
-    print(f'[INFO]  - train = {Mathematics.Min(data[data.columns[3]])[1]}')
-    print(f'[INFO]  - valid = {Mathematics.Min(data[data.columns[10]])[1]}')
-    print('[INFO]  Pr + Rec')
-    print(f'[INFO]  - precision = {Mathematics.Max(data[data.columns[4]])[1]}')
-    print(f'[INFO]  - recall = {Mathematics.Max(data[data.columns[5]])[1]}')
-    print('[INFO]  Mean Average Precision (mAP)')
-    print(f'[INFO]  - mAP@0.5 = {Mathematics.Max(data[data.columns[6]])[1]}')
-    print(f'[INFO]  - mAP@0.5:0.95 = {Mathematics.Max(data[data.columns[7]])[1]}')
 
 if __name__ == '__main__':
     sys.exit(main())
