@@ -168,7 +168,7 @@ def Draw_Bounding_Box(image: tp.List[tp.List[int]], bounding_box_properties: tp.
 
     return image_out
 
-def YOLO_Object_Detection(image: tp.List[tp.List[int]], model_onnx: str, image_size: int, confidence: float):
+def YOLO_ONNX_Format_Object_Detection(image: tp.List[tp.List[int]], model_onnx: str, image_size: int, confidence: float):
     """
     Description:
         Function for object detection using the trained YOLO model. The model in our case must be in *.onnx format, converted 
