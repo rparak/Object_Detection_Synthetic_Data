@@ -44,18 +44,25 @@ def main():
     #   The total number of iterations of the training data.
     epoch = data[data.columns[0]]
 
-    # ...
-    max_mAP = data[data.columns[6]][0]*0.1 + data[data.columns[7]][0]*0.9; idx = 0
+    # Get the YOLOv* model with the best loss selected by the trainer (best.pt).
+    #   The fitness function is defined as a weighted combination of metrics: 
+    #       - mAP@0.5: 10% 
+    #       - mAP@0.5:0.95: 90%
+    #   Precision {P} and Recall {R} are missing. 
+    #
+    #   The fitness function can be found at:
+    #       https://github.com/ultralytics/ultralytics/../utils/metrics.py
+    best_fitness = data[data.columns[6]][0]*0.1 + data[data.columns[7]][0]*0.9; idx = 0
     for i, (mAP_i, mAP_95_i) in enumerate(zip(data[data.columns[6]][1:], data[data.columns[7]][1:])):
-        max_mAP_tmp = mAP_i*0.1 + mAP_95_i*0.9
-        if max_mAP_tmp > max_mAP:
-            max_mAP = max_mAP_tmp
+        best_fitness_tmp = mAP_i*0.1 + mAP_95_i*0.9
+        if best_fitness_tmp > best_fitness:
+            best_fitness = best_fitness_tmp
             idx = i + 1
 
     # Display the results as the values shown in the console.
     print('[INFO] Evaluation Criteria: YOLOv8')
     print(f'[INFO] The name of the dataset: {CONST_DATASET_NAME}')
-    print(f'[INFO] ..... {idx}')
+    print(f'[INFO] The best results were found in the {idx} iteration.')
     print('[INFO]  Generalized Intersection over Union (GIoU):')
     print(f'[INFO]  - train = {data[data.columns[1]][idx]}')
     print(f'[INFO]  - valid = {data[data.columns[8]][idx]}')
@@ -80,11 +87,11 @@ def main():
     fig.suptitle(f'The name of the dataset: {CONST_DATASET_NAME}', fontsize = 20)
 
     # Generalized Intersection over Union (GIoU)
-    ax[0].plot(epoch, data[data.columns[1]], 'o--', color=[0.525,0.635,0.8,1.0], linewidth=2.0, ms = 3.0, label='train')
-    ax[0].plot(epoch, data[data.columns[8]], 'o--', color=[1.0,0.75,0.5,1.0], linewidth=2.0, ms = 3.0, label='valid')
+    ax[0].plot(epoch, data[data.columns[1]], 'o-', color=[0.525,0.635,0.8,1.0], linewidth=2.0, ms = 3.0, label='train')
+    ax[0].plot(epoch, data[data.columns[8]], 'o-', color=[1.0,0.75,0.5,1.0], linewidth=2.0, ms = 3.0, label='valid')
     #   Set parameters of the visualization.
     ax[0].set_title('GIoU')
-    ax[0].grid(linewidth = 0.75, linestyle = '--')
+    ax[0].grid(linewidth = 0.25, linestyle = '--')
     ax[0].legend(fontsize=10.0)
 
     # Objectness.
@@ -92,7 +99,7 @@ def main():
     ax[1].plot(epoch, data[data.columns[9]], 'o-', color=[1.0,0.75,0.5,1.0], linewidth=2.0, ms = 3.0, label='valid')
     #   Set parameters of the visualization.
     ax[1].set_title('Objectness')
-    ax[1].grid(linewidth = 0.75, linestyle = '--')
+    ax[1].grid(linewidth = 0.25, linestyle = '--')
     ax[1].legend(fontsize=10.0)
 
     # Classification.
@@ -100,7 +107,7 @@ def main():
     ax[2].plot(epoch, data[data.columns[10]], 'o-', color=[1.0,0.75,0.5,1.0], linewidth=2.0, ms = 3.0, label='valid')
     #   Set parameters of the visualization.
     ax[2].set_title('Classification')
-    ax[2].grid(linewidth = 0.75, linestyle = '--')
+    ax[2].grid(linewidth = 0.25, linestyle = '--')
     ax[2].legend(fontsize=10.0)
 
     # Precision + Recall (Pr + Rec).
@@ -108,7 +115,7 @@ def main():
     ax[3].plot(epoch, data[data.columns[5]], 'o-', color=[1.0,0.75,0.5,1.0], linewidth=2.0, ms = 3.0, label='recall')
     #   Set parameters of the visualization.
     ax[3].set_title('Pr + Rec')
-    ax[3].grid(linewidth = 0.75, linestyle = '--')
+    ax[3].grid(linewidth = 0.25, linestyle = '--')
     ax[3].legend(fontsize=10.0)
 
     # mAP (mAP@0.5, mAP@0.5:0.95)
@@ -116,7 +123,7 @@ def main():
     ax[4].plot(epoch, data[data.columns[7]], 'o-', color=[1.0,0.75,0.5,1.0], linewidth=2.0, ms = 3.0, label='mAP@0.5:0.95')
     #   Set parameters of the visualization.
     ax[4].set_title('mAP')
-    ax[4].grid(linewidth = 0.75, linestyle = '--')
+    ax[4].grid(linewidth = 0.25, linestyle = '--')
     ax[4].legend(fontsize=10.0)
 
     # Display the results as a graph (plot).
