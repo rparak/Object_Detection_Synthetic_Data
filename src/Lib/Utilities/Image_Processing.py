@@ -182,7 +182,7 @@ def YOLO_ONNX_Format_Object_Detection(image: tp.List[tp.List[int]], model_onnx: 
         (2) model_onnx [str]: Input model in *.onnx format.
                               Note:
                                 More information about the onnx format can be found at: https://onnx.ai
-        (3) image_size [int]: Image size as scalar. The size must match the size of the image when training the model.
+        (3) image_size [Vector<float> 1x2]: The size of the input image. The size must match the size of the image when training the model.
         (4) confidence [float]: The required minimum object confidence threshold for detection.
     
     Returns:
@@ -199,13 +199,13 @@ def YOLO_ONNX_Format_Object_Detection(image: tp.List[tp.List[int]], model_onnx: 
     #   Image Resolution: [x: Height, y: Width]
     Resolution = {'x': image.shape[1], 'y': image.shape[0]}
     #   The coefficient (factor) of the processed image.
-    Image_Coeff = {'x': Resolution['x'] / image_size, 
-                   'y': Resolution['y'] / image_size}
+    Image_Coeff = {'x': Resolution['x'] / image_size[0], 
+                   'y': Resolution['y'] / image_size[1]}
     #   Threshold for applying non-maximum suppression.
-    CONST_THRESHOLD = 0.5
-    
+    CONST_THRESHOLD = 0.6
+
     # Create a blob from the input image.
-    blob = cv2.dnn.blobFromImage(image, 1.0/255.0, (image_size, image_size), swapRB=True, crop=False)
+    blob = cv2.dnn.blobFromImage(image, 1.0/255.0, (image_size[0], image_size[1]), swapRB=True, crop=False)
 
     # Get the names of the output layers.
     layer_names = model_onnx.getLayerNames()
@@ -242,7 +242,7 @@ def YOLO_ONNX_Format_Object_Detection(image: tp.List[tp.List[int]], model_onnx: 
 
     # Perform a non-maximal suppression relative to the previously defined score.
     indexes = cv2.dnn.NMSBoxes(bounding_boxes, confidences, confidence, CONST_THRESHOLD)
-    
+ 
     # At least one detection should be successful, otherwise just report a failed detection.
     if isinstance(indexes, np.ndarray):
         print(f'[INFO] The model found {indexes.size} object in the input image.')

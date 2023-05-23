@@ -35,27 +35,21 @@ Description:
     Initialization of constants.
 """
 # The ID of the object to be tested.
-CONST_OBJECT_ID = 0
+CONST_OBJECT_ID = 1
 # Available objects.
 #   ID{0} = 'T_Joint'
 #   ID{1} = 'Metal_Blank'
 CONST_OBJECT_NAME = ['T_Joint', 'Metal_Blank']
 # The identification number of the dataset type.
-CONST_DATASET_TYPE = 1
+CONST_DATASET_TYPE = 5
 # Name of the dataset.
 CONST_DATASET_NAME = f'Dataset_Type_{CONST_DATASET_TYPE}'
 # Number of data to be tested.
 CONST_NUM_OF_TEST_DATA = 15
 # Initial iteration of the scanning process.
 CONST_SCAN_ITERATION = 30
-
-# Mean Average Precision (mAP)
-# x - Image Idenfication Number (ID)
-# y - Score
-
-# Score:
-#   Intersection over Union (IoU)
-#   Confidence
+# The boundaries of the object area {A}.
+CONST_BOUNDARIES_OBJECT_A = [[0.0056, 0.0112], [0.0045, 0.0129]]
 
 def main():
     """
@@ -67,19 +61,17 @@ def main():
     project_folder = os.getcwd().split('Blender_Synthetic_Data')[0] + 'Blender_Synthetic_Data'
 
     # Load a pre-trained custom YOLO model.
-    model = YOLO(f'{project_folder}/YOLO/Model/Type_{CONST_DATASET_TYPE}/yolov8s_custom.pt')
+    model = YOLO(f'{project_folder}/YOLO/Model/Type_{CONST_DATASET_TYPE}/yolov8n_custom.pt')
 
-    score_confidence = []; score_iou = []; total_num_of_data = 0; num_of_data = []
+    score_confidence = []; score_iou = []
     for n_i in range(CONST_NUM_OF_TEST_DATA):
-        image_file_path = f'{project_folder}/Data/{CONST_DATASET_NAME}/images/test/ \
-                          Object_ID_{CONST_OBJECT_ID}_{(CONST_SCAN_ITERATION + (n_i + 1)):05}.png'
+        image_file_path = f'{project_folder}/Data/{CONST_DATASET_NAME}/images/test/Object_ID_{CONST_OBJECT_ID}_{(CONST_SCAN_ITERATION + (n_i + 1)):05}.png'
 
         # Loads images from the specified file.
         image_data = cv2.imread(image_file_path)
 
         # Loads labels (annotations) from the specified file.
-        label_data = File_IO.Load(f'{project_folder}/Data/{CONST_DATASET_NAME}/labels/test/ \
-                                  Object_ID_{CONST_OBJECT_ID}_{(CONST_SCAN_ITERATION + (n_i + 1)):05}', 'txt', ' ')
+        label_data = File_IO.Load(f'{project_folder}/Data/{CONST_DATASET_NAME}/labels/test/Object_ID_{CONST_OBJECT_ID}_{(CONST_SCAN_ITERATION + (n_i + 1)):05}', 'txt', ' ')
 
         # ...
         bounding_box_desired = []
@@ -91,36 +83,81 @@ def main():
                                                                                        'height': label_data_i[4]}, {'x': image_data.shape[1], 'y': image_data.shape[0]})
             bounding_box_desired.append(list(bounding_box_desired_tmp.values()))
 
-        # Calculate the number of data in the current row and the total number of data.
-        total_num_of_data += len(bounding_box_desired)
-        num_of_data.append(len(bounding_box_desired))
-        
+        # Calculate the number of data in the current row
+        num_of_data = len(bounding_box_desired)
+
         # Predict (test) the model on a test dataset.
-        result = model.predict(source=image_file_path, imgsz=640, conf=0.5)
+        result = model.predict(source=image_file_path, imgsz=[480, 640], conf=0.5)
 
         # ...
+        score_confidence_tmp = []
         if result[0].boxes.shape[0] >= 1:
             bounding_box_predicted_tmp = result[0].boxes.xyxy.cpu().numpy()
+            bounding_box_predicted_yolo_tmp = result[0].boxes.xywhn.cpu().numpy()
             confidence_predicted_tmp   = result[0].boxes.conf.cpu().numpy()
             bounding_box_predicted = []
-            for _, (bounding_box_predicted_tmp_i, confidence_predicted_tmp_i) in enumerate(zip(bounding_box_predicted_tmp, confidence_predicted_tmp)):
-                bounding_box_predicted.append(bounding_box_predicted_tmp_i); score_confidence.append(confidence_predicted_tmp_i)
+            for _, (bounding_box_predicted_tmp_i, bounding_box_predicted_yolo_tmp_i, confidence_predicted_tmp_i) in enumerate(zip(bounding_box_predicted_tmp, bounding_box_predicted_yolo_tmp, 
+                                                                                                                                  confidence_predicted_tmp)):
+                if CONST_BOUNDARIES_OBJECT_A[CONST_OBJECT_ID][0] < \
+                   bounding_box_predicted_yolo_tmp_i[2] * bounding_box_predicted_yolo_tmp_i[3] < \
+                   CONST_BOUNDARIES_OBJECT_A[CONST_OBJECT_ID][1]:
+                    bounding_box_predicted.append(bounding_box_predicted_tmp_i); score_confidence_tmp.append(confidence_predicted_tmp_i)
         else:
-            bounding_box_predicted = [[0] * 4]; score_confidence.append(0.0)
-                
-        # ...
-        for _, bounding_box_desired_i in enumerate(bounding_box_desired):
-            score_iou_tmp = []
-            for _, bounding_box_predicted_i in enumerate(bounding_box_predicted):
-                score_iou_tmp.append(torchvision.ops.boxes.box_iou(torch.tensor([bounding_box_desired_i], dtype=torch.float),
-                                                                   torch.tensor([bounding_box_predicted_i], dtype=torch.float)).numpy()[0, 0])
-            score_iou.append(Mathematics.Max(score_iou_tmp)[1])
+            bounding_box_predicted = [[0] * 4]; score_confidence_tmp.append(0.0)
 
-    #print(num_of_data)
+        #   ...
+        score_confidence.append(np.sum(score_confidence_tmp)/num_of_data)
+
+        # ...
+        score_iou_tmp = []
+        for _, bounding_box_desired_i in enumerate(bounding_box_desired):
+            score_iou_i_tmp = []
+            for _, bounding_box_predicted_i in enumerate(bounding_box_predicted):
+                score_iou_i_tmp.append(torchvision.ops.boxes.box_iou(torch.tensor(np.array([bounding_box_desired_i]), dtype=torch.float),
+                                                                     torch.tensor(np.array([bounding_box_predicted_i]), dtype=torch.float)).numpy()[0, 0])
+            score_iou_tmp.append(Mathematics.Max(score_iou_i_tmp)[1])
+        #   ..
+        score_iou.append(np.mean(score_iou_tmp))
+
     # ...
-    mAP = np.sum(score_iou)/num_of_data
-    print(mAP)
-    print(score_iou)
+    mAP = np.mean(np.array(score_iou, dtype=np.float32).flatten())
+    print(f'Mean Average Precision (mAP): {mAP}')
+
+    # ...
+    image_number = []; average_iou = []; average_confidence = []
+    for i, (score_iou_i, score_confidence_i) in enumerate(zip(score_iou, score_confidence)):
+        # ...
+        image_number.append(i + 1)
+        # ...
+        average_iou.append(score_iou_i); average_confidence.append(score_confidence_i)
+
+    # Set the parameters for the scientific style.
+    plt.style.use('science')
+
+    # Create a figure with 5 subplots.
+    fig, ax = plt.subplots(1, 1)
+    fig.suptitle(f'The name of the dataset: {CONST_DATASET_NAME}\nClass: ID = {CONST_OBJECT_ID}, Name = {CONST_OBJECT_NAME[CONST_OBJECT_ID]}', fontsize = 30)
+
+    # Display data ....
+    ax.plot(image_number[0:10], average_confidence[0:10], 'o', color=[0.525,0.635,0.8,1.0], linewidth=2.0, ms = 10.0, mfc = [0.525,0.635,1.0], markeredgewidth = 5,
+            label='Confidence')
+    ax.plot(image_number[0:10], average_iou[0:10], 'o', color=[1.0,0.75,0.5,1.0], linewidth=2.0, ms = 10.0, mfc = [1.0,0.75,0.5,1.0], markeredgewidth = 5,
+            label='Intersection over Union (IoU)')
+    ax.plot(image_number[9::], average_confidence[9::], 'o', color=[0.525,0.635,0.8,1.0], linewidth=2.0, ms = 10.0, mfc = [1.0,1.0,1.0,1.0], markeredgewidth = 5,
+            label='Average Confidence')
+    ax.plot(image_number[9::], average_iou[9::], 'o', color=[1.0,0.75,0.5,1.0], linewidth=2.0, ms = 10.0, mfc = [1.0,1.0,1.0,1.0], markeredgewidth = 5, 
+            label='Average Intersection over Union (IoU)')
+    ax.plot(image_number, [mAP] * len(image_number), '--', color=[0.65,0.65,0.65,1.0], linewidth=2.0, ms = 10.0, label='Mean Average Precision (mAP)')
+    #   Set the x ticks.
+    ax.set_xticks(np.arange(1, len(image_number) + 1, 1))
+    #   Label
+    ax.set_xlabel(r'Image Idenfication Number (ID)'); ax.set_ylabel(r'Score') 
+    #   Set parameters of the visualization.
+    ax.grid(which='major', linewidth = 0.25, linestyle = '--')
+    ax.legend(fontsize=10.0)
+
+    # Display the results as a graph (plot).
+    plt.show()
 
 if __name__ == '__main__':
     sys.exit(main())

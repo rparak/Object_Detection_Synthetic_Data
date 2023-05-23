@@ -76,15 +76,15 @@ def main():
             t_0 = time.time()
 
             if class_id != None:
-                print(class_id)
                 for i, (class_id_i, bounding_box_i, confidence_i) in enumerate(zip(class_id, bounding_box, confidence)):
                     # Create a bounding box from the label data.
-                    Bounding_Box_Properties = {'Name': f'{CONST_OBJECT_NAME[CONST_OBJECT_ID]}_{i}', 'Precision': f'{str(np.round(confidence_i, 2))}', 
+                    Bounding_Box_Properties = {'Name': f'{CONST_OBJECT_NAME[class_id_i]}_{i}', 'Precision': f'{str(np.round(confidence_i, 2))}', 
                                                'Data': bounding_box_i}
                     
                     # Draw the bounding box of the object with additional dependencies (name, precision, etc.) in 
                     # the raw image.
-                    image_data = Lib.Utilities.Image_Processing.Draw_Bounding_Box(image_data, Bounding_Box_Properties, 'PASCAL_VOC', (0, 255, 0), True, True)
+                    image_data = Lib.Utilities.Image_Processing.Draw_Bounding_Box(image_data, Bounding_Box_Properties, 'PASCAL_VOC', CONST_OBJECT_BB_COLOR[class_id_i], 
+                                                                                  True, True)
                 
             # Loads images from the specified file.
             if CONST_IMAGE_FOLDER_TYPE == 'DATASET':
@@ -99,7 +99,6 @@ def main():
                 print(f'[INFO] The data in iteration {int(n_i + 1)} was successfully saved to the folder {project_folder}/Additional/results/PyTorch/Type_{CONST_DATASET_TYPE}/images/.')
 
             # Display information.
-            print(f'[INFO]  - Image: Image_{(CONST_SCAN_ITERATION + (n_i + 1)):05}.png')
             print(f'[INFO] Time: {(time.time() - t_0):0.05f} in seconds.')
 
 if __name__ == '__main__':

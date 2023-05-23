@@ -96,7 +96,7 @@ def main():
             #   Label
             ax[1, i].set_xlabel(r'Intesity'); ax[1, i].set_ylabel(r'Frequency')
             #   Other dependencies
-            ax[1, i].grid(linewidth = 0.75, linestyle = '--')
+            ax[1, i].grid(linewidth = 0.25, linestyle = '--')
             ax[1, i].legend(fontsize=10.0)
 
         # Display the results.

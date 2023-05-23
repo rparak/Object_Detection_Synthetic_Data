@@ -12,6 +12,8 @@ import cv2
 # Custom Library:
 #   ../Lib/Utilities/Image_Processing
 import Lib.Utilities.Image_Processing
+#   ../Lib/Transformation/Utilities/Mathematics
+import Lib.Transformation.Utilities.Mathematics as Mathematics
 
 """
 Description:
@@ -25,7 +27,7 @@ CONST_OBJECT_ID = 0
 # Note:
 #   It must be equal to the number of data 
 #   in the raw images folder.
-CONST_NUM_OF_DATA = 10
+CONST_NUM_OF_DATA = 7
 # Specified parameter of each object for histogram 
 # clipping in percentage.
 CONST_CLIP_LIMIT = [0.75, 1.25]

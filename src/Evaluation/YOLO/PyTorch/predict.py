@@ -22,7 +22,7 @@ import Lib.Utilities.Image_Processing
 Description:
     Initialization of constants.
 """
-# The ID of the object to be scanned.
+# The ID of the object to be tested.
 #   ID{0} = 'T_Joint'
 #   ID{1} = 'Metal_Blank'
 CONST_OBJECT_ID = 0
@@ -72,7 +72,7 @@ def main():
         t_0 = time.time()
 
         # Predict (test) the model on a test dataset.
-        result = model.predict(source=image_file_path, imgsz=(480, 640), conf=0.5)
+        result = model.predict(source=image_file_path, imgsz=[480, 640], conf=0.5)
 
         # Display information.
         print(f'[INFO]  - Image: Image_{(CONST_SCAN_ITERATION + (n_i + 1)):05}.png')
@@ -87,14 +87,17 @@ def main():
                 # A bounding box (in yolo format) with an associated confidence value. 
                 bounding_box = result[0].boxes.xywhn.cpu().numpy()
                 confidence   = result[0].boxes.conf.cpu().numpy()
-                for i, (bounding_box_i, confidence_i) in enumerate(zip(bounding_box, confidence)):
+                # ID name of the class.
+                class_id = result[0].boxes.cls.cpu().numpy()
+                for i, (class_id_i, bounding_box_i, confidence_i) in enumerate(zip(class_id, bounding_box, confidence)):
                     # Create a bounding box from the label data.
-                    Bounding_Box_Properties = {'Name': f'{CONST_OBJECT_NAME[CONST_OBJECT_ID]}_{i}', 'Precision': f'{str(np.round(confidence_i, 2))}', 
+                    Bounding_Box_Properties = {'Name': f'{CONST_OBJECT_NAME[class_id_i]}_{i}', 'Precision': f'{str(np.round(confidence_i, 2))}', 
                                                'Data': {'x_c': bounding_box_i[0], 'y_c': bounding_box_i[1], 'width': bounding_box_i[2], 'height': bounding_box_i[3]}}
                     
                     # Draw the bounding box of the object with additional dependencies (name, precision, etc.) in 
                     # the raw image.
-                    image_data = Lib.Utilities.Image_Processing.Draw_Bounding_Box(image_data, Bounding_Box_Properties, 'YOLO', (0, 255, 0), True, True)
+                    image_data = Lib.Utilities.Image_Processing.Draw_Bounding_Box(image_data, Bounding_Box_Properties, 'YOLO', CONST_OBJECT_BB_COLOR[class_id_i], 
+                                                                                  True, True)
             else:
                 print('[INFO] The model did not find object in the input image.')
 
@@ -111,7 +114,6 @@ def main():
                 print(f'[INFO] The data in iteration {int(n_i + 1)} was successfully saved to the folder {project_folder}/Additional/results/PyTorch/Type_{CONST_DATASET_TYPE}/images/.')
 
             # Display information.
-            print(f'[INFO]  - Image: Image_{(CONST_SCAN_ITERATION + (n_i + 1)):05}.png')
             print(f'[INFO] Time: {(time.time() - t_0):0.05f} in seconds.')
 
 if __name__ == '__main__':

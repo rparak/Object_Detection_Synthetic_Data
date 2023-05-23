@@ -78,7 +78,6 @@ def main():
         print(f'[INFO]  - Image: /images/train/Object_ID_{CONST_OBJECT_ID}_{(i+1):05}.png')
         print(f'[INFO]  - Label: /labels/train/Object_ID_{CONST_OBJECT_ID}_{(i+1):05}.txt')
         print(f'[INFO] Time: {(time.time() - t_0):0.05f} in seconds.')
-
         i += 1
 
     print('[INFO] The data generation has been successfully completed.')
