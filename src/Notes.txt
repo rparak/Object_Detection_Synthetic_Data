@@ -1,6 +1,3 @@
-# Conda instructions (Mac M1/M2)
-# https://blog.roboflow.com/m1-opencv/
-
 # Set up a new virtual environment called {name} with python {version}.
 {user_name} % conda create -n {name} python={version}
 {user_name} % conda activate {name}
@@ -22,6 +19,15 @@ or
 {user_name} % conda install pytorch-nightly::pytorch torchvision torchaudio -c pytorch-nightly
 #   - Python YAML
 {user_name} % conda install -c conda-forge pyyaml
+
+# Install dependencies that are not available by using conda-forge.
+#   After conda env. will be activated, install pip.
+{user_name} % conda activate {name}
+{user_name} % conda install -c conda-forge pip
+#   Locate the bin folder in the directory of the activated conda environment.
+{user_name} % cd {directory_path}/bin
+#   Installation of new packages such as Ultralytics:
+{user_name} % pip install ultralytics
 
 # Deactivate environment.
 {user_name} % conda deactivate
