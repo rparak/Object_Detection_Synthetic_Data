@@ -9,7 +9,7 @@ Description:
     Initialization of constants.
 """
 # The identification number of the dataset type.
-CONST_DATASET_TYPE = 0
+CONST_DATASET_TYPE = 5
 # Name of the dataset.
 CONST_DATASET_NAME = f'Dataset_Type_{CONST_DATASET_TYPE}'
 # Select the desired size of YOLOv* to build the model.

@@ -12,8 +12,6 @@ import cv2
 # Custom Library:
 #   ../Lib/Utilities/Image_Processing
 import Lib.Utilities.Image_Processing
-#   ../Lib/Transformation/Utilities/Mathematics
-import Lib.Transformation.Utilities.Mathematics as Mathematics
 
 """
 Description:
@@ -71,7 +69,7 @@ def main():
         if CONST_IMAGE_FOLDER_TYPE == 'DATASET':
             (alpha_custom, beta_custom) = Lib.Utilities.Image_Processing.Get_Alpha_Beta_Parameters(image_in, CONST_CLIP_LIMIT[CONST_OBJECT_ID])
         elif CONST_IMAGE_FOLDER_TYPE == 'ADDITIONAL':
-            (alpha_custom, beta_custom) = Lib.Utilities.Image_Processing.Get_Alpha_Beta_Parameters(image_in, Mathematics.Max(CONST_CLIP_LIMIT)[1])    
+            (alpha_custom, beta_custom) = Lib.Utilities.Image_Processing.Get_Alpha_Beta_Parameters(image_in, 2.0)    
         
         # Adjust the contrast and brightness of the image using the alpha and beta parameters.
         #   Equation:
