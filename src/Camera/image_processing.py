@@ -1,8 +1,8 @@
 # System (Default)
 import sys
 #   Add access if it is not in the system path.
-if '../../../' + 'src' not in sys.path:
-    sys.path.append('../../../' + 'src')
+if '../../' + 'src' not in sys.path:
+    sys.path.append('../../' + 'src')
 # Time (Time access and conversions)
 import time
 # OS (Operating system interfaces)
@@ -27,7 +27,7 @@ CONST_OBJECT_ID = 0
 # Note:
 #   It must be equal to the number of data 
 #   in the raw images folder.
-CONST_NUM_OF_DATA = 7
+CONST_NUM_OF_DATA = 5
 # Specified parameter of each object for histogram 
 # clipping in percentage.
 CONST_CLIP_LIMIT = [0.75, 1.25]
@@ -71,7 +71,7 @@ def main():
         if CONST_IMAGE_FOLDER_TYPE == 'DATASET':
             (alpha_custom, beta_custom) = Lib.Utilities.Image_Processing.Get_Alpha_Beta_Parameters(image_in, CONST_CLIP_LIMIT[CONST_OBJECT_ID])
         elif CONST_IMAGE_FOLDER_TYPE == 'ADDITIONAL':
-            (alpha_custom, beta_custom) = Lib.Utilities.Image_Processing.Get_Alpha_Beta_Parameters(image_in, 1.5)    
+            (alpha_custom, beta_custom) = Lib.Utilities.Image_Processing.Get_Alpha_Beta_Parameters(image_in, Mathematics.Max(CONST_CLIP_LIMIT)[1])    
         
         # Adjust the contrast and brightness of the image using the alpha and beta parameters.
         #   Equation:

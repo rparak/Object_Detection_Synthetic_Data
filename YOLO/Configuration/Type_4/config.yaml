@@ -8,7 +8,10 @@
 #   Note:
 #     dataset_type: 
 #       The identification number of the dataset type.
-path: '/content/drive/MyDrive/YOLOv8_Custom_Dataset/Data/Dataset_Type_4'
+#   Warning:
+#     path(Google Colab): '/content/drive/MyDrive/YOLOv8_Custom_Dataset/Data/Dataset_Type_{dataset_type}'
+#     path(Internal): '../Data/Dataset_Type_{dataset_type}'
+path: '../Data/Dataset_Type_4'
 
 # The absolute path to the specified partition folder (train, validation, test) that contains 
 # the dataset images as well as the labels.

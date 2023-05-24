@@ -37,7 +37,7 @@ CONST_DATASET_TYPE = 5
 # Name of the dataset.
 CONST_DATASET_NAME = f'Dataset_Type_{CONST_DATASET_TYPE}'
 # Number of data to be tested.
-CONST_NUM_OF_TEST_DATA = 7
+CONST_NUM_OF_TEST_DATA = 5
 # Initial iteration of the scanning process.
 CONST_SCAN_ITERATION = 0
 # The type of image folder to be processed.

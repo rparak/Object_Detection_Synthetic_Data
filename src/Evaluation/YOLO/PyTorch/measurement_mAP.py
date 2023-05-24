@@ -35,7 +35,7 @@ Description:
     Initialization of constants.
 """
 # The ID of the object to be tested.
-CONST_OBJECT_ID = 1
+CONST_OBJECT_ID = 0
 # Available objects.
 #   ID{0} = 'T_Joint'
 #   ID{1} = 'Metal_Blank'
@@ -63,7 +63,15 @@ def main():
     # Load a pre-trained custom YOLO model.
     model = YOLO(f'{project_folder}/YOLO/Model/Type_{CONST_DATASET_TYPE}/yolov8n_custom.pt')
 
-    score_confidence = []; score_iou = []
+    # Set the parameters for the scientific style.
+    plt.style.use('science')
+
+    # Create a figure.
+    fig, ax = plt.subplots(1, 1)
+    fig.suptitle(f'The name of the dataset: {CONST_DATASET_NAME}\nClass: ID = {CONST_OBJECT_ID}, Name = {CONST_OBJECT_NAME[CONST_OBJECT_ID]}', fontsize = 30)
+
+    # ...
+    score_iou = []
     for n_i in range(CONST_NUM_OF_TEST_DATA):
         image_file_path = f'{project_folder}/Data/{CONST_DATASET_NAME}/images/test/Object_ID_{CONST_OBJECT_ID}_{(CONST_SCAN_ITERATION + (n_i + 1)):05}.png'
 
@@ -83,14 +91,11 @@ def main():
                                                                                        'height': label_data_i[4]}, {'x': image_data.shape[1], 'y': image_data.shape[0]})
             bounding_box_desired.append(list(bounding_box_desired_tmp.values()))
 
-        # Calculate the number of data in the current row
-        num_of_data = len(bounding_box_desired)
-
         # Predict (test) the model on a test dataset.
         result = model.predict(source=image_file_path, imgsz=[480, 640], conf=0.5)
 
         # ...
-        score_confidence_tmp = []
+        score_confidence = []
         if result[0].boxes.shape[0] >= 1:
             bounding_box_predicted_tmp = result[0].boxes.xyxy.cpu().numpy()
             bounding_box_predicted_yolo_tmp = result[0].boxes.xywhn.cpu().numpy()
@@ -101,12 +106,9 @@ def main():
                 if CONST_BOUNDARIES_OBJECT_A[CONST_OBJECT_ID][0] < \
                    bounding_box_predicted_yolo_tmp_i[2] * bounding_box_predicted_yolo_tmp_i[3] < \
                    CONST_BOUNDARIES_OBJECT_A[CONST_OBJECT_ID][1]:
-                    bounding_box_predicted.append(bounding_box_predicted_tmp_i); score_confidence_tmp.append(confidence_predicted_tmp_i)
+                    bounding_box_predicted.append(bounding_box_predicted_tmp_i); score_confidence.append(confidence_predicted_tmp_i)
         else:
-            bounding_box_predicted = [[0] * 4]; score_confidence_tmp.append(0.0)
-
-        #   ...
-        score_confidence.append(np.sum(score_confidence_tmp)/num_of_data)
+            bounding_box_predicted = [[0] * 4]; score_confidence.append(0.0)
 
         # ...
         score_iou_tmp = []
@@ -119,42 +121,40 @@ def main():
         #   ..
         score_iou.append(np.mean(score_iou_tmp))
 
-    # ...
+        # Calculates the number of detected objects in the current episode. If the number of objects is greater than one, display the average 
+        # of the data, otherwise display the original data.
+        if len(bounding_box_desired) == 1:
+            ax.scatter(n_i + 1, score_confidence, marker='o', color=[1.0,1.0,1.0,1.0], s=100.0, linewidth=3.0, 
+                       edgecolors=[0.525,0.635,0.8,1.0], label='Confidence')
+            ax.scatter(n_i + 1, score_iou_tmp, marker='o', color=[1.0,1.0,1.0,1.0], s=100.0, linewidth=3.0, 
+                       edgecolors=[1.0,0.75,0.5,1.0], label='Intersection over Union (IoU)') 
+        else:
+            ax.scatter(n_i + 1, np.mean(score_confidence), marker='o', color=[0.525,0.635,0.8,1.0], s=100.0, linewidth=3.0, 
+                       edgecolors=[0.525,0.635,0.8,1.0], label='Average Confidence')
+            ax.scatter(n_i + 1, np.mean(score_iou_tmp), marker='o', color=[1.0,0.75,0.5,1.0], s=100.0, linewidth=3.0, 
+                       edgecolors=[1.0,0.75,0.5,1.0], label='Average Intersection over Union (IoU)')  
+        
+    # Calculates the mean average precision (mAP).
     mAP = np.mean(np.array(score_iou, dtype=np.float32).flatten())
     print(f'Mean Average Precision (mAP): {mAP}')
 
-    # ...
-    image_number = []; average_iou = []; average_confidence = []
-    for i, (score_iou_i, score_confidence_i) in enumerate(zip(score_iou, score_confidence)):
-        # ...
-        image_number.append(i + 1)
-        # ...
-        average_iou.append(score_iou_i); average_confidence.append(score_confidence_i)
+    # Display data of the mAP.
+    ax.plot(np.arange(1, CONST_NUM_OF_TEST_DATA + 1, 1), [mAP] * CONST_NUM_OF_TEST_DATA, '--', color=[0.65,0.65,0.65,1.0], linewidth=2.0, ms = 10.0, 
+            label='Mean Average Precision (mAP)')
 
-    # Set the parameters for the scientific style.
-    plt.style.use('science')
-
-    # Create a figure with 5 subplots.
-    fig, ax = plt.subplots(1, 1)
-    fig.suptitle(f'The name of the dataset: {CONST_DATASET_NAME}\nClass: ID = {CONST_OBJECT_ID}, Name = {CONST_OBJECT_NAME[CONST_OBJECT_ID]}', fontsize = 30)
-
-    # Display data ....
-    ax.plot(image_number[0:10], average_confidence[0:10], 'o', color=[0.525,0.635,0.8,1.0], linewidth=2.0, ms = 10.0, mfc = [0.525,0.635,1.0], markeredgewidth = 5,
-            label='Confidence')
-    ax.plot(image_number[0:10], average_iou[0:10], 'o', color=[1.0,0.75,0.5,1.0], linewidth=2.0, ms = 10.0, mfc = [1.0,0.75,0.5,1.0], markeredgewidth = 5,
-            label='Intersection over Union (IoU)')
-    ax.plot(image_number[9::], average_confidence[9::], 'o', color=[0.525,0.635,0.8,1.0], linewidth=2.0, ms = 10.0, mfc = [1.0,1.0,1.0,1.0], markeredgewidth = 5,
-            label='Average Confidence')
-    ax.plot(image_number[9::], average_iou[9::], 'o', color=[1.0,0.75,0.5,1.0], linewidth=2.0, ms = 10.0, mfc = [1.0,1.0,1.0,1.0], markeredgewidth = 5, 
-            label='Average Intersection over Union (IoU)')
-    ax.plot(image_number, [mAP] * len(image_number), '--', color=[0.65,0.65,0.65,1.0], linewidth=2.0, ms = 10.0, label='Mean Average Precision (mAP)')
+    # Set parameters of the graph (plot).
     #   Set the x ticks.
-    ax.set_xticks(np.arange(1, len(image_number) + 1, 1))
+    ax.set_xticks(np.arange(1, CONST_NUM_OF_TEST_DATA + 1, 1))
     #   Label
     ax.set_xlabel(r'Image Idenfication Number (ID)'); ax.set_ylabel(r'Score') 
     #   Set parameters of the visualization.
     ax.grid(which='major', linewidth = 0.25, linestyle = '--')
-    ax.legend(fontsize=10.0)
+    # Get handles and labels for the legend.
+    handles, labels = plt.gca().get_legend_handles_labels()
+    # Remove duplicate labels.
+    legend = dict(zip(labels, handles))
+    # Show the labels (legends) of the graph.
+    ax.legend(legend.values(), legend.keys(), fontsize=10.0)
 
     # Display the results as a graph (plot).
     plt.show()
