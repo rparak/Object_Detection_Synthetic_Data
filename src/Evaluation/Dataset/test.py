@@ -39,20 +39,23 @@ CONST_DATASET_NAME = f'Dataset_Type_{CONST_DATASET_TYPE}'
 def main():
     """
     Description:
-        A simple script to evaluate synthetic data (image with corresponding label) generated from Blender 
+        A program to evaluate synthetic data (image with corresponding label) generated from Blender 
         or mixed data (synthetic data with real camera data).
     """
-
 
     # Locate the path to the project folder.
     project_folder = os.getcwd().split('Blender_Synthetic_Data')[0] + 'Blender_Synthetic_Data'
 
+    # Express the name of the image. 
+    if CONST_PARTITION_DATASET == 'test':
+        image_name = f'Image_{CONST_SCAN_ITERATION:05}'
+    else:
+        image_name = f'Object_ID_{CONST_OBJECT_ID}_{CONST_SCAN_ITERATION:05}'
+
     # Load a raw image from a file.
-    image_data = cv2.imread(f'{project_folder}/Data/{CONST_DATASET_NAME}/images/{CONST_PARTITION_DATASET}/' +
-                            f'Object_ID_{CONST_OBJECT_ID}_{CONST_SCAN_ITERATION:05}.png')
+    image_data = cv2.imread(f'{project_folder}/Data/{CONST_DATASET_NAME}/images/{CONST_PARTITION_DATASET}/{image_name}.png')
     # Load a label (annotation) from a file.
-    label_data = File_IO.Load(f'{project_folder}/Data/{CONST_DATASET_NAME}/labels/{CONST_PARTITION_DATASET}/' +
-                              f'Object_ID_{CONST_OBJECT_ID}_{CONST_SCAN_ITERATION:05}', 'txt', ' ')
+    label_data = File_IO.Load(f'{project_folder}/Data/{CONST_DATASET_NAME}/labels/{CONST_PARTITION_DATASET}/{image_name}', 'txt', ' ')
 
     for i, label_data_i in enumerate(label_data):
         # Create a bounding box from the label data.
@@ -61,7 +64,7 @@ def main():
 
         # Draw the bounding box of the object with additional dependencies (name, precision, etc.) in 
         # the raw image.
-        image_data = Lib.Utilities.Image_Processing.Draw_Bounding_Box(image_data, Bounding_Box_Properties, 'YOLO', CONST_OBJECT_BB_COLOR[CONST_OBJECT_ID], 
+        image_data = Lib.Utilities.Image_Processing.Draw_Bounding_Box(image_data, Bounding_Box_Properties, 'YOLO', CONST_OBJECT_BB_COLOR[int(label_data_i[0])], 
                                                                       True, True)
 
     # Displays the image in the window.

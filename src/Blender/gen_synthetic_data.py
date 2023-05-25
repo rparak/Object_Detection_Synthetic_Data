@@ -53,7 +53,7 @@ CONST_INIT_INDEX = 0
 def main():
     """
     Description:
-        The main script that generates data from Blender. The main parameters of the generation can be found 
+        The main program that generates data from Blender. The main parameters of the generation can be found 
         in the constants at the top.
 
         Note 1:

@@ -33,7 +33,7 @@ CONST_IMAGE_FOLDER_TYPE = 'ADDITIONAL'
 def main():
     """
     Description:
-        A simple script to display data from the camera (raw/processed images) as well as to compare the data with 
+        A program to display data from the camera (raw/processed images) as well as to compare the data with 
         the corresponding histogram. In our case it is the camera from the PhoXi 3D Scanner M.
 
         Note:

@@ -31,7 +31,7 @@ CONST_SCAN_ITERATION = 1
 def main():
     """
     Description:
-        A simple script to evaluate camera data (image with corresponding label) generated from PhoXi Control. Image annotation was performed 
+        A program to evaluate camera data (image with corresponding label) generated from PhoXi Control. Image annotation was performed 
         using the graphical image annotation tool LabelImg.
 
         Reference:

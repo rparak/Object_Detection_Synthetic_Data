@@ -37,7 +37,7 @@ CONST_IMAGE_FOLDER_TYPE = 'ADDITIONAL'
 def main():
     """
     Description:
-        A simple script to adjust the contrast {alpha} and brightness {beta} of a raw image.
+        A program to adjust the contrast {alpha} and brightness {beta} of a raw image.
 
         Note:
             The raw images were collected using the script here:

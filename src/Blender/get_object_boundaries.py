@@ -42,7 +42,7 @@ CONST_NUM_OF_DATA = 10000
 def main():
     """
     Description:
-        A simple script to get the boundaries of an object (bounding box). More precisely the area of the rectangle.
+        A program to get the boundaries of an object (bounding box). More precisely the area of the rectangle.
 
         Rectangle Area:
             A = w * h,

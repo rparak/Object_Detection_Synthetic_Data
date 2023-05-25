@@ -46,7 +46,7 @@ CONST_DATASET_PARTITION = {'Percentage': [80, 20, 0], 'Init_Index': [25, 247, 0]
 def main():
     """
     Descriptioon:
-        The main script that generates (augments) data from a small image dataset. The script includes image and label 
+        The main program that generates (augments) data from a small image dataset. The program includes image and label 
         augmentations.
 
         A small dataset for the augmentation can be found here:

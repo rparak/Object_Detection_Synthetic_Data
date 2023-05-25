@@ -40,7 +40,7 @@ CONST_IMAGE_FOLDER_TYPE = 'ADDITIONAL'
 def main():
     """
     Description:
-        A simple script to get a raw image (2D) from a Photoneo sensor. In our case, it is a Photoneo 
+        A program to get a raw image (2D) from a Photoneo sensor. In our case, it is a Photoneo 
         PhoXi 3D scanner M.
 
         Note:

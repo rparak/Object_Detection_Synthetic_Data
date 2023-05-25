@@ -42,7 +42,7 @@ CONST_DATASET_NAME = f'Dataset_Type_{CONST_DATASET_TYPE}'
 def main():
     """
     Description:
-        The main script to generate data of the background from Blender.
+        The main program to generate data of the background from Blender.
     """
 
     # Deselect all objects in the current scene.

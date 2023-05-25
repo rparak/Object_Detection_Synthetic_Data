@@ -26,7 +26,7 @@ Description:
 def main():
     """
     Description:
-        Generate a 3D bounding box for each object in the scene.
+        The main program to generate a 3D bounding box for each object in the scene.
 
         Find and display the main bounding box parameters relevant to the main object structure.
             Object_Parameters_Str() in ../Lib/Parameters/Object.py
