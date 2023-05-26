@@ -36,7 +36,8 @@ def main():
     model = YOLO(f'{project_folder}/YOLO/Model/Type_{CONST_DATASET_TYPE}/{CONST_YOLO_SIZE}_custom.pt')
 
     # Export the model to *.onnx format.
-    model.export(format='onnx', imgsz=[480, 640], dynamic=True, opset=12)
+    #model.export(format='onnx', imgsz=[480, 640], dynamic=True, opset=12)
+    model.export(format='onnx', imgsz=640, dynamic=False, opset=12)
 
 if __name__ == '__main__':
     main()

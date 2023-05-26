@@ -120,12 +120,8 @@ def main():
                 # Calculates the area of the rectangle from the bounding box.
                 A_tmp = b_box_pred_yolo_tmp_i[2] * b_box_pred_yolo_tmp_i[3]
 
-                """
                 if CONST_BOUNDARIES_OBJECT_A[int(class_id_pred_tmp_i)][0] < A_tmp < CONST_BOUNDARIES_OBJECT_A[int(class_id_pred_tmp_i)][1]:
                     b_box_pred.append(b_box_pred_tmp_i); s_conf.append(conf_pred_tmp_i)
-                """
-                b_box_pred.append(b_box_pred_tmp_i); s_conf.append(conf_pred_tmp_i)
-                print(f'Confidence: {conf_pred_tmp_i}')
         else:
             # Otherwise, write null values for both the bounding box and the confidence.
             b_box_pred = [[0] * 4]; s_conf.append(0.0)
@@ -140,7 +136,6 @@ def main():
             for _, b_box_pred_i in enumerate(b_box_pred):
                 s_iou_i_tmp.append(torchvision.ops.boxes.box_iou(torch.tensor(np.array([b_box_des_i]), dtype=torch.float),
                                                                  torch.tensor(np.array([b_box_pred_i]), dtype=torch.float)).numpy()[0, 0])
-                print(f'IoU: {s_iou_i_tmp}')
             s_iou_tmp.append(Mathematics.Max(s_iou_i_tmp)[1])
 
         # Save the mean value (score) of the Intersection over Union (IoU). It will be used to calculate the mAP.
