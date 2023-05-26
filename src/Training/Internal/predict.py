@@ -15,7 +15,7 @@ CONST_FREEZE_BACKBONE = True
 # Format of the trained model.
 #   Standard YOLO *.pt format: 'pt'
 #   ONNX *.onnx format: 'onnx
-CONST_MODEL_FORMAT = 'onnx'
+CONST_MODEL_FORMAT = 'pt'
 
 def main():
     """
@@ -48,7 +48,7 @@ def main():
 
         # Predict (test) the model on a test dataset.
         model.predict(source=f'{project_folder}/Data/Dataset_Type_{CONST_DATASET_TYPE}/images/test', save=True, save_txt=True, save_conf=True, 
-                      imgsz=[480, 640], conf=0.5, name=f'{project_folder}/YOLO/Results/Type_{CONST_DATASET_TYPE}/predict_fb_{CONST_FREEZE_BACKBONE}')
+                      imgsz=[480, 640], conf=0.5, iou=0.7, name=f'{project_folder}/YOLO/Results/Type_{CONST_DATASET_TYPE}/predict_fb_{CONST_FREEZE_BACKBONE}')
     else:
         print('[INFO] The file does not exist.')
 

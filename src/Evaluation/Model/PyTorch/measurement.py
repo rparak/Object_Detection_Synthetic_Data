@@ -39,7 +39,7 @@ Description:
 #   ID{1} = 'Metal_Blank'
 CONST_OBJECT_NAME = ['T_Joint', 'Metal_Blank']
 # The identification number of the dataset type.
-CONST_DATASET_TYPE = 1
+CONST_DATASET_TYPE = 5
 # Name of the dataset.
 CONST_DATASET_NAME = f'Dataset_Type_{CONST_DATASET_TYPE}'
 # The number of data to be tested for a single object.
@@ -125,6 +125,7 @@ def main():
                     b_box_pred.append(b_box_pred_tmp_i); s_conf.append(conf_pred_tmp_i)
                 """
                 b_box_pred.append(b_box_pred_tmp_i); s_conf.append(conf_pred_tmp_i)
+                print(f'Confidence: {conf_pred_tmp_i}')
         else:
             # Otherwise, write null values for both the bounding box and the confidence.
             b_box_pred = [[0] * 4]; s_conf.append(0.0)
@@ -139,6 +140,7 @@ def main():
             for _, b_box_pred_i in enumerate(b_box_pred):
                 s_iou_i_tmp.append(torchvision.ops.boxes.box_iou(torch.tensor(np.array([b_box_des_i]), dtype=torch.float),
                                                                  torch.tensor(np.array([b_box_pred_i]), dtype=torch.float)).numpy()[0, 0])
+                print(f'IoU: {s_iou_i_tmp}')
             s_iou_tmp.append(Mathematics.Max(s_iou_i_tmp)[1])
 
         # Save the mean value (score) of the Intersection over Union (IoU). It will be used to calculate the mAP.
