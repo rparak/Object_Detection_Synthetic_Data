@@ -45,7 +45,7 @@ def main():
 
         # Rename the file.
         os.rename(file_path_new + model_name_old, file_path_new + model_name_new)
-        print(f'[INFO] The file {model_name_old} was successfully renamed to ({model_name_new}).')
+        print(f'[INFO] The file {model_name_old} was successfully renamed to {model_name_new}.')
 
 if __name__ == '__main__':
     main()

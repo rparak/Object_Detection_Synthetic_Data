@@ -9,7 +9,7 @@ Description:
     Initialization of constants.
 """
 # The identification number of the dataset type.
-CONST_DATASET_TYPE = 0
+CONST_DATASET_TYPE = 5
 # Select the desired size of YOLOv* to build the model.
 #   Note:
 #     Detection Model.
@@ -25,7 +25,7 @@ def main():
         For more information see: 
             https://docs.ultralytics.com/modes/export/
 
-        More information about the **onnx** format can be found at: 
+        More information about the onnx format can be found at: 
             https://onnx.ai
     """
     
@@ -36,7 +36,7 @@ def main():
     model = YOLO(f'{project_folder}/YOLO/Model/Type_{CONST_DATASET_TYPE}/{CONST_YOLO_SIZE}_custom.pt')
 
     # Export the model to *.onnx format.
-    model.export(format='onnx', imgsz=[480, 640], opset=12)
+    model.export(format='onnx', imgsz=[480, 640], dynamic=True, opset=12)
 
 if __name__ == '__main__':
     main()

@@ -39,7 +39,7 @@ Description:
 #   ID{1} = 'Metal_Blank'
 CONST_OBJECT_NAME = ['T_Joint', 'Metal_Blank']
 # The identification number of the dataset type.
-CONST_DATASET_TYPE = 0
+CONST_DATASET_TYPE = 1
 # Name of the dataset.
 CONST_DATASET_NAME = f'Dataset_Type_{CONST_DATASET_TYPE}'
 # The number of data to be tested for a single object.
@@ -120,8 +120,11 @@ def main():
                 # Calculates the area of the rectangle from the bounding box.
                 A_tmp = b_box_pred_yolo_tmp_i[2] * b_box_pred_yolo_tmp_i[3]
 
+                """
                 if CONST_BOUNDARIES_OBJECT_A[int(class_id_pred_tmp_i)][0] < A_tmp < CONST_BOUNDARIES_OBJECT_A[int(class_id_pred_tmp_i)][1]:
                     b_box_pred.append(b_box_pred_tmp_i); s_conf.append(conf_pred_tmp_i)
+                """
+                b_box_pred.append(b_box_pred_tmp_i); s_conf.append(conf_pred_tmp_i)
         else:
             # Otherwise, write null values for both the bounding box and the confidence.
             b_box_pred = [[0] * 4]; s_conf.append(0.0)
