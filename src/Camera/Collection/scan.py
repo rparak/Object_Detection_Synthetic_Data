@@ -32,10 +32,6 @@ CONST_IMAGE_RESOLUTION = [2064, 1544]
 #       It can be found in the device details when the PhoXi 
 #       Control software is opened.
 CONST_DEVICE_ID = 'PhotoneoTL_DEV_' + '2019-06-011-LC3'
-# The type of image folder to be processed.
-#   'DATASET': Images for the dataset.
-#   'ADDITIONAL': Images for additional tests.
-CONST_IMAGE_FOLDER_TYPE = 'ADDITIONAL'
 
 def main():
     """
@@ -53,10 +49,7 @@ def main():
     project_folder = os.getcwd().split('Blender_Synthetic_Data')[0] + 'Blender_Synthetic_Data'
 
     # The specified path to the folder where the image will be saved.
-    if CONST_IMAGE_FOLDER_TYPE == 'DATASET':
-        file_path = f'{project_folder}/Data/Camera/raw/images/Object_ID_{CONST_OBJECT_ID}_{(CONST_INIT_INDEX):05}.png'
-    elif CONST_IMAGE_FOLDER_TYPE == 'ADDITIONAL':
-        file_path = f'{project_folder}/Additional/raw/images/Image_{(CONST_INIT_INDEX):05}.png'
+    file_path = f'{project_folder}/Data/Camera/raw/images/Object_ID_{CONST_OBJECT_ID}_{(CONST_INIT_INDEX):05}.png'
 
     # Set the path to the destination CTI file.
     cti_file_path = os.getenv('PHOXI_CONTROL_PATH') + "/API/bin/photoneo.cti"

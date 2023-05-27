@@ -24,7 +24,7 @@ CONST_DATASET_NAME = f'Type_{CONST_DATASET_TYPE}'
 def main():
     """
     Description:
-        A simple script to display result data from training a dataset. Metrics such as Generalized Intersection over Union (GIoU), Mean
+        A program to display result data from training a dataset. Metrics such as Generalized Intersection over Union (GIoU), Mean
         Average Precision (mAP), Precision, etc. were used to evaluate the performance of the proposed network.
     """
         
@@ -61,20 +61,15 @@ def main():
     print(f'[INFO] The name of the dataset: {CONST_DATASET_NAME}')
     print(f'[INFO] The best results were found in the {idx} iteration.')
     print('[INFO]  Generalized Intersection over Union (GIoU):')
-    print(f'[INFO]  - train = {data[data.columns[1]][idx]}')
-    print(f'[INFO]  - valid = {data[data.columns[8]][idx]}')
+    print(f'[INFO]  [train = {data[data.columns[1]][idx]}, valid = {data[data.columns[8]][idx]}]')
     print('[INFO]  Objectness:')
-    print(f'[INFO]  - train = {data[data.columns[2]][idx]}')
-    print(f'[INFO]  - valid = {data[data.columns[9]][idx]}')
+    print(f'[INFO]  [train = {data[data.columns[2]][idx]}, valid = {data[data.columns[9]][idx]}]')
     print('[INFO]  Classification:')
-    print(f'[INFO]  - train = {data[data.columns[3]][idx]}')
-    print(f'[INFO]  - valid = {data[data.columns[10]][idx]}')
+    print(f'[INFO]  [train = {data[data.columns[3]][idx]}, valid = {data[data.columns[10]][idx]}]')
     print('[INFO]  Pr + Rec:')
-    print(f'[INFO]  - precision = {data[data.columns[4]][idx]}')
-    print(f'[INFO]  - recall = {data[data.columns[5]][idx]}')
+    print(f'[INFO]  [precision = {data[data.columns[4]][idx]}, recall = {data[data.columns[5]][idx]}]')
     print('[INFO]  Mean Average Precision (mAP):')
-    print(f'[INFO]  - mAP@0.5 = {data[data.columns[6]][idx]}')
-    print(f'[INFO]  - mAP@0.5:0.95 = {data[data.columns[7]][idx]}')
+    print(f'[INFO]  [mAP@0.5 = {data[data.columns[6]][idx]}, mAP@0.5:0.95 = {data[data.columns[7]][idx]}]')
     
     # Set the parameters for the scientific style.
     plt.style.use(['science'])

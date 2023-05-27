@@ -2,16 +2,20 @@ Object Detection:
 https://docs.ultralytics.com/tasks/detect/
 
 Model: YOLOv8n
-GPU: NVIDIA Tesla T4 16 GB (Google Colab)
+GPU: NVIDIA GeForce GTX 1080 Ti 16 GB (Internal)
 Image Size: 640x480 (rectangular training with each batch collated for minimum padding).
 Maximum Number of Epochs: 300
 Patience: 100
 Batch Size: Automatically estimate the best YOLO batch size to use a fraction of the available CUDA memory.
 
+Average prediction speed:
+    - PyTorch (*.pt): 5.7 ms
+    - ONNX (*.pt): 4.8 ms
+
 Partitioning of the Dataset:
     - Train: 80% + Background Images(~3.3%)
     - Valid: 20%
-    - Test: 30 images from real hardware (camera)
+    - Test: 30 images from real hardware (camera) and 1 synthetic image.
 
 Type of images:
     R: Real
@@ -36,12 +40,10 @@ Type_0:
             - ID_1: 6 = 6(R) + 0(A) + 0(S)
             - N: 12(ID_{0,1})
         - Test: 
-            - ID_0: 15 = 15(R)
-            - ID_1: 15 = 15(R)
-            - N: 30(ID_{0,1})
+            - N: 30(R) + 0(A) + 1(S)
     Freeze Backbone: True
     Epochs: 300 
-    Training Time: 0.416 hours
+    Training Time: 0.053 hours
 
 Type_1:
     Size: 1.90 GB
@@ -56,12 +58,10 @@ Type_1:
             - ID_1: 60 = 6(R) + 54(A) + 0(S)
             - N: 120(ID_{0,1})
         - Test: 
-            - ID_0: 15 = 15(R)
-            - ID_1: 15 = 15(R)
-            - N: 30(ID_{0,1})
+            - N: 30(R) + 0(A) + 1(S)
     Freeze Backbone: True
     Epochs: 300 
-    Training Time: 3.495 hours
+    Training Time: 0.342 hours
 
 Type_2:
     Size: 0.205 GB
@@ -76,12 +76,10 @@ Type_2:
             - ID_1: 6 = 0(R) + 0(A) + 6(S)
             - N: 12(ID_{0,1})
         - Test: 
-            - ID_0: 15 = 15(R)
-            - ID_1: 15 = 15(R)
-            - N: 30(ID_{0,1})
+            - N: 30(R) + 0(A) + 1(S)
     Freeze Backbone: True
     Epochs: 300 
-    Training Time: 0.337 hours
+    Training Time: 0.052 hours
 
 Type_3:
     Size: 2.43 GB
@@ -96,12 +94,10 @@ Type_3:
             - ID_1: 60 = 0(R) + 54(A) + 6(S)
             - N: 120(ID_{0,1})
         - Test: 
-            - ID_0: 15 = 15(R)
-            - ID_1: 15 = 15(R)
-            - N: 30(ID_{0,1})
+            - N: 30(R) + 0(A) + 1(S)
     Freeze Backbone: True
     Epochs: 300 
-    Training Time: 3.694 hours
+    Training Time: 0.352 hours
 
 Type_4:
     Size: 1.39 GB
@@ -116,12 +112,10 @@ Type_4:
             - ID_1: 60 = 0(R) + 0(A) + 60(S)
             - N: 120(ID_{0,1})
         - Test: 
-            - ID_0: 15 = 15(R)
-            - ID_1: 15 = 15(R)
-            - N: 30(ID_{0,1})
+            - N: 30(R) + 0(A) + 1(S)
     Freeze Backbone: True
     Epochs: 300 
-    Training Time: 2.711 hours
+    Training Time: 0.310 hours
 
 Type_5:
     Size: 1.41 GB
@@ -136,16 +130,7 @@ Type_5:
             - ID_1: 60 = 6(R) + 0(A) + 54(S)
             - N: 120(ID_{0,1})
         - Test: 
-            - ID_0: 15 = 15(R)
-            - ID_1: 15 = 15(R)
-            - N: 30(ID_{0,1})
+            - N: 30(R) + 0(A) + 1(S)
     Freeze Backbone: True
     Epochs: 300 
-    Training Time: 2.778 hours
-
-# Fitness
-https://github.com/ultralytics/yolov5/issues/582
-https://github.com/ultralytics/yolov5/issues/8701
-https://github.com/ultralytics/ultralytics/blob/23fc50641c45b3a3504d6c939bf12666f9f51dc5/ultralytics/yolo/utils/metrics.py
-https://github.com/ultralytics/ultralytics/blob/d1107ca4cb5ef2a94a583e0a0247172f7f972f9a/docs/yolov5/tutorials/hyperparameter_evolution.md
-https://stackoverflow.com/questions/75523057/how-is-the-yolov8-best-loss-model-selected-by-the-trainer-class
+    Training Time: 0.299 hours

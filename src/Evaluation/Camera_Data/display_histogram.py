@@ -25,10 +25,6 @@ CONST_SCAN_ITERATION = 1
 # Displays an image using the matplotlib library 
 # with histograms.
 CONST_SHOW_IMG_MATPLOTLIB = True
-# The type of image folder to be processed.
-#   'DATASET': Images for the dataset.
-#   'ADDITIONAL': Images for additional tests.
-CONST_IMAGE_FOLDER_TYPE = 'ADDITIONAL'
 
 def main():
     """
@@ -50,14 +46,9 @@ def main():
     # Loads images from the specified file.
     #   Note:
     #       Related raw/processed images.
-    if CONST_IMAGE_FOLDER_TYPE == 'DATASET':
-        image_name = f'Object_ID_{CONST_OBJECT_ID}_{CONST_SCAN_ITERATION:05}'
-        image_raw = cv2.imread(f'{file_path}/Camera/raw/images/{image_name}.png')
-        image_processed = cv2.imread(f'{file_path}/Camera/processed/images/{image_name}.png')
-    elif CONST_IMAGE_FOLDER_TYPE == 'ADDITIONAL':
-        image_name = f'Image_{CONST_SCAN_ITERATION:05}'
-        image_raw = cv2.imread(f'{project_folder}/Additional/raw/images/{image_name}.png')
-        image_processed = cv2.imread(f'{project_folder}/Additional/processed/images/{image_name}.png')
+    image_name = f'Object_ID_{CONST_OBJECT_ID}_{CONST_SCAN_ITERATION:05}'
+    image_raw = cv2.imread(f'{file_path}/Camera/raw/images/{image_name}.png')
+    image_processed = cv2.imread(f'{file_path}/Camera/processed/images/{image_name}.png')
 
     # Set the parameters for the scientific style.
     plt.style.use('science')

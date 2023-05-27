@@ -168,14 +168,15 @@ def Draw_Bounding_Box(image: tp.List[tp.List[int]], bounding_box_properties: tp.
 
     return image_out
 
-def YOLO_ONNX_Format_Object_Detection(image: tp.List[tp.List[int]], model_onnx: str, image_size: int, confidence: float):
+def YOLO_ONNX_Format_Object_Detection(image: tp.List[tp.List[int]], model_onnx: str, image_size: int, confidence: float,
+                                      iou: float) -> tp.Tuple[tp.List[int], tp.List[float], tp.Tuple[str, str, tp.List[tp.Union[int, float]]]]:
     """
     Description:
         Function for object detection using the trained YOLO model. The model in our case must be in *.onnx format, converted 
         from the official *.pt model.
 
         More information about training, validation, etc. of the model can be found here:
-            ../Lib/YOLO/YOLOv8_Train_Custom_Dataset.ipynb
+            ../src/Training/..
 
     Args:
         (1) image [Vector<float> Image Shape {Resolution<x, y>}]: Input image to be used for object detection.
@@ -183,7 +184,8 @@ def YOLO_ONNX_Format_Object_Detection(image: tp.List[tp.List[int]], model_onnx: 
                               Note:
                                 More information about the onnx format can be found at: https://onnx.ai
         (3) image_size [Vector<float> 1x2]: The size of the input image. The size must match the size of the image when training the model.
-        (4) confidence [float]: The required minimum object confidence threshold for detection.
+        (4) confidence [float]: The threshold used to filter the bounding boxes by score.
+        (5) iou [float]: Threshold used for non-maximum suppression.
     
     Returns:
         (1) parameter [int or Vector<int> 1xn]: The class ID of the detected object.
@@ -201,8 +203,6 @@ def YOLO_ONNX_Format_Object_Detection(image: tp.List[tp.List[int]], model_onnx: 
     #   The coefficient (factor) of the processed image.
     Image_Coeff = {'x': Resolution['x'] / image_size[0], 
                    'y': Resolution['y'] / image_size[1]}
-    #   Threshold for applying non-maximum suppression.
-    CONST_THRESHOLD = 0.6
 
     # Create a blob from the input image.
     blob = cv2.dnn.blobFromImage(image, 1.0/255.0, (image_size[0], image_size[1]), swapRB=True, crop=False)
@@ -241,7 +241,7 @@ def YOLO_ONNX_Format_Object_Detection(image: tp.List[tp.List[int]], model_onnx: 
                 bounding_boxes.append([x, y, w, h])
 
     # Perform a non-maximal suppression relative to the previously defined score.
-    indexes = cv2.dnn.NMSBoxes(bounding_boxes, confidences, confidence, CONST_THRESHOLD)
+    indexes = cv2.dnn.NMSBoxes(bounding_boxes, confidences, confidence, iou)
  
     # At least one detection should be successful, otherwise just report a failed detection.
     if isinstance(indexes, np.ndarray):

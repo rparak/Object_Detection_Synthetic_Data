@@ -17,9 +17,6 @@ import cv2
 import torch
 # Torchvision (Image and video datasets and models) [pip3 install torchvision]
 import torchvision.ops.boxes
-# Ultralytics (Real-time object detection and image segmentation 
-# model) [pip install ultralytics]
-from ultralytics import YOLO
 # Custom Library:
 #   ../Lib/Utilities/Image_Processing
 import Lib.Utilities.Image_Processing
@@ -57,7 +54,7 @@ def main():
     """
     Description:
         A program to display results based on object predictions from the test partition of a dataset. The prediction is performed using 
-        the standard YOLO *.pt format.
+        the *.onnx format.
 
         Note:
             The measurement mainly focuses on data such as Confidence, Intersection over Union (IoU) and Precision (P).
@@ -66,8 +63,8 @@ def main():
     # Locate the path to the project folder.
     project_folder = os.getcwd().split('Blender_Synthetic_Data')[0] + 'Blender_Synthetic_Data'
 
-    # Load a pre-trained custom YOLO model.
-    model = YOLO(f'{project_folder}/YOLO/Model/Type_{CONST_DATASET_TYPE}/yolov8n_custom.pt')
+    # Load a pre-trained YOLO model in the *.onnx format.
+    model = cv2.dnn.readNet(f'{project_folder}/YOLO/Model/Type_{CONST_DATASET_TYPE}/yolov8n_dynamic_False_custom.onnx')
 
     # Set the parameters for the scientific style.
     plt.style.use('science')
@@ -94,37 +91,39 @@ def main():
         b_box_des = []
         for _, label_data_i in enumerate(label_data):
             b_box_des_tmp = Lib.Utilities.General.Convert_Boundig_Box_Data('YOLO', 'PASCAL_VOC', 
-                                                                           {'x_c': label_data_i[1], 
+                                                                            {'x_c': label_data_i[1], 
                                                                             'y_c': label_data_i[2], 
                                                                             'width': label_data_i[3], 
                                                                             'height': label_data_i[4]}, {'x': image_data.shape[1], 'y': image_data.shape[0]})
             b_box_des.append(list(b_box_des_tmp.values()))
 
-        # Predict (test) the model on a test dataset.
-        result = model.predict(source=image_file_path, imgsz=[480, 640], conf=0.5)
-
+        #   Express the data from the prediction:
+        #       ID name of the class, Bounding box in the YOLO format and Confidence.
+        (cls_id_pred_tmp, b_box_pred_tmp, conf_pred_tmp) = Lib.Utilities.Image_Processing.YOLO_ONNX_Format_Object_Detection(image_data, model, 
+                                                                                                                            [640, 480], 0.50)
+        
         # If the model has found an object in the current processed image, express the bounding box and the confidence of each object.
         #   Note:
         #       Predicted data to be used to validate results.
         s_conf = []
-        if result[0].boxes.shape[0] >= 1:
-            # Express the data from the prediction:
-            #   ID name of the class, Bounding box in the YOLO format and Confidence.
-            class_id_pred_tmp = result[0].boxes.cls.cpu().numpy(); b_box_pred_tmp = result[0].boxes.xyxy.cpu().numpy()
-            b_box_pred_yolo_tmp = result[0].boxes.xywhn.cpu().numpy(); conf_pred_tmp = result[0].boxes.conf.cpu().numpy()
-
+        if cls_id_pred_tmp != None:
             # Check if the area of each predicted object is within the boundaries.
             b_box_pred = []
-            for _, (class_id_pred_tmp_i, b_box_pred_tmp_i, conf_pred_tmp_i, b_box_pred_yolo_tmp_i) in enumerate(zip(class_id_pred_tmp, b_box_pred_tmp, 
-                                                                                                                    conf_pred_tmp, b_box_pred_yolo_tmp)):
+            for _, (class_id_pred_tmp_i, b_box_pred_tmp_i, conf_pred_tmp_i) in enumerate(zip(cls_id_pred_tmp, b_box_pred_tmp, 
+                                                                                             conf_pred_tmp)):
+                # Convert bounding box data from PASCAL_VOC format to YOLO format to get the area of the rectangle..
+                b_box_pred_yolo_tmp = Lib.Utilities.General.Convert_Boundig_Box_Data('PASCAL_VOC', 'YOLO', b_box_pred_tmp_i, 
+                                                                                     {'x': image_data.shape[1], 'y': image_data.shape[0]})
+
                 # Calculates the area of the rectangle from the bounding box.
-                A_tmp = b_box_pred_yolo_tmp_i[2] * b_box_pred_yolo_tmp_i[3]
+                A_tmp = b_box_pred_yolo_tmp['width'] * b_box_pred_yolo_tmp['height']
 
                 if CONST_BOUNDARIES_OBJECT_A[int(class_id_pred_tmp_i)][0] < A_tmp < CONST_BOUNDARIES_OBJECT_A[int(class_id_pred_tmp_i)][1]:
-                    b_box_pred.append(b_box_pred_tmp_i); s_conf.append(conf_pred_tmp_i)
+                    b_box_pred.append(list(b_box_pred_tmp_i.values())); s_conf.append(conf_pred_tmp_i)
         else:
             # Otherwise, write null values for both the bounding box and the confidence.
             b_box_pred = [[0] * 4]; s_conf.append(0.0)
+
 
         # Find the Intersection over Union (IoU) score of the bounding boxes. 
         #   Note:
@@ -152,7 +151,7 @@ def main():
             ax.scatter(n_i + 1, np.mean(s_conf), marker='o', color=[0.525,0.635,0.8,1.0], s=100.0, linewidth=3.0, 
                        edgecolors=[0.525,0.635,0.8,1.0], label='Average Confidence')
             ax.scatter(n_i + 1, np.mean(s_iou_tmp), marker='o', color=[1.0,0.75,0.5,1.0], s=100.0, linewidth=3.0, 
-                       edgecolors=[1.0,0.75,0.5,1.0], label='Average Intersection over Union (AIoU)')  
+                       edgecolors=[1.0,0.75,0.5,1.0], label='Average Intersection over Union (AIoU)')   
 
     # Calculates the mean average precision (mAP).
     mAP = np.mean(np.array(s_iou, dtype=np.float32).flatten())
