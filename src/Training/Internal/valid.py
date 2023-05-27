@@ -9,13 +9,13 @@ Description:
     Initialization of constants.
 """
 # The identification number of the dataset type.
-CONST_DATASET_TYPE = 5
+CONST_DATASET_TYPE = 1
 # An indication of whether the backbone layers of the model should be frozen.
 CONST_FREEZE_BACKBONE = True
 # Format of the trained model.
 #   Standard YOLO *.pt format: 'pt'
 #   ONNX *.onnx format: 'onnx
-CONST_MODEL_FORMAT = 'onnx'
+CONST_MODEL_FORMAT = 'pt'
 
 def main():
     """
@@ -51,8 +51,8 @@ def main():
                   split='test', name=f'{project_folder}/YOLO/Results/Type_{CONST_DATASET_TYPE}/valid_fb_{CONST_FREEZE_BACKBONE}')
         """
 
-        result = model.val(data=f'{project_folder}/YOLO/Configuration/Type_{CONST_DATASET_TYPE}/config.yaml', batch=32, imgsz=640, iou=0.6, rect=True, save_txt=True, save_conf=True, 
-                           save_json=True, dnn=True, split='test', name=f'{project_folder}/YOLO/Results/Type_{CONST_DATASET_TYPE}/valid_fb_{CONST_FREEZE_BACKBONE}')
+        result = model.val(data=f'{project_folder}/YOLO/Configuration/Type_{CONST_DATASET_TYPE}/config.yaml', batch=32, imgsz=640, conf=0.001, iou=0.6, rect=True, save_txt=True, save_conf=True, 
+                           save_json=True, dnn=False, split='test', name=f'{project_folder}/YOLO/Results/Type_{CONST_DATASET_TYPE}/valid_fb_{CONST_FREEZE_BACKBONE}')
         
         #print(result.box)
     else:

@@ -9,7 +9,7 @@ Description:
     Initialization of constants.
 """
 # The identification number of the dataset type.
-CONST_DATASET_TYPE = 5
+CONST_DATASET_TYPE = 1
 # An indication of whether the backbone layers of the model should be frozen.
 CONST_FREEZE_BACKBONE = True
 # Format of the trained model.
