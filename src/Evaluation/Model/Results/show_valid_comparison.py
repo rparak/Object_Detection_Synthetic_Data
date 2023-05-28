@@ -71,8 +71,9 @@ def main():
                label=f'Type {i}')
 
     # Set parameters of the graph (plot).
-    #   Set the x ticks.
+    #   Set the x, y ticks.
     plt.xticks(np.arange(0, 4, 1) + 0.125, ['Precision', 'Recall', 'mAP@0.5', 'mAP@0.5:0.95'])
+    plt.yticks(np.arange(0, 1.1, 0.1))
     #   Label
     ax.set_xlabel(r'Metrics', fontsize=15); ax.set_ylabel(r'Score', fontsize=15) 
     #   Set parameters of the visualization.

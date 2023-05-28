@@ -73,15 +73,18 @@ def main():
     fig.suptitle('Comparison of Training Results', fontsize = 30)
 
     # Display metrics data in a bar chart.
-    for i in range(CONST_NUM_OF_DATASETS):
-        ax.bar(np.arange(0, 10, 1) + i*0.05, np.array([metrics[i, :, 0], metrics[i, :, 1]]).flatten(), alpha=1.0, width = 0.05, 
+    for i, color_i in enumerate(['#bfdbd1', '#72837d', '#abcae4', '#88a1b6', '#667988', '#a64d79']):
+        ax.bar(np.arange(0, 10, 1) + i*0.05, np.array([metrics[i, :, 0], metrics[i, :, 1]]).flatten(), color=color_i, alpha=1.0, width = 0.05,
                label=f'Type {i}')
 
     # Set parameters of the graph (plot).
-    #   Set the x ticks.
+    #   Set the x,y ticks.
     plt.xticks(np.arange(0, 10, 1) + 0.125, ['GIoU: train', 'Objectness: train', 'Classification: train', 
                                              'GIoU: valid', 'Objectness: valid', 'Classification: valid',
                                              'Precision', 'Recall', 'mAP@0.5', 'mAP@0.5:0.95'])
+    plt.yticks(np.arange(0.0, 1.1, 0.1))
+    #   Set the y limits.
+    ax.set(ylim=[0.0, 1.1])
     #   Label
     ax.set_xlabel(r'Metrics', fontsize=15); ax.set_ylabel(r'Score', fontsize=15) 
     #   Set parameters of the visualization.
