@@ -110,7 +110,7 @@ def main():
     ax[3].grid(linewidth = 0.25, linestyle = '--')
     ax[3].legend(fontsize=10.0)
 
-    # Mean Average Precision (mAP) - (mAP@0.5, mAP@0.5:0.95)
+    # Mean Average Precision (mAP) - (mAP@0.5, mAP@0.5:0.95).
     ax[4].plot(epoch, data[data.columns[6]], 'o-', color=[0.525,0.635,0.8,1.0], linewidth=2.0, ms = 3.0, label='mAP@0.5')
     ax[4].plot(epoch, data[data.columns[7]], 'o-', color=[1.0,0.75,0.5,1.0], linewidth=2.0, ms = 3.0, label='mAP@0.5:0.95')
     #   Set parameters of the visualization.

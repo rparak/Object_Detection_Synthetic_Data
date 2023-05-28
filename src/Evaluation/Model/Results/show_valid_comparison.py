@@ -1,0 +1,91 @@
+# Ultralytics (Real-time object detection and image segmentation 
+# System (Default)
+import sys
+#   Add access if it is not in the system path.
+if '../' + 'src' not in sys.path:
+    sys.path.append('../..')
+# Numpy (Array computing) [pip3 install numpy]
+import numpy as np
+# Matplotlib (Visualization) [pip3 install matplotlib]
+import matplotlib.pyplot as plt
+# OS (Operating system interfaces)
+import os
+# SciencePlots (Matplotlib styles for scientific plotting) [pip3 install SciencePlots]
+import scienceplots
+# Ultralytics (Real-time object detection and image segmentation 
+# model) [pip install ultralytics]
+from ultralytics import YOLO
+
+"""
+Description:
+    Initialization of constants.
+"""
+# Number of datasets.
+CONST_NUM_OF_DATASETS = 6
+# Format of the trained model.
+#   Standard YOLO *.pt format: 'PyTorch'
+#   ONNX *.onnx format: 'ONNX'
+CONST_MODEL_FORMAT = 'PyTorch'
+
+def main():
+    """
+    Description:
+        A program to display validation results on a test dataset in the form of bar charts. Metrics such as Precision, Recall, Mean
+        Average Precision (mAP), etc. were used to evaluate the performance of the proposed network.
+    """
+
+    # Locate the path to the project folder.
+    project_folder = os.getcwd().split('Blender_Synthetic_Data')[0] + 'Blender_Synthetic_Data'
+
+    # Set the parameters for the scientific style.
+    plt.style.use(['science'])
+
+    metrics = []
+    for i in range(CONST_NUM_OF_DATASETS):
+        # The path to the trained model.
+        if CONST_MODEL_FORMAT == 'PyTorch':
+            file_path = f'{project_folder}/YOLO/Model/Type_{i}/yolov8n_custom.pt'
+        elif CONST_MODEL_FORMAT == 'ONNX':
+            file_path = f'{project_folder}/YOLO/Model/Type_{i}/yolov8n_dynamic_True_custom.onnx'
+
+        # Load a pre-trained custom YOLO model in the desired format.
+        model = YOLO(file_path)
+
+        # Evaluate the performance of the model on the validation dataset.
+        results = model.val(data=f'{project_folder}/YOLO/Configuration/Type_{i}/config.yaml', batch=32, imgsz=640, conf=0.001, iou=0.6, rect=True, 
+                            split='test')
+        
+        # Express the best metrics in the current dataset.
+        metrics.append(list(results.results_dict.values())[0:-1])
+
+    # Convert the list to an array.
+    metrics = np.array(metrics, dtype=np.float32)
+
+    # Create a figure.
+    fig, ax = plt.subplots(1, 1)
+    fig.suptitle('Comparison of Validation Results', fontsize = 30)
+
+    # Display metrics data in a bar chart.
+    for i in range(CONST_NUM_OF_DATASETS):
+        ax.bar(np.arange(0, 4, 1) + i*0.05, metrics[i, :], alpha=1.0, width = 0.05, 
+               label=f'Type {i}')
+
+    # Set parameters of the graph (plot).
+    #   Set the x ticks.
+    plt.xticks(np.arange(0, 4, 1) + 0.125, ['Precision', 'Recall', 'mAP@0.5', 'mAP@0.5:0.95'])
+    #   Label
+    ax.set_xlabel(r'Metrics', fontsize=15); ax.set_ylabel(r'Score', fontsize=15) 
+    #   Set parameters of the visualization.
+    ax.grid(which='major', linewidth = 0.25, linestyle = '--')
+    # Get handles and labels for the legend.
+    handles, labels = plt.gca().get_legend_handles_labels()
+    # Remove duplicate labels.
+    legend = dict(zip(labels, handles))
+    # Show the labels (legends) of the graph.
+    ax.legend(legend.values(), legend.keys(), fontsize=10.0)
+
+    # Display the results as a graph (plot).
+    plt.show()
+
+if __name__ == '__main__':
+    main()
