@@ -31,7 +31,7 @@ CONST_DATASET_TYPE = 1
 # Name of the dataset.
 CONST_DATASET_NAME = f'Dataset_Type_{CONST_DATASET_TYPE}'
 # Number of augmented data to be generated.
-CONST_NUM_OF_GEN_DATA = 270
+CONST_NUM_OF_GEN_DATA = 285
 # Explanation of the dictionary of dataset partitions.
 #   'Percentage': Partition the dataset into training, validation, and test sets in percentages.
 #                 Note:
@@ -41,7 +41,7 @@ CONST_NUM_OF_GEN_DATA = 270
 #                   The value of the initial index is equal to the last image/label value 
 #                   in the dataset + 1.
 #   'Num_of_Data': Number of data in each partitions.
-CONST_DATASET_PARTITION = {'Percentage': [80, 20, 0], 'Init_Index': [25, 247, 0], 'Num_of_Data': [24, 6, 0]}
+CONST_DATASET_PARTITION = {'Percentage': [80, 20, 0], 'Init_Index': [13, 244, 0], 'Num_of_Data': [12, 3, 0]}
 
 def main():
     """

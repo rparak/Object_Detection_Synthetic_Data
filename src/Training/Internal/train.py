@@ -9,7 +9,7 @@ Description:
     Initialization of constants.
 """
 # The identification number of the dataset type.
-CONST_DATASET_TYPE = 0
+CONST_DATASET_TYPE = 2
 # Name of the dataset.
 CONST_DATASET_NAME = f'Dataset_Type_{CONST_DATASET_TYPE}'
 # Select the desired size of YOLOv* to build the model.
@@ -77,8 +77,8 @@ def main():
         model.add_callback('on_train_start', Freeze_Backbone)
 
     # Training the model on a custom dataset with additional dependencies (number of epochs, image size, etc.)
-    model.train(data=f'{project_folder}/YOLO/Configuration/Type_{CONST_DATASET_TYPE}/config.yaml', batch=-1, imgsz=640, epochs=500, patience=0,
-                rect=True, name=f'{project_folder}/YOLO/Results/Type_{CONST_DATASET_TYPE}/train_fb_{CONST_FREEZE_BACKBONE}')
+    model.train(data=f'{project_folder}/YOLO/Configuration/Type_{CONST_DATASET_TYPE}/config.yaml', batch=-1, imgsz=640, epochs=300, patience=0,
+                rect=True, name=f'{project_folder}/YOLO/Results/Type_{CONST_DATASET_TYPE}/train_fb_{CONST_FREEZE_BACKBONE}_{4}')
 
 if __name__ == '__main__':
     main()
