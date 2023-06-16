@@ -21,15 +21,15 @@ Description:
 #   ID{0} = 'T_Joint'
 #   ID{1} = 'Metal_Blank'
 #   ID{-1} = ALL
-CONST_OBJECT_ID = 0
+CONST_OBJECT_ID = -1
 # Number of data to be processed.
 # Note:
 #   It must be equal to the number of data 
 #   in the raw images folder.
-CONST_NUM_OF_DATA = 5
+CONST_NUM_OF_DATA = 24
 # Specified parameter of each object for histogram 
 # clipping in percentage.
-CONST_CLIP_LIMIT = [0.75, 1.25, 2.0]
+CONST_CLIP_LIMIT = [0.75, 1.25, 1.5]
 
 def main():
     """
@@ -51,8 +51,12 @@ def main():
         t_0 = time.time()
 
         # The specified path to the folder from which the image will be loaded (*_in) and where the image will be saved (*_out).
-        file_path_in  = f'{project_folder}/Data/Camera/raw/images/Object_ID_{CONST_OBJECT_ID}_{(i + 1):05}.png'
-        file_path_out = f'{project_folder}/Data/Camera/processed/images/Object_ID_{CONST_OBJECT_ID}_{(i + 1):05}.png'    
+        if CONST_OBJECT_ID == -1:
+            file_path_in  = f'{project_folder}/Data/Camera/raw/images/Image_{(i + 1):05}.png'
+            file_path_out = f'{project_folder}/Data/Camera/processed/images/Image_{(i + 1):05}.png' 
+        else:
+            file_path_in  = f'{project_folder}/Data/Camera/raw/images/Object_ID_{CONST_OBJECT_ID}_{(i + 1):05}.png'
+            file_path_out = f'{project_folder}/Data/Camera/processed/images/Object_ID_{CONST_OBJECT_ID}_{(i + 1):05}.png'    
 
         # Loads the image to the specified file.
         image_in = cv2.imread(file_path_in)

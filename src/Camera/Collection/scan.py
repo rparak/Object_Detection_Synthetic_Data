@@ -19,6 +19,7 @@ Description:
 # The ID of the object to be scanned.
 #   ID{0} = 'T_Joint'
 #   ID{1} = 'Metal_Blank'
+#   ID{-1} = ALL
 CONST_OBJECT_ID = 0
 # The identification number of the iteration to save the image. It starts with the number 1.
 #   1 = 'Image_001', 2 = 'Image_002', etc.
@@ -49,7 +50,10 @@ def main():
     project_folder = os.getcwd().split('Blender_Synthetic_Data')[0] + 'Blender_Synthetic_Data'
 
     # The specified path to the folder where the image will be saved.
-    file_path = f'{project_folder}/Data/Camera/raw/images/Object_ID_{CONST_OBJECT_ID}_{(CONST_INIT_INDEX):05}.png'
+    if CONST_OBJECT_ID == -1:
+        file_path = f'{project_folder}/Data/Camera/raw/images/Image_{(CONST_INIT_INDEX):05}.png'
+    else:
+        file_path = f'{project_folder}/Data/Camera/raw/images/Object_ID_{CONST_OBJECT_ID}_{(CONST_INIT_INDEX):05}.png'
 
     # Set the path to the destination CTI file.
     cti_file_path = os.getenv('PHOXI_CONTROL_PATH') + "/API/bin/photoneo.cti"
