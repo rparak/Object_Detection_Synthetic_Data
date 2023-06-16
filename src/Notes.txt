@@ -17,8 +17,6 @@
 {user_name} % conda install pytorch::pytorch torchvision torchaudio -c pytorch
 or 
 {user_name} % conda install pytorch-nightly::pytorch torchvision torchaudio -c pytorch-nightly
-#   - Python YAML
-{user_name} % conda install -c conda-forge pyyaml
 
 # Install dependencies that are not available by using conda-forge.
 #   After conda env. will be activated, install pip.
