@@ -28,7 +28,7 @@ CONST_OBJECT_NAME = ['T_Joint', 'Metal_Blank']
 # The color of the bounding box of the object.
 CONST_OBJECT_BB_COLOR = [(255, 165, 0), (0, 165, 255)]
 # The identification number of the dataset type.
-CONST_DATASET_TYPE = 0
+CONST_DATASET_TYPE = 5
 # Name of the dataset.
 CONST_DATASET_NAME = f'Dataset_Type_{CONST_DATASET_TYPE}'
 # The number of data to be tested for a single object.
