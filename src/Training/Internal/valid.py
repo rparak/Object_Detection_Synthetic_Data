@@ -57,8 +57,8 @@ def main():
         # Load a pre-trained custom YOLO model in the desired format.
         model = YOLO(file_path)
 
-        # Evaluate the performance of the model on the validation dataset.
-        model.val(data=f'{project_folder}/YOLO/Configuration/Type_{CONST_DATASET_TYPE}/config.yaml', batch=64, imgsz=640, conf=0.001, iou=0.6, rect=True, 
+        # Evaluate the performance of the model on the test dataset.
+        model.val(data=f'{project_folder}/YOLO/Configuration/Type_{CONST_DATASET_TYPE}/config.yaml', batch=32, imgsz=640, conf=0.001, iou=0.6, rect=True, 
                   save_txt=True, save_conf=True, save_json=False, split='test', name=f'{project_folder}/YOLO/Results/Type_{CONST_DATASET_TYPE}/valid_fb_{CONST_FREEZE_BACKBONE}')
     else:
         print('[INFO] The file does not exist.')

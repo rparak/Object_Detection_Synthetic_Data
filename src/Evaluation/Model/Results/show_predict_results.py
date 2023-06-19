@@ -39,12 +39,13 @@ CONST_OBJECT_NAME = ['T-Joint', 'Metal Blank']
 CONST_MODEL_FORMAT = 'PyTorch'
 # The number of data to be tested for a single object.
 CONST_NUM_OF_TEST_DATA = 25
+# Initial iteration of the scanning process.
+CONST_SCAN_ITERATION = 0
 
 def main():
     """
     Description:
-        A program to display the results based on the validation of the YOLOv8 model. In this case, the model is evaluated 
-        on a test dataset to measure metrics such as Precision, Recall, mAP@0.5, mAP@0.5:0.95.
+        A program to display the results based on object predictions from the test partition of a dataset.
 
         Note:
             The prediction is performed using both *.onnx and *.pt formats.
@@ -59,19 +60,6 @@ def main():
     elif CONST_MODEL_FORMAT == 'ONNX':
         file_path = f'{project_folder}/YOLO/Model/Type_{CONST_DATASET_TYPE}/yolov8n_dynamic_True_custom.onnx'
 
-    # The name of the temporary folder with the validation results.
-    tmp_folder_name = f'{project_folder}/src/Evaluation/Model/Results/tmp_folder'
-
-    # Load a pre-trained custom YOLO model in the desired format.
-    model = YOLO(file_path)
-
-    # Evaluate the performance of the model on the test dataset.
-    results = model.val(data=f'{project_folder}/YOLO/Configuration/Type_{CONST_DATASET_TYPE}/config.yaml', batch=32, imgsz=640, conf=0.001, iou=0.6, rect=True, 
-                        save_txt=True, save_conf=True, save_json=False, split='test', name=tmp_folder_name)
-    
-    # Express the best metrics in the current dataset.
-    metrics = list(results.results_dict.values())[0:-1]
-    
     # Set the parameters for the scientific style.
     plt.style.use('science')
 
@@ -79,32 +67,30 @@ def main():
     fig, ax = plt.subplots(1, 1)
     fig.suptitle(f'The name of the dataset: {CONST_DATASET_NAME}', fontsize = 30)
 
-    for i in range(CONST_NUM_OF_TEST_DATA):
-        # Load a label (annotation) from a file.
-        label_data = File_IO.Load(f'{tmp_folder_name}/labels/Image_{(i + 1):05}', 'txt', ' ')
-        for _, label_data_i in enumerate(label_data):
-            cls_id = int(label_data_i[0]); conf = label_data_i[-1]
-            if cls_id == 0:
-                ax.scatter(i + 1, conf, marker='o', color=[1.0,1.0,1.0,1.0], s=100.0, linewidth=3.0, 
-                           edgecolors=[1.0,0.75,0.5,1.0], label=f'{CONST_OBJECT_NAME[cls_id]}')
-            elif cls_id == 1:
-                ax.scatter(i + 1, conf, marker='o', color=[1.0,1.0,1.0,1.0], s=100.0, linewidth=3.0, 
-                           edgecolors=[0.525,0.635,0.8,1.0], label=f'{CONST_OBJECT_NAME[cls_id]}')
+    # Load a pre-trained custom YOLO model in the desired format.
+    model = YOLO(file_path)
 
-    # Remove the unnecessary (temporary) folder.
-    if os.path.isdir(tmp_folder_name):
-        shutil.rmtree(tmp_folder_name)
+    # Tests the data up to the desired maximum number of iterations, which is given by the constant {CONST_NUM_OF_TEST_DATA}.
+    for n_i in range(CONST_NUM_OF_TEST_DATA):
+        # File path of the processed image.
+        image_file_path = f'{project_folder}/Data/{CONST_DATASET_NAME}/images/test/Image_{(CONST_SCAN_ITERATION + (n_i + 1)):05}.png'
+
+        # Evaluate the performance of the model on the test dataset.
+        results = model.predict(source=image_file_path, imgsz=[480, 640], conf=0.5, iou=0.7)
         
-    # Display data of the monitored metrics.
-    print('[INFO] Evaluation Criteria: YOLOv8')
-    print(f'[INFO] The name of the dataset: {CONST_DATASET_NAME}')
-    for _, (metrics_data, metrics_name, color_i) in enumerate(zip(metrics, ['Precision', 'Recall', 'mAP@0.5', 'mAP@0.5:0.95'], 
-                                                              ['#bfdbd1', '#98afa7', '#72837d', '#39413e'])):
-        ax.plot(np.arange(1, CONST_NUM_OF_TEST_DATA + 1, 1), [metrics_data] * CONST_NUM_OF_TEST_DATA, '--', color=color_i, linewidth=2.0, ms = 10.0, 
-                label=f'{metrics_name}')
-        # Display the results as the values shown in the console.
-        print(f'[INFO] {metrics_name} = {metrics_data}')
-
+        # If the model has found an object in the current processed image, express the results (class, confidence).
+        if results[0].boxes.shape[0] >= 1:
+            # Express the data from the prediction:
+            cls_id = results[0].boxes.cls.cpu().numpy(); conf = results[0].boxes.conf.cpu().numpy()
+            
+            for _, (cls_id_i, conf_i) in enumerate(zip(cls_id, conf)):
+                if cls_id_i == 0:
+                    ax.scatter(n_i + 1, conf_i, marker='o', color=[1.0,1.0,1.0,1.0], s=100.0, linewidth=3.0, 
+                               edgecolors=[1.0,0.75,0.5,1.0], label=f'{CONST_OBJECT_NAME[int(cls_id_i)]}')
+                elif cls_id_i == 1:
+                    ax.scatter(n_i + 1, conf_i, marker='o', color=[1.0,1.0,1.0,1.0], s=100.0, linewidth=3.0, 
+                               edgecolors=[0.525,0.635,0.8,1.0], label=f'{CONST_OBJECT_NAME[int(cls_id_i)]}')
+                    
     # Set parameters of the graph (plot).
     #   Set the x ticks.
     ax.set_xticks(np.arange(1, CONST_NUM_OF_TEST_DATA + 1, 1))

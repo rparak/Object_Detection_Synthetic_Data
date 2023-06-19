@@ -73,12 +73,9 @@ def main():
     fig.suptitle('Comparison of Training Results', fontsize = 30)
 
     # Display metrics data in a bar chart.
-    print('[INFO] Metrics:')
-    print('[GIoU: train, Objectness: train, Classification: train, GIoU: valid, Objectness: valid, Classification: valid, Precision, Recall, mAP@0.5, mAP@0.5:0.95]')
     for i, color_i in enumerate(['#bfdbd1', '#72837d', '#abcae4', '#88a1b6', '#667988', '#a64d79']):
         ax.bar(np.arange(0, 10, 1) + i*0.05, np.array([metrics[i, :, 0], metrics[i, :, 1]]).flatten(), color=color_i, alpha=1.0, width = 0.05,
                label=f'Type {i}')
-        print(f'[INFO] Dataset Type {i}: {np.array([metrics[i, :, 0], metrics[i, :, 1]]).flatten()}')
 
     # Set parameters of the graph (plot).
     #   Set the x,y ticks.
@@ -103,4 +100,4 @@ def main():
     plt.show()
 
 if __name__ == '__main__':
-    main()
+    sys.exit(main())
