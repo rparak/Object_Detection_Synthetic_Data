@@ -17,7 +17,7 @@ Description:
     Initialization of constants.
 """
 # The identification number of the dataset type.
-CONST_DATASET_TYPE = 3
+CONST_DATASET_TYPE = 0
 # Name of the dataset.
 CONST_DATASET_NAME = f'Type_{CONST_DATASET_TYPE}'
 

@@ -9,7 +9,7 @@ Description:
     Initialization of constants.
 """
 # The identification number of the dataset type.
-CONST_DATASET_TYPE = 5
+CONST_DATASET_TYPE = 0
 # An indication of whether the backbone layers of the model should be frozen.
 CONST_FREEZE_BACKBONE = True
 # Select the desired size of YOLOv* to build the model.
@@ -58,7 +58,7 @@ def main():
         model = YOLO(file_path)
 
         # Evaluate the performance of the model on the validation dataset.
-        model.val(data=f'{project_folder}/YOLO/Configuration/Type_{CONST_DATASET_TYPE}/config.yaml', batch=32, imgsz=640, conf=0.001, iou=0.6, rect=True, 
+        model.val(data=f'{project_folder}/YOLO/Configuration/Type_{CONST_DATASET_TYPE}/config.yaml', batch=64, imgsz=640, conf=0.001, iou=0.6, rect=True, 
                   save_txt=True, save_conf=True, save_json=False, split='test', name=f'{project_folder}/YOLO/Results/Type_{CONST_DATASET_TYPE}/valid_fb_{CONST_FREEZE_BACKBONE}')
     else:
         print('[INFO] The file does not exist.')

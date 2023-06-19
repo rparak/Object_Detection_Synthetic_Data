@@ -66,9 +66,11 @@ def main():
     fig.suptitle('Comparison of Validation Results', fontsize = 30)
 
     # Display metrics data in a bar chart.
+    print('[INFO] Observed Metrics: [P, R, mAP50, mAP50-95]')
     for i, color_i in enumerate(['#bfdbd1', '#72837d', '#abcae4', '#88a1b6', '#667988', '#a64d79']):
         ax.bar(np.arange(0, 4, 1) + i*0.05, metrics[i, :], color=color_i, alpha=1.0, width = 0.05, 
                label=f'Type {i}')
+        print(f'[INFO] Dataset Type {i}: {metrics[i, :]}')
 
     # Set parameters of the graph (plot).
     #   Set the x, y ticks.

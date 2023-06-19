@@ -20,7 +20,7 @@ CONST_YOLO_SIZE = 'yolov8n'
 # Format of the trained model.
 #   Standard YOLO *.pt format: 'pt'
 #   ONNX *.onnx format: 'onnx
-CONST_MODEL_FORMAT = 'onnx'
+CONST_MODEL_FORMAT = 'pt'
 # ONNX/TensorRT: Dynamic axes.
 #   Note:
 #       It is only used if the onnx model format is enabled.

@@ -19,7 +19,6 @@ import Lib.Utilities.Image_Processing
 #   ../Lib/Utilities/General
 import Lib.Utilities.General
 
-
 """
 Description:
     Initialization of constants.
@@ -35,7 +34,7 @@ CONST_DATASET_TYPE = 0
 # Name of the dataset.
 CONST_DATASET_NAME = f'Dataset_Type_{CONST_DATASET_TYPE}'
 # The number of data to be tested for a single object.
-CONST_NUM_OF_TEST_DATA = 31
+CONST_NUM_OF_TEST_DATA = 25
 # Initial iteration of the scanning process.
 CONST_SCAN_ITERATION = 0
 

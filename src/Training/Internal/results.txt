@@ -1,0 +1,15 @@
+[INFO] PyTorch
+[INFO] Dataset Type 0: [    0.97382     0.99083     0.99495     0.88058]
+[INFO] Dataset Type 1: [    0.99573           1       0.995     0.90422]
+[INFO] Dataset Type 2: [    0.94995     0.97569     0.99208     0.83261]
+[INFO] Dataset Type 3: [     0.9762     0.98991       0.995     0.85784]
+[INFO] Dataset Type 4: [     0.9778     0.99524       0.995     0.87403]
+[INFO] Dataset Type 5: [    0.99799           1       0.995     0.91634]
+
+[INFO] ONNX
+[INFO] Dataset Type 0: [    0.98705     0.96812     0.99486     0.88082]
+[INFO] Dataset Type 1: [    0.99515           1       0.995     0.90455]
+[INFO] Dataset Type 2: [    0.96941     0.97536     0.99376     0.82672]
+[INFO] Dataset Type 3: [    0.98132     0.98331       0.995     0.85806]
+[INFO] Dataset Type 4: [    0.99112           1       0.995     0.86397]
+[INFO] Dataset Type 5: [    0.99791           1       0.995       0.919]
