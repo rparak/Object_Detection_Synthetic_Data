@@ -95,7 +95,7 @@ def main():
                     # Draw the bounding box of the object with additional dependencies (name, precision, etc.) in 
                     # the raw image.
                     image_data = Lib.Utilities.Image_Processing.Draw_Bounding_Box(image_data, Bounding_Box_Properties, 'YOLO', CONST_OBJECT_BB_COLOR[int(class_id_i)], 
-                                                                                    True, True)
+                                                                                  True, True)
             else:
                 print('[INFO] The model did not find object in the input image.')
 
