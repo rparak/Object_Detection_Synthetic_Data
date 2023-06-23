@@ -12,6 +12,15 @@ import Lib.Transformation.Core as Transformation
 #   ../Lib/Utilities/File_IO
 import Lib.Utilities.File_IO as File_IO
 
+def Deselect_All() -> None:
+    """
+    Description:
+        Deselect all objects in the current scene.
+    """
+    
+    for obj in bpy.context.selected_objects:
+        bpy.data.objects[obj.name].select_set(False)
+        
 def Object_Exist(name: str) -> bool:
     """
     Description:
@@ -186,15 +195,6 @@ def Object_Visibility(name: str, state: bool) -> None:
         obj.hide_viewport = cmd; obj.hide_render = cmd
         for obj_i in obj.children:
             obj_i.hide_viewport = cmd; obj_i.hide_render = cmd
-
-def Deselect_All() -> None:
-    """
-    Description:
-        Deselect all objects in the current scene.
-    """
-    
-    for obj in bpy.context.selected_objects:
-        bpy.data.objects[obj.name].select_set(False)
 
 def Set_Object_Transformation(name: str, T: tp.List[tp.List[float]]) -> None:
     """
