@@ -39,7 +39,7 @@ def main():
     """
 
     # Locate the path to the project folder.
-    project_folder = os.getcwd().split('Blender_Synthetic_Data')[0] + 'Blender_Synthetic_Data'
+    project_folder = os.getcwd().split('Image_Processing_Synthetic_Data')[0] + 'Image_Processing_Synthetic_Data'
 
     # Load a raw image from a file.
     image_data = cv2.imread(f'{project_folder}/Data/Camera/processed/images/Object_ID_{CONST_OBJECT_ID}_{CONST_SCAN_ITERATION:05}.png')

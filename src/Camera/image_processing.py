@@ -42,7 +42,7 @@ def main():
     """
 
     # Locate the path to the project folder.
-    project_folder = os.getcwd().split('Blender_Synthetic_Data')[0] + 'Blender_Synthetic_Data'
+    project_folder = os.getcwd().split('Image_Processing_Synthetic_Data')[0] + 'Image_Processing_Synthetic_Data'
 
     # Processes the data up to the desired maximum number of iterations, which is given by the constant {CONST_NUM_OF_DATA}.
     i = 0

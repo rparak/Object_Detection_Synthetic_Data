@@ -24,7 +24,7 @@ def main():
     """
     
     # Locate the path to the project folder.
-    project_folder = os.getcwd().split('Blender_Synthetic_Data')[0] + 'Blender_Synthetic_Data'
+    project_folder = os.getcwd().split('Image_Processing_Synthetic_Data')[0] + 'Image_Processing_Synthetic_Data'
 
     for i in range(CONST_NUM_OF_DATASETS):
         # The specified path of the file.

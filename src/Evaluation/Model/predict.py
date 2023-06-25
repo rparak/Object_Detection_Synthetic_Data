@@ -53,7 +53,7 @@ def main():
     """
 
     # Locate the path to the project folder.
-    project_folder = os.getcwd().split('Blender_Synthetic_Data')[0] + 'Blender_Synthetic_Data'
+    project_folder = os.getcwd().split('Image_Processing_Synthetic_Data')[0] + 'Image_Processing_Synthetic_Data'
 
     # The path to the trained model.
     if CONST_MODEL_FORMAT == 'PyTorch':

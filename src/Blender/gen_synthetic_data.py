@@ -68,7 +68,7 @@ def main():
     Lib.Blender.Utilities.Deselect_All()
 
     # Locate the path to the project folder.
-    project_folder = os.getcwd().split('Blender_Synthetic_Data')[0] + 'Blender_Synthetic_Data'
+    project_folder = os.getcwd().split('Image_Processing_Synthetic_Data')[0] + 'Image_Processing_Synthetic_Data'
     
     # Select the structure of the scanned object.
     Object_Str = [Lib.Parameters.Object.T_Joint_001_Str, 

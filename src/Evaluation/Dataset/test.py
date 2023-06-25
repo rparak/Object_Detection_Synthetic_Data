@@ -26,7 +26,7 @@ CONST_OBJECT_NAME = ['T_Joint', 'Metal_Blank']
 # The color of the bounding box of the object.
 CONST_OBJECT_BB_COLOR = [(255, 165, 0), (0, 165, 255)]
 # Initial iteration of the scanning process.
-CONST_SCAN_ITERATION = 1
+CONST_SCAN_ITERATION = 25
 # The name of the partition of the dataset.
 #   Note:
 #      Possible names to choose from: ['train', 'valid', 'test']
@@ -44,7 +44,7 @@ def main():
     """
 
     # Locate the path to the project folder.
-    project_folder = os.getcwd().split('Blender_Synthetic_Data')[0] + 'Blender_Synthetic_Data'
+    project_folder = os.getcwd().split('Image_Processing_Synthetic_Data')[0] + 'Image_Processing_Synthetic_Data'
 
     # Express the name of the image. 
     if CONST_PARTITION_DATASET == 'test':
