@@ -59,7 +59,7 @@ def main():
 
     # Create a figure.
     fig, ax = plt.subplots(1, 1)
-    fig.suptitle(f'The name of the dataset: {CONST_DATASET_NAME}', fontsize = 30)
+    fig.suptitle(f'The name of the dataset: {CONST_DATASET_NAME}', fontsize=30)
 
     # Tests the data up to the desired maximum number of iterations, which is given by the constant {CONST_NUM_OF_TEST_DATA}.
     a_conf_object_0 = []; a_conf_object_1 = []

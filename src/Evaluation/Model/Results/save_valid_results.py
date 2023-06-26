@@ -43,7 +43,7 @@ CONST_NUM_OF_TEST_DATA = 25
 def main():
     """
     Description:
-        A program to display the results based on the validation of the YOLOv8 model. In this case, the model is evaluated 
+        A program to save the results based on the validation of the YOLOv8 model. In this case, the model is evaluated 
         on a test dataset to measure metrics such as Precision, Recall, mAP@0.5, mAP@0.5:0.95.
 
         Note:
@@ -77,7 +77,6 @@ def main():
 
     # Create a figure.
     fig, ax = plt.subplots(1, 1)
-    fig.suptitle(f'The name of the dataset: {CONST_DATASET_NAME}', fontsize = 30)
 
     for i in range(CONST_NUM_OF_TEST_DATA):
         # Load a label (annotation) from a file.
@@ -119,8 +118,11 @@ def main():
     # Show the labels (legends) of the graph.
     ax.legend(legend.values(), legend.keys(), fontsize=10.0)
 
-    # Display the results as a graph (plot).
-    plt.show()
+    # Set the full scree mode.
+    plt.get_current_fig_manager().full_screen_toggle()
+
+    # Save the results.
+    fig.savefig(f'{project_folder}/images/Evaluation/Model/Type_{CONST_DATASET_TYPE}/{CONST_MODEL_FORMAT}/Validation_0001_Conf_06_IOU.png', format='png', dpi=300)
 
 if __name__ == '__main__':
     sys.exit(main())

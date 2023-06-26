@@ -17,14 +17,14 @@ Description:
     Initialization of constants.
 """
 # The identification number of the dataset type.
-CONST_DATASET_TYPE = 0
+CONST_DATASET_TYPE = 5
 # Name of the dataset.
 CONST_DATASET_NAME = f'Type_{CONST_DATASET_TYPE}'
 
 def main():
     """
     Description:
-        A program to display result data from training a dataset. Metrics such as Generalized Intersection over Union (GIoU), Mean
+        A program to save result data from training a dataset. Metrics such as Generalized Intersection over Union (GIoU), Mean
         Average Precision (mAP), Precision, etc. were used to evaluate the performance of the proposed network.
     """
         
@@ -76,7 +76,7 @@ def main():
 
     # Create a figure with 5 subplots.
     fig, ax = plt.subplots(1, 5)
-    fig.suptitle(f'The name of the dataset: {CONST_DATASET_NAME}', fontsize = 30)
+    fig.suptitle(f'The name of the Dataset: {CONST_DATASET_NAME}', fontsize=25)
 
     # Generalized Intersection over Union (GIoU)
     ax[0].plot(epoch, data[data.columns[1]], 'o-', color=[0.525,0.635,0.8,1.0], linewidth=2.0, ms = 3.0, label='train')
@@ -118,8 +118,11 @@ def main():
     ax[4].grid(linewidth = 0.25, linestyle = '--')
     ax[4].legend(fontsize=10.0)
 
-    # Display the results as a graph (plot).
-    plt.show()
+    # Set the full scree mode.
+    plt.get_current_fig_manager().full_screen_toggle()
+
+    # Save the results.
+    fig.savefig(f'{project_folder}/images/Evaluation/Model/{CONST_DATASET_NAME}/Training_Results.png', format='png', dpi=300)
 
 if __name__ == '__main__':
     sys.exit(main())

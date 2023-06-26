@@ -40,7 +40,7 @@ CONST_SCAN_ITERATION = 0
 def main():
     """
     Description:
-        A program to display the results based on object predictions from the test partition of a dataset.
+        A program to save the results based on object predictions from the test partition of a dataset.
 
         Note:
             The prediction is performed using both *.onnx and *.pt formats.
@@ -60,7 +60,6 @@ def main():
 
     # Create a figure.
     fig, ax = plt.subplots(1, 1)
-    fig.suptitle(f'The name of the dataset: {CONST_DATASET_NAME}', fontsize = 30)
 
     # Load a pre-trained custom YOLO model in the desired format.
     model = YOLO(file_path)
@@ -100,8 +99,11 @@ def main():
     # Show the labels (legends) of the graph.
     ax.legend(legend.values(), legend.keys(), fontsize=10.0)
 
-    # Display the results as a graph (plot).
-    plt.show()
+    # Set the full scree mode.
+    plt.get_current_fig_manager().full_screen_toggle()
+
+    # Save the results.
+    fig.savefig(f'{project_folder}/images/Evaluation/Model/Type_{CONST_DATASET_TYPE}/{CONST_MODEL_FORMAT}/Prediction_05_Conf_07_IOU.png', format='png', dpi=300)
 
 if __name__ == '__main__':
     sys.exit(main())

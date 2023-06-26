@@ -24,7 +24,7 @@ CONST_NUM_OF_DATASETS = 6
 def main():
     """
     Description:
-        A program to display result data from training a dataset in the form of bar charts. Metrics such as Generalized Intersection over Union (GIoU), Mean
+        A program to save result data from training a dataset in the form of bar charts. Metrics such as Generalized Intersection over Union (GIoU), Mean
         Average Precision (mAP), Precision, etc. were used to evaluate the performance of the proposed network.
     """
 
@@ -70,7 +70,6 @@ def main():
 
     # Create a figure.
     fig, ax = plt.subplots(1, 1)
-    fig.suptitle('Comparison of Training Results', fontsize = 30)
 
     # Display metrics data in a bar chart.
     for i, color_i in enumerate(['#bfdbd1', '#72837d', '#abcae4', '#88a1b6', '#667988', '#a64d79']):
@@ -96,8 +95,11 @@ def main():
     # Show the labels (legends) of the graph.
     ax.legend(legend.values(), legend.keys(), fontsize=10.0)
 
-    # Display the results as a graph (plot).
-    plt.show()
+    # Set the full scree mode.
+    plt.get_current_fig_manager().full_screen_toggle()
+
+    # Save the results.
+    fig.savefig(f'{project_folder}/images/Evaluation/Model/Training_Comparison.png', format='png', dpi=300)
 
 if __name__ == '__main__':
     sys.exit(main())

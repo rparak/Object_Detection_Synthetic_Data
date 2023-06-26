@@ -19,17 +19,20 @@ Description:
     Initialization of constants.
 """
 # The ID of the object to be processed.
-CONST_OBJECT_ID = 0
+#   ID{0} = 'T_Joint'
+#   ID{1} = 'Metal_Blank'
+#   ID{-1} = ALL
+CONST_OBJECT_ID = -1
 # Initial iteration of the scanning process.
-CONST_SCAN_ITERATION = 1
-# Displays an image using the matplotlib library 
+CONST_SCAN_ITERATION = 13
+# Saves an image using the matplotlib library 
 # with histograms.
-CONST_SHOW_IMG_MATPLOTLIB = True
+CONST_SAVE_IMG_MATPLOTLIB = True
 
 def main():
     """
     Description:
-        A program to display data from the camera (raw/processed images) as well as to compare the data with 
+        A program to save data from the camera (raw/processed images) as well as to compare the data with 
         the corresponding histogram. In our case it is the camera from the PhoXi 3D Scanner M.
 
         Note:
@@ -46,7 +49,10 @@ def main():
     # Loads images from the specified file.
     #   Note:
     #       Related raw/processed images.
-    image_name = f'Object_ID_{CONST_OBJECT_ID}_{CONST_SCAN_ITERATION:05}'
+    if CONST_OBJECT_ID == -1:
+        image_name = f'Image_{CONST_SCAN_ITERATION:05}'
+    else:
+        image_name = f'Object_ID_{CONST_OBJECT_ID}_{CONST_SCAN_ITERATION:05}'
     image_raw = cv2.imread(f'{file_path}/Camera/raw/images/{image_name}.png')
     image_processed = cv2.imread(f'{file_path}/Camera/processed/images/{image_name}.png')
 
@@ -54,10 +60,10 @@ def main():
     plt.style.use('science')
     
     # Matplotlib Method:
-    if CONST_SHOW_IMG_MATPLOTLIB == True:
+    if CONST_SAVE_IMG_MATPLOTLIB == True:
         # Create a figure with 4 subplots.
         fig, ax = plt.subplots(2, 2)
-        fig.suptitle(f'The name of the processed image: ../{image_name}.png', fontsize = 20)
+        fig.suptitle(f'The name of the processed image: ../{image_name}.png', fontsize=25)
 
         # Calculate the grayscale histogram of the raw image and the processed image.
         raw_image_hist = cv2.calcHist([image_raw], [0], None, [256], [0, 256])
@@ -77,21 +83,24 @@ def main():
         for i in range(2):
             # Set parameters of the visualization.
             #   1\ Image
-            ax[0, i].set_title(f'Grayscale Image')
+            ax[0, i].set_title(f'Grayscale Image', fontsize=15)
             #   Label
-            ax[0, i].set_xlabel(r'Width in pixels'); ax[0, i].set_ylabel(r'Height in pixels')  
+            ax[0, i].set_xlabel(r'Width in pixels', fontsize=10); ax[0, i].set_ylabel(r'Height in pixels', fontsize=10)  
             #   2\ Histogram
-            ax[1, i].set_title(f'Histogram of Grayscale Image')
+            ax[1, i].set_title(f'Histogram of Grayscale Image', fontsize=15)
             #   Y-Limit
             ax[1, i].set_ylim([-10000, hist_max_value + 10000])
             #   Label
-            ax[1, i].set_xlabel(r'Intesity'); ax[1, i].set_ylabel(r'Frequency')
+            ax[1, i].set_xlabel(r'Intesity', fontsize=10); ax[1, i].set_ylabel(r'Frequency', fontsize=10)
             #   Other dependencies
             ax[1, i].grid(linewidth = 0.25, linestyle = '--')
             ax[1, i].legend(fontsize=10.0)
 
-        # Display the results.
-        plt.show()
+        # Set the full scree mode.
+        plt.get_current_fig_manager().full_screen_toggle()
+
+        # Save the results.
+        fig.savefig(f'{project_folder}/images/Evaluation/Camera_Data/Histogram_{image_name}.png', format='png', dpi=300)
     else:
         # OpenCV Method:
         #   Displays images in the window.
