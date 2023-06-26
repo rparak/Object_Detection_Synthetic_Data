@@ -19,7 +19,7 @@ Description:
     Open Object_Bounding_Box.blend from the Blender folder and copy + paste this script and run it.
 
     Terminal:
-        $ cd Documents/GitHub/Image_Processing_Synthetic_Data/Blender
+        $ cd Documents/GitHub/Object_Detection_Synthetic_Data/Blender
         $ blender Object_Bounding_Box.blend
 """
 

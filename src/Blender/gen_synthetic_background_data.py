@@ -21,7 +21,7 @@ Description:
     Open Camera_View.blend from the Blender folder and copy + paste this script and run it.
 
     Terminal:
-        $ cd Documents/GitHub/Image_Processing_Synthetic_Data/Blender
+        $ cd Documents/GitHub/Object_Detection_Synthetic_Data/Blender
         $ blender Gen_Synthetic_Data.blend
 """
 
@@ -49,7 +49,7 @@ def main():
     Lib.Blender.Utilities.Deselect_All()
 
     # Locate the path to the project folder.
-    project_folder = os.getcwd().split('Image_Processing_Synthetic_Data')[0] + 'Image_Processing_Synthetic_Data'
+    project_folder = os.getcwd().split('Object_Detection_Synthetic_Data')[0] + 'Object_Detection_Synthetic_Data'
     
     # Initialize the camera to scan an object in the scene.
     #   The main parameters of the camera can be found at: ../Lib/Parameters/Camera

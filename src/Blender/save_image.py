@@ -20,7 +20,7 @@ Description:
     Open Camera_View.blend from the Blender folder and copy + paste this script and run it.
 
     Terminal:
-        $ cd Documents/GitHub/Image_Processing_Synthetic_Data/Blender
+        $ cd Documents/GitHub/Object_Detection_Synthetic_Data/Blender
         $ blender Gen_Synthetic_Data.blend
 """
 
@@ -59,7 +59,7 @@ def main():
     Camera_Cls.Random()
     
     # Locate the path to the project folder.
-    project_folder = os.getcwd().split('Image_Processing_Synthetic_Data')[0] + 'Image_Processing_Synthetic_Data'
+    project_folder = os.getcwd().split('Object_Detection_Synthetic_Data')[0] + 'Object_Detection_Synthetic_Data'
 
     # Save the image to the file.
     bpy.context.scene.render.filepath = f'{project_folder}/images/Object_ID_{Object_Str.Id}_{Object_Str.Name}.png'

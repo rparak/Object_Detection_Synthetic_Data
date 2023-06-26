@@ -10,16 +10,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 # OS (Operating system interfaces)
 import os
-# Shutil (High-level file operations)
-import shutil
 # SciencePlots (Matplotlib styles for scientific plotting) [pip3 install SciencePlots]
 import scienceplots
 # Ultralytics (Real-time object detection and image segmentation 
 # model) [pip install ultralytics]
 from ultralytics import YOLO
-# Custom Library:
-#   ../Lib/Utilities/File_IO
-import Lib.Utilities.File_IO as File_IO
 
 """
 Description:
@@ -52,7 +47,7 @@ def main():
     """
 
     # Locate the path to the project folder.
-    project_folder = os.getcwd().split('Image_Processing_Synthetic_Data')[0] + 'Image_Processing_Synthetic_Data'
+    project_folder = os.getcwd().split('Object_Detection_Synthetic_Data')[0] + 'Object_Detection_Synthetic_Data'
 
     # The path to the trained model.
     if CONST_MODEL_FORMAT == 'PyTorch':
