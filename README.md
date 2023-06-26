@@ -1,4 +1,4 @@
-# Analysis of Object Detection using Different Types of Dataset
+# Analysis of Object Detection using Different Types of Datasets
 
 Create readme file during the june. 
 
