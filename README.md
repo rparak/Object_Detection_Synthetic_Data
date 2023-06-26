@@ -3,3 +3,8 @@
 Create readme file during the june. 
 
 Test all of the algorithms. Etc., etc.
+
+**Train Results**
+```bash
+
+```
