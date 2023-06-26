@@ -1,4 +1,4 @@
-# Blender_Synthetic_Data
+# Analysis of Object Detection using Different Types of Dataset
 
 Create readme file during the june. 
 
