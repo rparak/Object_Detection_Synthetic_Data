@@ -4,7 +4,7 @@
   <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Background/Image_11.png?raw=true" width="750" height="450">
 </p>
 
-## Requirements:
+## Requirements
 
 **Software:**
 ```bash
@@ -21,11 +21,11 @@ Linux (recommended), macOS, Windows
 See the "Installation Dependencies" section in the Readme file.
 ```
 
-## Project Description:
+## Project Description
 
 Text ...
 
-## Project Hierarchy:
+## Project Hierarchy
 
 **../Object_Detection_Synthetic_Data/CAD/**
 
@@ -62,6 +62,80 @@ Data
 YOLO
 - The "YOLO" folder contains the configuration file for training, the results of the training process and the models to be saved after training.
   
+## Data Acquisition from the PhoXi 3D Scanner M
+
+The Harvester Python library was used for image acquisition. Harvester is a Python library that aims to make the image acquisition process in your computer vision application easy.
+```bash
+https://github.com/genicam/harvesters
+```
+
+**Python Support for Photoneo 3D Sensors using GenICam**
+```bash
+https://www.photoneo.com/support/
+```
+
+**The requirements to run the Python example with GenICam are:**
+```bash
+- Python 3.*
+- PhoXi Control 1.8 or higher
+```
+
+**Examples located at (Windows):**
+```bash
+C:\Program Files\Photoneo\PhoXiControl-x.x.x\API\examples\GenTL\python
+```
+
+**Python Dependencies (packages)**
+```bash
+NumPy
+$ ../user_name> pip3 install numpy
+
+Open3D
+$ ../user_name> pip3 install open3d
+Note:  Only if 3D data processing is used.
+
+harvesters
+$ ../user_name> pip3 install harvesters
+```
+
+The program for obtaining the raw image (2D) from the Photoneo sensor can be found below. This program can also be used for other types of Photoneo scanners.
+
+```bash
+$ ../src/Camera/Collection> python scan.py 
+```
+
+After scanning the environment, we get the raw image without adjusting the contrast and brightness. To adjust the contrast {alpha} and brightness {beta} of each image, we use the histogram clip function.
+
+A program to adjust the contrast {alpha} and brightness {beta} of the raw image can be found below:
+```bash
+$ ../src/Camera> python image_processing.py 
+```
+
+The results of the adjustment can be saved to the images folder using the program bellow:
+```bash
+$ ../src/Evaluation/Camera_Data> python save_histogram.py 
+```
+
+<p align="center">
+  <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Evaluation/Camera_Data/Histogram_Image_00013.png?raw=true" width="750" height="450">
+</p>
+
+## Synthetic Data Generation
+
+Text ......
+
+## Data Augmentation
+
+Text ......
+
+## Train YOLOv8 Object Detection on a Custom Dataset
+
+Text ......
+
+## Evaluation of the Experiment
+
+Text ......
+
 ## Installation Dependencies
 
 It will be useful for the project to create a virtual environment using Conda. Conda is an open source package management system and environment management system that runs on Windows, macOS, and Linux. Conda quickly installs, runs and updates packages and their dependencies.
@@ -123,65 +197,7 @@ Rename the environment from the old name to the new one.
 $ ../user_name> conda rename -n {old_name} {name_name}
 ```
 
-## Data Acquisition from the PhoXi 3D Scanner M
-
-The Harvester Python library was used for image acquisition. Harvester is a Python library that aims to make the image acquisition process in your computer vision application easy.
-```bash
-https://github.com/genicam/harvesters
-```
-
-**Python Support for Photoneo 3D Sensors using GenICam**
-```bash
-https://www.photoneo.com/support/
-```
-
-**The requirements to run the Python example with GenICam are:**
-```bash
-- Python 3.*
-- PhoXi Control 1.8 or higher
-```
-
-**Examples located at (Windows):**
-```bash
-C:\Program Files\Photoneo\PhoXiControl-x.x.x\API\examples\GenTL\python
-```
-
-**Python Dependencies (packages)**
-```bash
-NumPy
-$ ../user_name> pip3 install numpy
-
-Open3D
-$ ../user_name> pip3 install open3d
-Note:  Only if 3D data processing is used.
-
-harvesters
-$ ../user_name> pip3 install harvesters
-```
-
-The program for obtaining the raw image (2D) from the Photoneo sensor can be found below. This program can also be used for other types of Photoneo scanners.
-
-```bash
-$ ../src/Camera/Collection> python scan.py 
-```
-
-After scanning the environment, we get the raw image without adjusting the contrast and brightness. To adjust the contrast {alpha} and brightness {beta} of each image, we use the histogram clip function.
-
-A program to adjust the contrast {alpha} and brightness {beta} of the raw image can be found below:
-```bash
-$ ../src/Camera> python image_processing.py 
-```
-
-The results of the adjustment can be saved to the images folder using the program bellow:
-```bash
-$ ../src/Evaluation/Camera_Data> python save_histogram.py 
-```
-
-<p align="center">
-  <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Evaluation/Camera_Data/Histogram_Image_00013.png?raw=true" width="750" height="450">
-</p>
-
-## Result:
+## Video
 
 Youtube: Coming soon ...
 
