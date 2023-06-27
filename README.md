@@ -142,6 +142,19 @@ https://www.photoneo.com/support/
 C:\Program Files\Photoneo\PhoXiControl-x.x.x\API\examples\GenTL\python
 ```
 
+**Python Dependencies (packages)**
+```bash
+NumPy
+$ ../user_name> pip3 install numpy
+
+Open3D
+$ ../user_name> pip3 install open3d
+Note:  Only if 3D data processing is used.
+
+harvesters
+$ ../user_name> pip3 install harvesters
+```
+
 The program for obtaining the raw image (2D) from the Photoneo sensor can be found below. This program can also be used for other types of Photoneo scanners.
 
 ```bash
@@ -161,21 +174,8 @@ $ ../src/Evaluation/Camera_Data> python save_histogram.py
 ```
 
 <p align="center">
-  <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Evaluation/Camera_Data/Histogram_Image_00013.png" width="200" height="200">
+  <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Evaluation/Camera_Data/Histogram_Image_00013.png" width="800" height="500">
 </p>
-
-**Python Dependencies (packages)**
-```bash
-NumPy
-$ ../user_name> pip3 install numpy
-
-Open3D
-$ ../user_name> pip3 install open3d
-Note:  Only if 3D data processing is used.
-
-harvesters
-$ ../user_name> pip3 install harvesters
-```
 
 ## Result:
 
