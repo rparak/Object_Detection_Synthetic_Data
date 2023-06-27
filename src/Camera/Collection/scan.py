@@ -41,9 +41,9 @@ def main():
         PhoXi 3D scanner M.
 
         Note:
-            This script can also be used for another type of Photoneqo scanner.
+            This program can also be used for another type of Photoneo scanner.
 
-        Additional notes can be found in the Notes.txt file.
+        Additional notes can be found in the README.md file.
     """
 
     # Locate the path to the project folder.

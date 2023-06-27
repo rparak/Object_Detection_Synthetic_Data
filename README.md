@@ -1,219 +1,200 @@
-# Analysis of Object Detection using Different Types of Datasets
+# Analysis of Training Object Detection Models using Different Types of Datasets
 
-Create readme file during the june. 
+## Requirements:
 
-Test all of the algorithms. Etc., etc.
-
-# Train Results
-
-**Dataset 0**
+**Software:**
 ```bash
-[INFO] Evaluation Criteria: YOLOv8
-[INFO] The name of the dataset: Type_0
-[INFO] The best results were found in the 290 iteration.
-[INFO]  Generalized Intersection over Union (GIoU):
-[INFO]  [train = 0.25577, valid = 0.38983]
-[INFO]  Objectness:
-[INFO]  [train = 0.30117, valid = 0.34116]
-[INFO]  Classification:
-[INFO]  [train = 0.77362, valid = 0.76177]
-[INFO]  Pr + Rec:
-[INFO]  [precision = 0.98519, recall = 1.0]
-[INFO]  Mean Average Precision (mAP):
-[INFO]  [mAP@0.5 = 0.995, mAP@0.5:0.95 = 0.96651]
-```
-**Dataset 1**
-```bash
-[INFO] Evaluation Criteria: YOLOv8
-[INFO] The name of the dataset: Type_1
-[INFO] The best results were found in the 251 iteration.
-[INFO]  Generalized Intersection over Union (GIoU):
-[INFO]  [train = 0.18225, valid = 0.33785]
-[INFO]  Objectness:
-[INFO]  [train = 0.15247, valid = 0.2144]
-[INFO]  Classification:
-[INFO]  [train = 0.75575, valid = 0.77062]
-[INFO]  Pr + Rec:
-[INFO]  [precision = 0.99522, recall = 1.0]
-[INFO]  Mean Average Precision (mAP):
-[INFO]  [mAP@0.5 = 0.995, mAP@0.5:0.95 = 0.95957]
-```
-**Dataset 2**
-```bash
-[INFO] Evaluation Criteria: YOLOv8
-[INFO] The name of the dataset: Type_2
-[INFO] The best results were found in the 271 iteration.
-[INFO]  Generalized Intersection over Union (GIoU):
-[INFO]  [train = 0.32909, valid = 0.42055]
-[INFO]  Objectness:
-[INFO]  [train = 0.37482, valid = 0.31906]
-[INFO]  Classification:
-[INFO]  [train = 0.76431, valid = 0.80979]
-[INFO]  Pr + Rec:
-[INFO]  [precision = 0.97964, recall = 1.0]
-[INFO]  Mean Average Precision (mAP):
-[INFO]  [mAP@0.5 = 0.995, mAP@0.5:0.95 = 0.96579]
-```
-**Dataset 3**
-```bash
-[INFO] Evaluation Criteria: YOLOv8
-[INFO] The name of the dataset: Type_3
-[INFO] The best results were found in the 208 iteration.
-[INFO]  Generalized Intersection over Union (GIoU):
-[INFO]  [train = 0.22537, valid = 0.33045]
-[INFO]  Objectness:
-[INFO]  [train = 0.17904, valid = 0.20192]
-[INFO]  Classification:
-[INFO]  [train = 0.78709, valid = 0.79231]
-[INFO]  Pr + Rec:
-[INFO]  [precision = 0.99912, recall = 1.0]
-[INFO]  Mean Average Precision (mAP):
-[INFO]  [mAP@0.5 = 0.995, mAP@0.5:0.95 = 0.96948]
-```
-**Dataset 4**
-```bash
-[INFO] Evaluation Criteria: YOLOv8
-[INFO] The name of the dataset: Type_4
-[INFO] The best results were found in the 287 iteration.
-[INFO]  Generalized Intersection over Union (GIoU):
-[INFO]  [train = 0.20392, valid = 0.1957]
-[INFO]  Objectness:
-[INFO]  [train = 0.15947, valid = 0.16746]
-[INFO]  Classification:
-[INFO]  [train = 0.77582, valid = 0.74361]
-[INFO]  Pr + Rec:
-[INFO]  [precision = 0.99906, recall = 1.0]
-[INFO]  Mean Average Precision (mAP):
-[INFO]  [mAP@0.5 = 0.995, mAP@0.5:0.95 = 0.99326]
-```
-**Dataset 5**
-```bash
-[INFO] Evaluation Criteria: YOLOv8
-[INFO] The name of the dataset: Type_5
-[INFO] The best results were found in the 291 iteration.
-[INFO]  Generalized Intersection over Union (GIoU):
-[INFO]  [train = 0.19735, valid = 0.20787]
-[INFO]  Objectness:
-[INFO]  [train = 0.16188, valid = 0.17122]
-[INFO]  Classification:
-[INFO]  [train = 0.76623, valid = 0.74044]
-[INFO]  Pr + Rec:
-[INFO]  [precision = 0.99909, recall = 1.0]
-[INFO]  Mean Average Precision (mAP):
-[INFO]  [mAP@0.5 = 0.995, mAP@0.5:0.95 = 0.99296]
+Blender, Visual Studio Code with Python version >3.10 installed
 ```
 
-# Validation Results (PyTorch)
-
-**Dataset 0**
+**Supported on the following operating systems:**
 ```bash
-[INFO] Evaluation Criteria: YOLOv8
-[INFO] The name of the dataset: Dataset_Type_0
-[INFO] Precision = 0.9738244338575095
-[INFO] Recall = 0.9908256880733946
-[INFO] mAP@0.5 = 0.994954128440367
-[INFO] mAP@0.5:0.95 = 0.8805750003890992
-```
-**Dataset 1**
-```bash
-[INFO] Evaluation Criteria: YOLOv8
-[INFO] The name of the dataset: Dataset_Type_1
-[INFO] Precision = 0.9957268748983636
-[INFO] Recall = 1.0
-[INFO] mAP@0.5 = 0.995
-[INFO] mAP@0.5:0.95 = 0.9042182376810197
-```
-**Dataset 2**
-```bash
-[INFO] Evaluation Criteria: YOLOv8
-[INFO] The name of the dataset: Dataset_Type_2
-[INFO] Precision = 0.9499364977915459
-[INFO] Recall = 0.9756915212357327
-[INFO] mAP@0.5 = 0.9920815850815851
-[INFO] mAP@0.5:0.95 = 0.8325844233669368
-```
-**Dataset 3**
-```bash
-[INFO] Evaluation Criteria: YOLOv8
-[INFO] The name of the dataset: Dataset_Type_3
-[INFO] Precision = 0.9761978900918422
-[INFO] Recall = 0.9899073555800009
-[INFO] mAP@0.5 = 0.995
-[INFO] mAP@0.5:0.95 = 0.8578403958725997
-```
-**Dataset 4**
-```bash
-[INFO] The name of the dataset: Dataset_Type_4
-[INFO] Precision = 0.9828934023254254
-[INFO] Recall = 0.9959432170318465
-[INFO] mAP@0.5 = 0.995
-[INFO] mAP@0.5:0.95 = 0.8695596659413892
-```
-**Dataset 5**
-```bash
-[INFO] Evaluation Criteria: YOLOv8
-[INFO] The name of the dataset: Dataset_Type_5
-[INFO] Precision = 0.9979897262164512
-[INFO] Recall = 1.0
-[INFO] mAP@0.5 = 0.995
-[INFO] mAP@0.5:0.95 = 0.9163382434425511
+Linux (recommended), macOS, Windows
 ```
 
+**Python Libraries:**
+```bash
+See the "Installation Dependencies" section in the Readme file.
+```
 
+## Project Description:
 
-# Validation Results (ONNX)
+Text ...
 
-**Dataset 0**
+## Project Hierarchy:
+
+**../Object_Detection_Synthetic_Data/CAD/**
+
+3D models of individual objects.
+
+**../Object_Detection_Synthetic_Data/Blender/**
+
+Blender environment for access to synthetic data generation, robot workplace visualization, etc.
+
+See the programmes below for more information.
 ```bash
-[INFO] Evaluation Criteria: YOLOv8
-[INFO] The name of the dataset: Dataset_Type_0
-[INFO] Precision = 0.9870509429428476
-[INFO] Recall = 0.9681209964378099
-[INFO] mAP@0.5 = 0.9948627946127946
-[INFO] mAP@0.5:0.95 = 0.8835221482148936
+$ ../src/Blender> ls
+gen_object_bounding_box.py       gen_synthetic_data.py    save_image.py
+gen_synthetic_background_data.py get_object_boundaries.py
 ```
-**Dataset 1**
+
+**../Object_Detection_Synthetic_Data/src/**
+
+The source code of the project with additional dependencies. The individual scripts for data collection, training, augmentation, validation of the results, etc. contain additional information.
+
+The project also contains a Google Colab document that can be used to train the model in Collaboratory.
 ```bash
-[INFO] Evaluation Criteria: YOLOv8
-[INFO] The name of the dataset: Dataset_Type_1
-[INFO] Precision = 0.9951513000455711
-[INFO] Recall = 1.0
-[INFO] mAP@0.5 = 0.995
-[INFO] mAP@0.5:0.95 = 0.9045463240080153
+$ ../src/Training/Google_Colab> ls
+YOLOv8_Train_Custom_Dataset.ipynb
 ```
-**Dataset 2**
+
+**../Object_Detection_Synthetic_Data/Template/**
+
+The "Template" section contains the required folders for the training and validation process. Both folders are explained below. To run the project smoothly, it is necessary to follow the structure of the individual folders.
+
+Data
+- The "Data" folder contains the data from the camera, the individual datasets and the results for each model (PyTorch, ONNX, etc.).
+  
+YOLO
+- The "YOLO" folder contains the configuration file for training, the results of the training process and the models to be saved after training.
+  
+## Installation Dependencies
+
+It will be useful for the project to create a virtual environment using Conda. Conda is an open source package management system and environment management system that runs on Windows, macOS, and Linux. Conda quickly installs, runs and updates packages and their dependencies.
+
+**Set up a new virtual environment called {name} with python {version}**
 ```bash
-[INFO] Evaluation Criteria: YOLOv8
-[INFO] The name of the dataset: Dataset_Type_2
-[INFO] Precision = 0.9694093325670848
-[INFO] Recall = 0.9754387998143003
-[INFO] mAP@0.5 = 0.9937606731643429
-[INFO] mAP@0.5:0.95 = 0.8267212538523665
+$ ../user_name> conda create -n {name} python={version}
+$ ../user_name> conda activate {name}
 ```
-**Dataset 3**
+
+**Installation of packages needed for the project**
 ```bash
-[INFO] Evaluation Criteria: YOLOv8
-[INFO] The name of the dataset: Dataset_Type_3
-[INFO] Precision = 0.9813162211216122
-[INFO] Recall = 0.9833111895034636
-[INFO] mAP@0.5 = 0.995
-[INFO] mAP@0.5:0.95 = 0.8580565242042372
+OpenCV
+$ ../user_name> conda install -c conda-forge opencv
+
+Matplotlib
+$ ../user_name> conda install -c conda-forge matplotlib
+
+SciencePlots
+$ ../user_name> conda install -c conda-forge scienceplots
+
+Pandas
+$ ../user_name> conda install -c conda-forge pandas
+
+Albumentations
+$ ../user_name> conda install -c conda-forge albumentations
+
+PyTorch, Torchvision, etc.
+$ ../user_name> conda install pytorch::pytorch torchvision torchaudio -c pytorch
+or 
+$ ../user_name> conda install pytorch-nightly::pytorch torchvision torchaudio -c pytorch-nightly
 ```
-**Dataset 4**
+
+**Installation of packages that are not available using conda-forge**
 ```bash
-[INFO] Evaluation Criteria: YOLOv8
-[INFO] The name of the dataset: Dataset_Type_4
-[INFO] Precision = 0.9931101542689124
-[INFO] Recall = 1.0
-[INFO] mAP@0.5 = 0.995
-[INFO] mAP@0.5:0.95 = 0.8592243727973665
+After conda env. will be activated, install pip.
+$ ../user_name> conda activate {name}
+$ ../user_name> conda install -c conda-forge pip
+
+Locate the bin folder in the directory of the activated conda environment.
+$ ../user_name> cd {directory_path}/bin
+
+Installation of new packages such as Ultralytics.
+$ ../user_name> pip install ultralytics
 ```
-**Dataset 5**
+
+**Other useful commands for working with the Conda environment**
 ```bash
-[INFO] Evaluation Criteria: YOLOv8
-[INFO] The name of the dataset: Dataset_Type_5
-[INFO] Precision = 0.997907120991472
-[INFO] Recall = 1.0
-[INFO] mAP@0.5 = 0.995
-[INFO] mAP@0.5:0.95 = 0.9190032569339632
+Deactivate environment.
+$ ../user_name> conda deactivate
+
+Remove environment.
+$ ../user_name> conda remove -name {name} --all
+
+To verify that the environment was removed, in your terminal window or an Anaconda Prompt, run.
+$ ../user_name> conda info --envs
+
+Rename the environment from the old name to the new one.
+$ ../user_name> conda rename -n {old_name} {name_name}
 ```
+
+## Data Acquisition from the PhoXi 3D Scanner M
+
+The Harvester Python library was used for image acquisition. Harvester is a Python library that aims to make the image acquisition process in your computer vision application easy.
+```bash
+https://github.com/genicam/harvesters
+```
+
+**Python Support for Photoneo 3D Sensors using GenICam**
+```bash
+https://www.photoneo.com/support/
+```
+
+**The requirements to run the Python example with GenICam are:**
+```bash
+- Python 3.*
+- PhoXi Control 1.8 or higher
+```
+
+**Examples located at (Windows):**
+```bash
+C:\Program Files\Photoneo\PhoXiControl-x.x.x\API\examples\GenTL\python
+```
+
+**Python Dependencies (packages)**
+```bash
+NumPy
+$ ../user_name> pip3 install numpy
+
+Open3D
+$ ../user_name> pip3 install open3d
+Note:  Only if 3D data processing is used.
+
+harvesters
+$ ../user_name> pip3 install harvesters
+```
+
+The program for obtaining the raw image (2D) from the Photoneo sensor can be found below. This program can also be used for other types of Photoneo scanners.
+
+```bash
+$ ../src/Camera/Collection> python scan.py 
+```
+
+After scanning the environment, we get the raw image without adjusting the contrast and brightness. To adjust the contrast {alpha} and brightness {beta} of each image, we use the histogram clip function.
+
+A program to adjust the contrast {alpha} and brightness {beta} of the raw image can be found below:
+```bash
+$ ../src/Camera> python image_processing.py 
+```
+
+The results of the adjustment can be saved to the images folder using the program bellow:
+```bash
+$ ../src/Evaluation/Camera_Data> python save_histogram.py 
+```
+
+<p align="center">
+  <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Background/Image_11.png" width="800" height="500">
+</p>
+
+## Result:
+
+Youtube: Coming soon ...
+
+## Contact Info:
+Roman.Parak@outlook.com
+
+## Citation (BibTex)
+```bash
+@misc{RomanParak_Unity3D,
+  author = {Roman Parak},
+  title = {Analysis of training object detection models using different types of datasets},
+  year = {2020-2023},
+  publisher = {GitHub},
+  journal = {GitHub repository},
+  howpublished = {\url{https://github.com/rparak/Unity3D_Robotics_Overview}}
+}
+```
+
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
