@@ -396,8 +396,8 @@ Text ......
 As we can see in the table above, the best predictions were found from the object detection model that was trained with the Type-5 dataset. We can, therefore, conclude that the combination of real data and synthetic data is the most effective method for object detection in real-world applications. The prediction results for the entire test partition can be found below.
 
 <p align="center">
-  <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Results_PyTorch_Type_5/Image_Test_Partition.png?raw=true" width="350" height="350">
-  <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Results_PyTorch_Type_5/Image_Test_Partition_Results.png?raw=true" width="350" height="350">
+  <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Results_PyTorch_Type_5/Image_Test_Partition.png?raw=true" width="375" height="375">
+  <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Results_PyTorch_Type_5/Image_Test_Partition_Results.png?raw=true" width="375" height="375">
 </p>
 
 <p align="center">
