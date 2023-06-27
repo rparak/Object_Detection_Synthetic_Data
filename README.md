@@ -43,7 +43,7 @@ The experiment aims to detect two types of objects (see figure):
 To determine the most effective object detection method, we created six types of datasets and trained them using the YOLOv8 model (Ultralytics HUB).
 
 | Type of the Dataset  | Short Description |
-| -------------------- | ------------- |
+| :---: | :---: |
 | Type-0 | A smaller dataset that contains real monochrome images from the Photoneo scanner. |
 | Type-1 | Augmented real monochrome images used to increase the size of the Type-0 dataset. |
 | Type-2 | A smaller dataset that contains synthetic monochrome images from the Blender camera. |
@@ -170,11 +170,224 @@ Text ......
 
 ## Train YOLOv8 Object Detection on a Custom Dataset
 
-Text ......
+The YOLOv8n (nano) model was used to train the object detection experiment. To quickly retrain the model on the new data without retraining the entire network, we use a function to freeze the backbone layers of the model. The backbone of the model consists of layers 0-9 (10 layers). The training process was performed using an internal NVIDIA GeForce GTX 1080 Ti 16 GB GPU, , but it is also possible to use Google Colab, as I mentioned earlier.
+
+**Information about the training process**
+```
+The 'config.yaml' file can be found here:
+../YOLO/Configuration/Type_{dataset_type}/config.yaml
+Note:
+  dataset_type: The identification number of the dataset type.
+
+Training the YOLOv8 model on a custom dataset. Just change the constant 'CONST_DATASET_TYPE' in the program parameters.
+$ ../src/Training/Internal> python train.py
+```
+
+**Configuration file (config.yaml) for the Type-0 dataset**
+```bash
+# Description:
+#   The contents of the configuration data, such as the specified partition path, the total 
+#   number of classes in the dataset, and the name of each class.
+
+# The path to the main directory of the dataset.
+#   Name of the dataset:
+#     Dataset_Type_{dataset_type}
+#   Note:
+#     dataset_type: 
+#       The identification number of the dataset type.
+#   Warning:
+#     path(Google Colab): '/content/drive/MyDrive/YOLOv8_Custom_Dataset/Data/Dataset_Type_{dataset_type}'
+#     path(Internal): '../../../../Data/Dataset_Type_{dataset_type}'
+path: '../../../../Data/Dataset_Type_0'
+
+# The absolute path to the specified partition folder (train, validation, test) that contains 
+# the dataset images as well as the labels.
+train: images/train
+val: images/valid
+test: images/test
+
+# Parameters:
+#   The total number of classes in the dataset.
+nc: 2 
+#   ID name of each class.
+names: ['T_Joint', 'Metal_Blank']
+```
+
+**Training parameters of the YOLOv8 object detection model**
+```
+Model: YOLOv8n (Nano)
+Image Size: 640x480 (rectangular training with each batch collated for minimum padding).
+Maximum Number of Epochs: 300
+Patience: 0
+Batch Size: Automatically estimate the best YOLO batch size to use a fraction of the available CUDA memory.
+```
+
+**The partitioning of image data within datasets**
+```
+Partitioning of the Dataset:
+    - Train: 80% + Background Images.
+    - Valid: 20%
+    - Test: 24 images from real hardware (camera) and 1 synthetic image.
+
+Type of images:
+    R: Real
+    A: Augmented
+    S: Synthetic
+
+Type of objects:
+    ID_0: T-Joint (polypropylene)
+    ID_1: Metal-Blank (aluminium)
+    ID_B: Background
+
+Type_0:
+    Size: 0.134 GB
+    Number of images:
+        - Train: 
+            - ID_0: 12 = 12(R) + 0(A) + 0(S)
+            - ID_1: 12 = 12(R) + 0(A) + 0(S)
+            - ID_B:  2 =  2(R) + 0(A) + 0(S)
+            - N: 24(ID_{0,1}) + 2(B)
+        - Valid: 
+            - ID_0: 3 = 3(R) + 0(A) + 0(S)
+            - ID_1: 3 = 3(R) + 0(A) + 0(S)
+            - N: 6(ID_{0,1})
+        - Test: 
+            - N: 24(R) + 0(A) + 1(S)
+    Freeze Backbone: True
+    Epochs: 300 
+    Training Time: 0.038 hours
+
+Type_1:
+    Size: 1.800 GB
+    Number of images:
+        - Train: 
+            - ID_0: 240 = 12(R) + 228(A) + 0(S)
+            - ID_1: 240 = 12(R) + 228(A) + 0(S)
+            - ID_B:  20 =  2(R) +  18(A) + 0(S)
+            - N: 480(ID_{0,1}) + 20(B)
+        - Valid: 
+            - ID_0: 60 = 3(R) + 57(A) + 0(S)
+            - ID_1: 60 = 3(R) + 57(A) + 0(S)
+            - N: 120(ID_{0,1})
+        - Test: 
+            - N: 24(R) + 0(A) + 1(S)
+    Freeze Backbone: True
+    Epochs: 300 
+    Training Time: 0.357 hours
+
+Type_2:
+    Size: 0.128 GB
+    Number of images:
+        - Train: 
+            - ID_0: 12 =  0(R) + 0(A) + 12(S)
+            - ID_1: 12 =  0(R) + 0(A) + 12(S)
+            - ID_B:  2 =  0(R) + 0(A) +  2(S)
+            - N: 24(ID_{0,1}) + 2(B)
+        - Valid: 
+            - ID_0: 3 = 0(R) + 0(A) + 3(S)
+            - ID_1: 3 = 0(R) + 0(A) + 3(S)
+            - N: 6(ID_{0,1})
+        - Test: 
+            - N: 24(R) + 0(A) + 1(S)
+    Freeze Backbone: True
+    Epochs: 300 
+    Training Time: 0.037 hours
+
+Type_3:
+    Size: 2.500 GB
+    Number of images:
+        - Train: 
+            - ID_0: 240 =  0(R) + 228(A) + 12(S)
+            - ID_1: 240 =  0(R) + 228(A) + 12(S)
+            - ID_B:  20 =  0(R) +  18(A) +  2(S)
+            - N: 480(ID_{0,1}) + 20(B)
+        - Valid: 
+            - ID_0: 60 = 0(R) + 57(A) + 3(S)
+            - ID_1: 60 = 0(R) + 57(A) + 3(S)
+            - N: 120(ID_{0,1})
+        - Test: 
+            - N: 24(R) + 0(A) + 1(S)
+    Freeze Backbone: True
+    Epochs: 300 
+    Training Time: 0.380 hours
+
+Type_4:
+    Size: 1.400 GB
+    Number of images:
+        - Train: 
+            - ID_0: 240 =  0(R) + 0(A) + 240(S)
+            - ID_1: 240 =  0(R) + 0(A) + 240(S)
+            - ID_B:  20 =  0(R) + 0(A) +  20(S)
+            - N: 480(ID_{0,1}) + 20(B)
+        - Valid: 
+            - ID_0: 60 = 0(R) + 0(A) + 60(S)
+            - ID_1: 60 = 0(R) + 0(A) + 60(S)
+            - N: 120(ID_{0,1})
+        - Test: 
+            - N: 24(R) + 0(A) + 1(S)
+    Freeze Backbone: True
+    Epochs: 300 
+    Training Time: 0.301 hours
+
+Type_5:
+    Size: 1.400 GB
+    Number of images:
+        - Train: 
+            - ID_0: 240 = 12(R) + 0(A) + 228(S)
+            - ID_1: 240 = 12(R) + 0(A) + 228(S)
+            - ID_B:  20 =  2(R) + 0(A) + 18(S)
+            - N: 480(ID_{0,1}) + 20(B)
+        - Valid: 
+            - ID_0: 60 = 3(R) + 0(A) + 57(S)
+            - ID_1: 60 = 3(R) + 0(A) + 57(S)
+            - N: 120(ID_{0,1})
+        - Test: 
+            - N: 24(R) + 0(A) + 1(S)
+    Freeze Backbone: True
+    Epochs: 300 
+    Training Time: 0.300 hours
+```
+
+**The results of the object detection model training process**
+
+<p align="center">
+  <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Evaluation/Model/Type_0/Training_Results.png?raw=true" width="375" height="255">
+  <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Evaluation/Model/Type_1/Training_Results.png?raw=true" width="375" height="255">
+  <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Evaluation/Model/Type_2/Training_Results.png?raw=true" width="375" height="255">
+  <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Evaluation/Model/Type_3/Training_Results.png?raw=true" width="375" height="255">
+  <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Evaluation/Model/Type_4/Training_Results.png?raw=true" width="375" height="255">
+  <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Evaluation/Model/Type_5/Training_Results.png?raw=true" width="375" height="255">
+</p>
+
+**Comparison of training results**
+
+| Type of the Dataset | GIoU: Train | GIoU: Valid | Objectness: Train | Objectness: Valid | Classification: Train | Classification: Valid | Precision | Recall | mAP@0.5 | mAP@0.5:0.95 |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| Type-0 | 0.2558 | 0.3898 | 0.3012 | 0.3412 | 0.7736 | 0.7618 | 0.9852 | 1.0000 | 0.9950 | 0.9665 |
+| Type-1 | 0.1823 | 0.3379 | 0.1525 | 0.2144 | 0.7558 | 0.7706 | 0.9952 | 1.0000 | 0.9950 | 0.9596 |
+| Type-2 | 0.3291 | 0.4206 | 0.3748 | 0.3191 | 0.7643 | 0.8098 | 0.9796 | 1.0000 | 0.9950 | 0.9658 |
+| Type-3 | 0.2254 | 0.3305 | 0.1790 | 0.2019 | 0.7871 | 0.7923 | 0.9991 | 1.0000 | 0.9950 | 0.9695 |
+| Type-4 | 0.2039 | 0.1957 | 0.1595 | 0.1675 | 0.7758 | 0.7436 | 0.9991 | 1.0000 | 0.9950 | 0.9933 |
+| Type-5 | 0.1974 | 0.2079 | 0.1619 | 0.1712 | 0.7662 | 0.7404 | 0.9991 | 1.0000 | 0.9950 | 0.9930 |
+
+<p align="center">
+  <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Evaluation/Model/Training_Comparison.png?raw=true" width="750" height="450">
+</p>
 
 ## Evaluation of the Experiment
 
 Text ......
+
+**Comparison of prediction results on the test dataset**
+
+| Type of the Dataset | Precision | Recall | mAP@0.5 | mAP@0.5:0.95 |
+| :---: | :---: | :---: | :---: | :---: |
+| Type-0 | 0.9738 | 0.9908 | 0.9949 | 0.8806 |
+| Type-1 | 0.9957 | 1.0000 | 0.9950 | 0.9042 |
+| Type-2 | 0.9499 | 0.9757 | 0.9921 | 0.8326 |
+| Type-3 | 0.9762 | 0.9899 | 0.9950 | 0.8578 |
+| Type-4 | 0.9829 | 0.9959 | 0.9950 | 0.8696 |
+| Type-5 | 0.9980 | 1.0000 | 0.9950 | 0.9163 |
 
 ## Installation Dependencies
 
