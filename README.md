@@ -173,14 +173,9 @@ Text ......
 Text ......
 
 | Type of the Dataset  | Generalized Intersection over Union (GIoU) ||
-|   | train | validation|
 | :---: | :---: | :---: |
 | Type-0 | ... | ... |
 
-First Header  | Second Header | Third Header |
- ------------ | :-----------: | -----------: |
-Content       |          *Long Cell*        ||
-Content       |   **Cell**    |         Cell |
 
 ## Evaluation of the Experiment
 
