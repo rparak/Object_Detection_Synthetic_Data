@@ -181,6 +181,10 @@ Note:
 
 Training the YOLOv8 model on a custom dataset. Just change the constant 'CONST_DATASET_TYPE' in the program parameters.
 $ ../src/Training/Internal> python train.py
+
+Programs useful for evaluation of the training process can be found here:
+$ ../src/Evaluation/Model/Results> python save_train_results.py
+$ ../src/Evaluation/Model/Results> python save_train_comparison.py
 ```
 
 **Configuration file (config.yaml) for the Type-0 dataset**
@@ -376,7 +380,15 @@ Type_5:
 
 ## Evaluation of the Experiment
 
-Text ......
+**Information about the validation and prediction process**
+```
+Validation of the custom-trained YOLOv8 model on a test partition of an individual dataset. Just change the constant 'CONST_DATASET_TYPE' in the program parameters.
+$ ../src/Evaluation/Model/Results> python save_valid_results.py
+$ ../src/Evaluation/Model/Results> python save_valid_comparison.py
+
+Prediction of the custom-trained YOLOv8 model on a test partition of an individual dataset. Just change the constant 'CONST_DATASET_TYPE' in the program parameters.
+$ ../src/Evaluation/Model> python predict.py
+```
 
 **Comparison of prediction results on the test dataset**
 
@@ -399,6 +411,14 @@ As we can see in the table above, the best predictions were found from the objec
   <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Results_PyTorch_Type_5/Image_Test_Partition.png?raw=true" width="375" height="375">
   <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Results_PyTorch_Type_5/Image_Test_Partition_Results.png?raw=true" width="375" height="375">
 </p>
+
+**Validation: : Conf(0.001), IoU(0.6)**
+
+<p align="center">
+  <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Evaluation/Model/Type_5/PyTorch/Validation_0001_Conf_06_IOU.png?raw=true" width="750" height="450">
+</p>
+
+**Prediction: Conf(0.5), IoU(0.7)**
 
 <p align="center">
   <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Evaluation/Model/Type_5/PyTorch/Prediction_05_Conf_07_IOU.png?raw=true" width="750" height="450">
