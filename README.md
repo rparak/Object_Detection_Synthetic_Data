@@ -389,6 +389,10 @@ Text ......
 | Type-4 | 0.9829 | 0.9959 | 0.9950 | 0.8696 |
 | Type-5 | 0.9980 | 1.0000 | 0.9950 | 0.9163 |
 
+<p align="center">
+  <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Evaluation/Model/Validation_Comparison_PyTorch.png?raw=true" width="750" height="450">
+</p>
+
 ## Installation Dependencies
 
 It will be useful for the project to create a virtual environment using Conda. Conda is an open source package management system and environment management system that runs on Windows, macOS, and Linux. Conda quickly installs, runs and updates packages and their dependencies.
