@@ -1,2 +1,0 @@
-Augmetation: Approximately 0.185s per image.
-Synthetic Data: Approximately 17.22s per image.
