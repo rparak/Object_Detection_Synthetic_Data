@@ -23,11 +23,11 @@ See the "Installation Dependencies" section in the Readme file.
 
 ## Project Description
 
-The project focuses on the analysis of training object detection models using different types of datasets (real data, augmented data, synthetic data, hybrid data). As a result, we compare these approaches to train the model and find the best way for object detection in real-world applications.
+The project focuses on analyzing the training of object detection models using various types of datasets, including real data, augmented data, synthetic data, and hybrid data. Consequently, we compare these approaches to train the model and determine the most effective method for object detection in real-world applications.
 
-The experiment was demonstrated in a robotics lab called Industry 4.0 Cell (I4C), located at Brno University of Technology. The main hardware used for the experiment was a PhoXi 3D Scanner M. The project is primarily focused on object detection in 2D space, so we used only the 2D camera of the scanner in our experiment. In the future expansion of the project, we can also use the third dimension to make full use of the scanner's potential.
+The experiment was conducted in a robotics lab called Industry 4.0 Cell (I4C), located at Brno University of Technology. The main hardware used for the experiment was a PhoXi 3D Scanner M. The project primarily focuses on object detection in 2D space, so we utilized only the 2D camera of the scanner in our experiment. For future expansions of the project, we can also incorporate the third dimension to fully leverage the scanner's potential.
 
-More detailed information about the data acquisition process, generating synthetic data using Blender, data augmentation, training the object detection model on a custom dataset, and last but not least the evaluation of the experiment can be found in the individual sections of the Readme file below.
+More detailed information about the data acquisition process, generating synthetic data using Blender, data augmentation, training the object detection model on a custom dataset, and last but not least, the evaluation of the experiment can be found in the individual sections of the README file below.
 
 The project was realized at the Institute of Automation and Computer Science, Brno University of Technology, Faculty of Mechanical Engineering (NETME Centre - Cybernetics and Robotics Division).
 
@@ -60,13 +60,13 @@ YOLOv8_Train_Custom_Dataset.ipynb
 
 **../Object_Detection_Synthetic_Data/Template/**
 
-The "Template" section contains the required folders for the training and validation process. Both folders are explained below. To run the project smoothly, it is necessary to follow the structure of the individual folders.
+The **Template** section contains the required folders for the training and validation process. Both folders are explained below. To run the project smoothly, it is necessary to follow the structure of the individual folders.
 
 Data
-- The "Data" folder contains the data from the camera, the individual datasets and the results for each model (PyTorch, ONNX, etc.).
+- The **Data** folder contains the data from the camera, the individual datasets and the results for each model (PyTorch, ONNX, etc.).
   
 YOLO
-- The "YOLO" folder contains the configuration file for training, the results of the training process and the models to be saved after training.
+- The **YOLO** folder contains the configuration file for training, the results of the training process and the models to be saved after training.
   
 ## Data Acquisition from the PhoXi 3D Scanner M
 
@@ -104,13 +104,13 @@ harvesters
 $ ../user_name> pip3 install harvesters
 ```
 
-The program for obtaining the raw image (2D) from the Photoneo sensor can be found below. This program can also be used for other types of Photoneo scanners (XS, S, M, L, etc.)
+The program for acquiring the raw 2D image from the Photoneo sensor can be found below. This program is compatible with various types of Photoneo scanners, including XS, S, M, L, and more.
 
 ```bash
 $ ../src/Camera/Collection> python scan.py 
 ```
 
-After scanning the environment, we get the raw image without adjusting the contrast and brightness. To adjust the contrast {alpha} and brightness {beta} of each image, we use the histogram clip function.
+After scanning the environment, we obtain the raw image without adjusting the contrast and brightness. To adjust the contrast 'alpha' and brightness 'beta' of each image, we utilize the histogram clip function.
 
 A program to adjust the contrast {alpha} and brightness {beta} of the raw image can be found below:
 ```bash
