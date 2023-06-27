@@ -27,6 +27,11 @@ The project focuses on analyzing the training of object detection models using v
 
 The experiment was conducted in a robotics lab called Industry 4.0 Cell (I4C), located at Brno University of Technology. The main hardware used for the experiment was a PhoXi 3D Scanner M. The project primarily focuses on object detection in 2D space, so we utilized only the 2D camera of the scanner in our experiment. For future expansions of the project, we can also incorporate the third dimension to fully leverage the scanner's potential.
 
+<p align="center">
+  <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Real_Workplace/Image_11.png?raw=true" width="750" height="450">
+  <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Real_Workplace/Image_21.png?raw=true" width="750" height="450">
+</p>
+
 The experiment aims to detect two types of objects (see figure):
 - The **T-joint** object made of aluminum material. Figure left.
 - The **Metal-Blank** object made of aluminum material. Figure right.
