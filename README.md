@@ -48,8 +48,11 @@ To determine the most effective object detection method, we created six types of
 | Type-5 | A hybrid dataset that contains synthetic monochrome images from the Blender camera, as well as real monochrome images from the Photoneo scanner. |
 
 The full dataset can be found here in a shared folder on Google Drive:
+
 [Data.zip](https://drive.google.com/file/d/1VXEg9HtX9TzuSyUX8PPbrxeeKiCVEjNV/view?usp=drive_link)
+
 and the training results, models etc. can also be found here on Google Drive:
+
 [YOLO.zip](https://drive.google.com/file/d/1B_kyKrbVJNvrqnOPZnZo_mWCvWOtO58t/view?usp=drive_link)
 
 More detailed information about the data acquisition process, generating synthetic data using Blender, data augmentation, training the object detection model on a custom dataset, and last but not least, the evaluation of the experiment can be found in the individual sections of the README file below.
