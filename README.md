@@ -318,6 +318,9 @@ Type_5:
 | Type-4 | 0.2039 | 0.1957 | 0.1595 | 0.1675 | 0.7758 | 0.7436 | 0.9991 | 1.0000 | 0.9950 | 0.9933 |
 | Type-5 | 0.1974 | 0.2079 | 0.1619 | 0.1712 | 0.7662 | 0.7404 | 0.9991 | 1.0000 | 0.9950 | 0.9930 |
 
+<p align="center">
+  <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Evaluation/Model/Training_Comparison.png?raw=true" width="750" height="450">
+</p>
 
 ## Evaluation of the Experiment
 
