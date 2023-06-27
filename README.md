@@ -24,9 +24,11 @@ Text ...
 ## Project Hierarchy:
 
 **../CAD/**
+
 3D models of individual objects.
 
 **../Blender/**
+
 Blender environment for access to synthetic data generation, robot workplace visualization, etc.
 
 See the programmes below for more information.
@@ -37,6 +39,7 @@ gen_synthetic_background_data.py get_object_boundaries.py
 ```
 
 **../src/**
+
 The source code of the project with additional dependencies. The individual scripts for data collection, training, augmentation, validation of the results, etc. contain additional information.
 
 The project also contains a Google Colab document that can be used to train the model in Collaboratory.
@@ -46,14 +49,15 @@ YOLOv8_Train_Custom_Dataset.ipynb
 ```
 
 **../Template/**
+
 The "Template" section contains the required folders for the training and validation process. Both folders are explained below. To run the project smoothly, it is necessary to follow the structure of the individual folders.
 
 Data
 - The "Data" folder contains the data from the camera, the individual datasets and the results for each model (PyTorch, ONNX, etc.).
-- 
+  
 YOLO
 - The "YOLO" folder contains the configuration file for training, the results of the training process and the models to be saved after training.
-
+  
 ## Installation Dependencies
 
 It will be useful for the project to create a virtual environment using Conda. Conda is an open source package management system and environment management system that runs on Windows, macOS, and Linux. Conda quickly installs, runs and updates packages and their dependencies.
