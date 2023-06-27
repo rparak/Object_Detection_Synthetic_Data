@@ -172,9 +172,15 @@ Text ......
 
 Text ......
 
-| Type of the Dataset  | Generalized Intersection over Union (GIoU) ||
-| :---: | :---: | :---: |
-| Type-0 | ... | ... |
+
+|             |          Grouping           ||
+First Header  | Second Header | Third Header |
+ ------------ | :-----------: | -----------: |
+Content       |          *Long Cell*        ||
+Content       |   **Cell**    |         Cell |
+
+New section   |     More      |         Data |
+And more      | With an escaped '\|'         || 
 
 
 ## Evaluation of the Experiment
