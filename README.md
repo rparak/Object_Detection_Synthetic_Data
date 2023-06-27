@@ -174,7 +174,7 @@ $ ../src/Evaluation/Camera_Data> python save_histogram.py
 ```
 
 <p align="center">
-  <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Evaluation/Camera_Data/Histogram_Image_00013.png?raw=true" width="800" height="450">
+  <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Evaluation/Camera_Data/Histogram_Image_00013.png?raw=true" width="750" height="450">
 </p>
 
 ## Result:
