@@ -119,7 +119,7 @@ Rename the environment from the old name to the new one.
 $ ../user_name> conda rename -n {old_name} {name_name}
 ```
 
-## Data Acquisition from the PhoXi 3D Scanner M:
+## Data Acquisition from the PhoXi 3D Scanner M
 
 The Harvester Python library was used for image acquisition. Harvester is a Python library that aims to make the image acquisition process in your computer vision application easy.
 ```bash
