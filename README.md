@@ -161,7 +161,7 @@ $ ../src/Evaluation/Camera_Data> python save_histogram.py
 ```
 
 <p align="center">
-  <img src="https://github.com/rparak/Object_Detection_Synthetic_Data/tree/main/images/Evaluation/Camera_Data/Histogram_Image_00013.png" width="800" height="500">
+  <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Evaluation/Camera_Data/Histogram_Image_00013.png" width="800" height="500">
 </p>
 
 **Python Dependencies (packages)**
