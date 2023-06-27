@@ -217,3 +217,25 @@ Test all of the algorithms. Etc., etc.
 [INFO] mAP@0.5 = 0.995
 [INFO] mAP@0.5:0.95 = 0.9190032569339632
 ```
+
+## Result:
+
+Youtube: Coming soon ...
+
+## Contact Info:
+Roman.Parak@outlook.com
+
+## Citation (BibTex)
+```bash
+@misc{RomanParak_Unity3D,
+  author = {Roman Parak},
+  title = {Analysis of training object detection models using different types of datasets},
+  year = {2020-2023},
+  publisher = {GitHub},
+  journal = {GitHub repository},
+  howpublished = {\url{https://github.com/rparak/Unity3D_Robotics_Overview}}
+}
+```
+
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
