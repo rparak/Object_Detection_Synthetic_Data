@@ -170,7 +170,7 @@ Text ......
 
 ## Train YOLOv8 Object Detection on a Custom Dataset
 
-The YOLOv8n (nano) model was used to train the object detection experiment. To quickly retrain the model on the new data without retraining the entire network, we use a function to freeze the backbone layers of the model. The training process was performed using an internal NVIDIA GeForce GTX 1080 Ti 16 GB GPU, , but it is also possible to use Google Colab, as I mentioned earlier.
+The YOLOv8n (nano) model was used to train the object detection experiment. To quickly retrain the model on the new data without retraining the entire network, we use a function to freeze the backbone layers of the model. The backbone of the model consists of layers 0-9 (10 layers). The training process was performed using an internal NVIDIA GeForce GTX 1080 Ti 16 GB GPU, , but it is also possible to use Google Colab, as I mentioned earlier.
 
 **Information about the training process**
 ```
