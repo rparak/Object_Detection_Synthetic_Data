@@ -162,11 +162,11 @@ $ ../src/Evaluation/Camera_Data> python save_histogram.py
 
 ## Synthetic Data Generation
 
-Text ......
+The process of generating synthetic images takes approximately 17.22s per image. The time depends on the available GPU, along with the settings in Blender.
 
 ## Data Augmentation
 
-Text ......
+The process of generating augmented images takes approximately 0.185s per image.
 
 ## Train YOLOv8 Object Detection on a Custom Dataset
 
@@ -181,6 +181,10 @@ Note:
 
 Training the YOLOv8 model on a custom dataset. Just change the constant 'CONST_DATASET_TYPE' in the program parameters.
 $ ../src/Training/Internal> python train.py
+
+Programs useful for evaluation of the training process can be found here:
+$ ../src/Evaluation/Model/Results> python save_train_results.py
+$ ../src/Evaluation/Model/Results> python save_train_comparison.py
 ```
 
 **Configuration file (config.yaml) for the Type-0 dataset**
@@ -376,7 +380,15 @@ Type_5:
 
 ## Evaluation of the Experiment
 
-Text ......
+**Information about the validation and prediction process**
+```
+Validation of the custom-trained YOLOv8 model on a test partition of an individual dataset. Just change the constant 'CONST_DATASET_TYPE' in the program parameters.
+$ ../src/Evaluation/Model/Results> python save_valid_results.py
+$ ../src/Evaluation/Model/Results> python save_valid_comparison.py
+
+Prediction of the custom-trained YOLOv8 model on a test partition of an individual dataset. Just change the constant 'CONST_DATASET_TYPE' in the program parameters.
+$ ../src/Evaluation/Model> python predict.py
+```
 
 **Comparison of prediction results on the test dataset**
 
@@ -388,6 +400,29 @@ Text ......
 | Type-3 | 0.9762 | 0.9899 | 0.9950 | 0.8578 |
 | Type-4 | 0.9829 | 0.9959 | 0.9950 | 0.8696 |
 | Type-5 | 0.9980 | 1.0000 | 0.9950 | 0.9163 |
+
+<p align="center">
+  <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Evaluation/Model/Validation_Comparison_PyTorch.png?raw=true" width="750" height="450">
+</p>
+
+As we can see in the table above, the best predictions were found from the object detection model that was trained with the Type-5 dataset. We can, therefore, conclude that the combination of real data and synthetic data is the most effective method for object detection in real-world applications. The prediction results for the entire test partition can be found below.
+
+<p align="center">
+  <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Results_PyTorch_Type_5/Image_Test_Partition.png?raw=true" width="375" height="375">
+  <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Results_PyTorch_Type_5/Image_Test_Partition_Results.png?raw=true" width="375" height="375">
+</p>
+
+**Validation: : Conf(0.001), IoU(0.6)**
+
+<p align="center">
+  <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Evaluation/Model/Type_5/PyTorch/Validation_0001_Conf_06_IOU.png?raw=true" width="750" height="450">
+</p>
+
+**Prediction: Conf(0.5), IoU(0.7)**
+
+<p align="center">
+  <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Evaluation/Model/Type_5/PyTorch/Prediction_05_Conf_07_IOU.png?raw=true" width="750" height="450">
+</p>
 
 ## Installation Dependencies
 
