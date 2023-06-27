@@ -177,6 +177,11 @@ Text ......
 | :---: | :---: | :---: |
 | Type-0 | ... | ... |
 
+First Header  | Second Header | Third Header |
+ ------------ | :-----------: | -----------: |
+Content       |          *Long Cell*        ||
+Content       |   **Cell**    |         Cell |
+
 ## Evaluation of the Experiment
 
 Text ......
