@@ -23,38 +23,36 @@ Text ...
 
 ## Project Hierarchy:
 
+**../CAD/**
+3D models of individual objects.
+
+**../Blender/**
+Blender environment for access to synthetic data generation, robot workplace visualization, etc.
+
+See the programmes below for more information.
 ```bash
-[/CAD/]
-Description:
-  3D models of individual objects.
-
-[/Blender/]
-Description:
-  Blender environment for access to synthetic data generation, robot workplace visualization, etc.
-
-  See the programmes below for more information:
-    $ ../src/Blender> ls
-    gen_object_bounding_box.py              gen_synthetic_data.py                   save_image.py
-    gen_synthetic_background_data.py        get_object_boundaries.py
-  
-[/src/]
-Description:
-  The source code of the project with additional dependencies. The individual scripts for data collection, training, augmentation, validation of the results, etc. contain additional information.
-
-  The project also contains a Google Colab document that can be used to train the model in Collaboratory.
-    $ ../src/Training/Google_Colab> ls
-    YOLOv8_Train_Custom_Dataset.ipynb
-
-[/Templates/]
-Description:
-  The "Template" section contains the required folders for the training and validation process. Both folders are explained below. To run the project smoothly, it is necessary to follow the structure of the individual folders.
-
-  1\ Data
-    The "Data" folder contains the data from the camera, the individual datasets and the results for each model (PyTorch, ONNX, etc.).
-
-  2\ YOLO
-    The "YOLO" folder contains the configuration file for training, the results of the training process and the models to be saved after training.
+$ ../src/Blender> ls
+gen_object_bounding_box.py       gen_synthetic_data.py    save_image.py
+gen_synthetic_background_data.py get_object_boundaries.py
 ```
+
+**../src/**
+The source code of the project with additional dependencies. The individual scripts for data collection, training, augmentation, validation of the results, etc. contain additional information.
+
+The project also contains a Google Colab document that can be used to train the model in Collaboratory.
+```bash
+$ ../src/Training/Google_Colab> ls
+YOLOv8_Train_Custom_Dataset.ipynb
+```
+
+**../Template/**
+The "Template" section contains the required folders for the training and validation process. Both folders are explained below. To run the project smoothly, it is necessary to follow the structure of the individual folders.
+
+Data
+- The "Data" folder contains the data from the camera, the individual datasets and the results for each model (PyTorch, ONNX, etc.).
+- 
+YOLO
+- The "YOLO" folder contains the configuration file for training, the results of the training process and the models to be saved after training.
 
 ## Installation Dependencies
 
