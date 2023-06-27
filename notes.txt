@@ -1,3 +1,6 @@
+The experiment is aimed at detecting two types of objects. 
+
+
 # Train Results
 
 **Dataset 0**
@@ -151,63 +154,4 @@
 [INFO] Recall = 1.0
 [INFO] mAP@0.5 = 0.995
 [INFO] mAP@0.5:0.95 = 0.9163382434425511
-```
-
-
-
-# Validation Results (ONNX)
-
-**Dataset 0**
-```bash
-[INFO] Evaluation Criteria: YOLOv8
-[INFO] The name of the dataset: Dataset_Type_0
-[INFO] Precision = 0.9870509429428476
-[INFO] Recall = 0.9681209964378099
-[INFO] mAP@0.5 = 0.9948627946127946
-[INFO] mAP@0.5:0.95 = 0.8835221482148936
-```
-**Dataset 1**
-```bash
-[INFO] Evaluation Criteria: YOLOv8
-[INFO] The name of the dataset: Dataset_Type_1
-[INFO] Precision = 0.9951513000455711
-[INFO] Recall = 1.0
-[INFO] mAP@0.5 = 0.995
-[INFO] mAP@0.5:0.95 = 0.9045463240080153
-```
-**Dataset 2**
-```bash
-[INFO] Evaluation Criteria: YOLOv8
-[INFO] The name of the dataset: Dataset_Type_2
-[INFO] Precision = 0.9694093325670848
-[INFO] Recall = 0.9754387998143003
-[INFO] mAP@0.5 = 0.9937606731643429
-[INFO] mAP@0.5:0.95 = 0.8267212538523665
-```
-**Dataset 3**
-```bash
-[INFO] Evaluation Criteria: YOLOv8
-[INFO] The name of the dataset: Dataset_Type_3
-[INFO] Precision = 0.9813162211216122
-[INFO] Recall = 0.9833111895034636
-[INFO] mAP@0.5 = 0.995
-[INFO] mAP@0.5:0.95 = 0.8580565242042372
-```
-**Dataset 4**
-```bash
-[INFO] Evaluation Criteria: YOLOv8
-[INFO] The name of the dataset: Dataset_Type_4
-[INFO] Precision = 0.9931101542689124
-[INFO] Recall = 1.0
-[INFO] mAP@0.5 = 0.995
-[INFO] mAP@0.5:0.95 = 0.8592243727973665
-```
-**Dataset 5**
-```bash
-[INFO] Evaluation Criteria: YOLOv8
-[INFO] The name of the dataset: Dataset_Type_5
-[INFO] Precision = 0.997907120991472
-[INFO] Recall = 1.0
-[INFO] mAP@0.5 = 0.995
-[INFO] mAP@0.5:0.95 = 0.9190032569339632
 ```
