@@ -39,7 +39,7 @@ Description:
   
 [/src/]
 Description:
-  The source code of the project with additional dependencies. The individual scripts for data collection, training, augmentation, validation of the results, etc.          contain additional information.
+  The source code of the project with additional dependencies. The individual scripts for data collection, training, augmentation, validation of the results, etc. contain additional information.
 
   The project also contains a Google Colab document that can be used to train the model in Collaboratory.
     $ ../src/Training/Google_Colab> ls
@@ -47,7 +47,7 @@ Description:
 
 [/Templates/]
 Description:
-  The "Template" section contains the required folders for the training and validation process. Both folders are explained below. To run the project smoothly, it is        necessary to follow the structure of the individual folders.
+  The "Template" section contains the required folders for the training and validation process. Both folders are explained below. To run the project smoothly, it is necessary to follow the structure of the individual folders.
 
   1\ Data
     The "Data" folder contains the data from the camera, the individual datasets and the results for each model (PyTorch, ONNX, etc.).
