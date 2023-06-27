@@ -307,6 +307,17 @@ Type_5:
     Training Time: 0.300 hours
 ```
 
+**The results of the object detection model training process**
+
+<p align="center">
+  <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Evaluation/Model/Type_0/Training_Results.png?raw=true" width="375" height="275">
+  <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Evaluation/Model/Type_1/Training_Results.png?raw=true" width="375" height="275">
+  <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Evaluation/Model/Type_2/Training_Results.png?raw=true" width="375" height="275">
+  <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Evaluation/Model/Type_3/Training_Results.png?raw=true" width="375" height="275">
+  <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Evaluation/Model/Type_4/Training_Results.png?raw=true" width="375" height="275">
+  <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Evaluation/Model/Type_5/Training_Results.png?raw=true" width="375" height="275">
+</p>
+
 **Comparison of training results**
 
 | Type of the Dataset | GIoU: Train | GIoU: Valid | Objectness: Train | Objectness: Valid | Classification: Train | Classification: Valid | Precision | Recall | mAP@0.5 | mAP@0.5:0.95 |
