@@ -173,10 +173,9 @@ Text ......
 Text ......
 
 
-|             |          Grouping           ||
-| First Header  | Second Header | Third Header |
-| ------------ | :-----------: | -----------: |
-| Content       |          *Long Cell*        ||
+| Type of the Dataset  | GIoU: Train | GIoU: Valid | Objectness: Train | Objectness: Valid | Classification: Train | Classification: Valid | Precision | Recall | mAP@0.5 | mAP@0.5:0.95 |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| Type-0 | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... |
 
 
 ## Evaluation of the Experiment
