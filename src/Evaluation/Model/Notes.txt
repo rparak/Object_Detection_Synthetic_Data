@@ -1,5 +1,3 @@
-!!!! Warning check number of images and size, and other things!!!!!!!!!!!!!!!!!
-
 Object Detection:
 https://docs.ultralytics.com/tasks/detect/
 
