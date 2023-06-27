@@ -35,7 +35,13 @@ The experiment aims to detect two types of objects (see figure):
   <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Objects/Object_T_Joint.png?raw=true" width="250" height="250">
   <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Objects/Object_Metal_Blank.png?raw=true" width="250" height="250">
 </p>
-  
+
+To determine the most effective object detection method, we created six types of datasets that were trained using the YOLOv8 model (Ultralytics HUB).
+
+| Type of the Dataset  | Short Description |
+| -------------------- | ------------- |
+| Type 0               | Content Cell  |
+
 More detailed information about the data acquisition process, generating synthetic data using Blender, data augmentation, training the object detection model on a custom dataset, and last but not least, the evaluation of the experiment can be found in the individual sections of the README file below.
 
 The project was realized at the Institute of Automation and Computer Science, Brno University of Technology, Faculty of Mechanical Engineering (NETME Centre - Cybernetics and Robotics Division).
