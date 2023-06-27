@@ -162,11 +162,11 @@ $ ../src/Evaluation/Camera_Data> python save_histogram.py
 
 ## Synthetic Data Generation
 
-The process of generating augmented images takes approximately 0.185s per image.
+The process of generating synthetic images takes approximately 17.22s per image. The time depends on the available GPU, along with the settings in Blender.
 
 ## Data Augmentation
 
-The process of generating synthetic images takes approximately 17.22s per image. The time depends on the available GPU, along with the settings in Blender.
+The process of generating augmented images takes approximately 0.185s per image.
 
 ## Train YOLOv8 Object Detection on a Custom Dataset
 
