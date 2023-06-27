@@ -310,12 +310,12 @@ Type_5:
 **The results of the object detection model training process**
 
 <p align="center">
-  <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Evaluation/Model/Type_0/Training_Results.png?raw=true" width="375" height="275">
-  <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Evaluation/Model/Type_1/Training_Results.png?raw=true" width="375" height="275">
-  <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Evaluation/Model/Type_2/Training_Results.png?raw=true" width="375" height="275">
-  <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Evaluation/Model/Type_3/Training_Results.png?raw=true" width="375" height="275">
-  <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Evaluation/Model/Type_4/Training_Results.png?raw=true" width="375" height="275">
-  <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Evaluation/Model/Type_5/Training_Results.png?raw=true" width="375" height="275">
+  <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Evaluation/Model/Type_0/Training_Results.png?raw=true" width="375" height="255">
+  <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Evaluation/Model/Type_1/Training_Results.png?raw=true" width="375" height="255">
+  <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Evaluation/Model/Type_2/Training_Results.png?raw=true" width="375" height="255">
+  <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Evaluation/Model/Type_3/Training_Results.png?raw=true" width="375" height="255">
+  <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Evaluation/Model/Type_4/Training_Results.png?raw=true" width="375" height="255">
+  <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Evaluation/Model/Type_5/Training_Results.png?raw=true" width="375" height="255">
 </p>
 
 **Comparison of training results**
