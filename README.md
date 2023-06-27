@@ -43,7 +43,7 @@ The experiment aims to detect two types of objects (see figure):
 To determine the most effective object detection method, we created six types of datasets and trained them using the YOLOv8 model (Ultralytics HUB).
 
 | Type of the Dataset  | Short Description |
-| -------------------- | ------------- |
+| :---: | :---: |
 | Type-0 | A smaller dataset that contains real monochrome images from the Photoneo scanner. |
 | Type-1 | Augmented real monochrome images used to increase the size of the Type-0 dataset. |
 | Type-2 | A smaller dataset that contains synthetic monochrome images from the Blender camera. |
@@ -171,6 +171,11 @@ Text ......
 ## Train YOLOv8 Object Detection on a Custom Dataset
 
 Text ......
+
+| Type of the Dataset  | Generalized Intersection over Union (GIoU) ||
+|   | train | validation|
+| :---: | :---: | :---: |
+| Type-0 | ... | ... |
 
 ## Evaluation of the Experiment
 
