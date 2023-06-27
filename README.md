@@ -64,7 +64,7 @@ YOLO
   
 ## Data Acquisition from the PhoXi 3D Scanner M
 
-The Harvester Python library was used for image acquisition. Harvester is a Python library that aims to make the image acquisition process in your computer vision application easy.
+The Harvester Python library was used for image acquisition. Harvester is a library for Python that aims to ease the process of image acquisition in computer vision applications.
 ```bash
 https://github.com/genicam/harvesters
 ```
@@ -98,7 +98,7 @@ harvesters
 $ ../user_name> pip3 install harvesters
 ```
 
-The program for obtaining the raw image (2D) from the Photoneo sensor can be found below. This program can also be used for other types of Photoneo scanners.
+The program for obtaining the raw image (2D) from the Photoneo sensor can be found below. This program can also be used for other types of Photoneo scanners (XS, S, M, L, etc.)
 
 ```bash
 $ ../src/Camera/Collection> python scan.py 
