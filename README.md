@@ -170,7 +170,48 @@ Text ......
 
 ## Train YOLOv8 Object Detection on a Custom Dataset
 
-The training process was performed using an internal NVIDIA GeForce GTX 1080 Ti 16 GB GPU.
+The YOLOv8n (nano) model was used to train the object detection experiment. To quickly retrain the model on the new data without retraining the entire network, we use a function to freeze the backbone layers of the model. The training process was performed using an internal NVIDIA GeForce GTX 1080 Ti 16 GB GPU, , but it is also possible to use Google Colab, as I mentioned earlier.
+
+**Information about the training process**
+```
+The 'config.yaml' file can be found here:
+../YOLO/Configuration/Type_{dataset_type}/config.yaml
+Note:
+  dataset_type: The identification number of the dataset type.
+
+Training the YOLOv8 model on a custom dataset. Just change the constant 'CONST_DATASET_TYPE' in the program parameters.
+$ ../src/Training/Internal> python train.py
+```
+
+**Configuration file (config.yaml) for the Type-0 dataset**
+```bash
+# Description:
+#   The contents of the configuration data, such as the specified partition path, the total 
+#   number of classes in the dataset, and the name of each class.
+
+# The path to the main directory of the dataset.
+#   Name of the dataset:
+#     Dataset_Type_{dataset_type}
+#   Note:
+#     dataset_type: 
+#       The identification number of the dataset type.
+#   Warning:
+#     path(Google Colab): '/content/drive/MyDrive/YOLOv8_Custom_Dataset/Data/Dataset_Type_{dataset_type}'
+#     path(Internal): '../../../../Data/Dataset_Type_{dataset_type}'
+path: '../../../../Data/Dataset_Type_0'
+
+# The absolute path to the specified partition folder (train, validation, test) that contains 
+# the dataset images as well as the labels.
+train: images/train
+val: images/valid
+test: images/test
+
+# Parameters:
+#   The total number of classes in the dataset.
+nc: 2 
+#   ID name of each class.
+names: ['T_Joint', 'Metal_Blank']
+```
 
 **Training parameters of the YOLOv8 object detection model**
 ```
