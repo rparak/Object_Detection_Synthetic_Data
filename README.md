@@ -25,6 +25,8 @@ See the "Installation Dependencies" section in the Readme file.
 
 The project focuses on the analysis of training object detection models using different types of datasets (real data, augmented data, synthetic data, hybrid data). As a result, we compare these approaches to train the model and find the best way for object detection in real-world applications.
 
+The experiment was demonstrated in a robotics lab called Industry 4.0 Cell (I4C), located at Brno University of Technology. The main hardware used for the experiment was a PhoXi 3D Scanner M. The project is primarily focused on object detection in 2D space, so we used only the 2D camera of the scanner in our experiment. In the future expansion of the project, we can also use the third dimension to make full use of the scanner's potential.
+
 More detailed information about the data acquisition process, generating synthetic data using Blender, data augmentation, training the object detection model on a custom dataset, and last but not least the evaluation of the experiment can be found in the individual sections of the Readme file below.
 
 The project was realized at the Institute of Automation and Computer Science, Brno University of Technology, Faculty of Mechanical Engineering (NETME Centre - Cybernetics and Robotics Division).
