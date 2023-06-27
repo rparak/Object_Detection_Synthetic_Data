@@ -181,6 +181,134 @@ Patience: 0
 Batch Size: Automatically estimate the best YOLO batch size to use a fraction of the available CUDA memory.
 ```
 
+**The partitioning of image data within datasets**
+```
+Partitioning of the Dataset:
+    - Train: 80% + Background Images.
+    - Valid: 20%
+    - Test: 24 images from real hardware (camera) and 1 synthetic image.
+
+Type of images:
+    R: Real
+    A: Augmented
+    S: Synthetic
+
+Type of objects:
+    ID_0: T-Joint (polypropylene)
+    ID_1: Metal-Blank (aluminium)
+    ID_B: Background
+
+Type_0:
+    Size: 0.134 GB
+    Number of images:
+        - Train: 
+            - ID_0: 12 = 12(R) + 0(A) + 0(S)
+            - ID_1: 12 = 12(R) + 0(A) + 0(S)
+            - ID_B:  2 =  2(R) + 0(A) + 0(S)
+            - N: 24(ID_{0,1}) + 2(B)
+        - Valid: 
+            - ID_0: 3 = 3(R) + 0(A) + 0(S)
+            - ID_1: 3 = 3(R) + 0(A) + 0(S)
+            - N: 6(ID_{0,1})
+        - Test: 
+            - N: 24(R) + 0(A) + 1(S)
+    Freeze Backbone: True
+    Epochs: 300 
+    Training Time: 0.038 hours
+
+Type_1:
+    Size: 1.800 GB
+    Number of images:
+        - Train: 
+            - ID_0: 240 = 12(R) + 228(A) + 0(S)
+            - ID_1: 240 = 12(R) + 228(A) + 0(S)
+            - ID_B:  20 =  2(R) +  18(A) + 0(S)
+            - N: 480(ID_{0,1}) + 20(B)
+        - Valid: 
+            - ID_0: 60 = 3(R) + 57(A) + 0(S)
+            - ID_1: 60 = 3(R) + 57(A) + 0(S)
+            - N: 120(ID_{0,1})
+        - Test: 
+            - N: 24(R) + 0(A) + 1(S)
+    Freeze Backbone: True
+    Epochs: 300 
+    Training Time: 0.357 hours
+
+Type_2:
+    Size: 0.128 GB
+    Number of images:
+        - Train: 
+            - ID_0: 12 =  0(R) + 0(A) + 12(S)
+            - ID_1: 12 =  0(R) + 0(A) + 12(S)
+            - ID_B:  2 =  0(R) + 0(A) +  2(S)
+            - N: 24(ID_{0,1}) + 2(B)
+        - Valid: 
+            - ID_0: 3 = 0(R) + 0(A) + 3(S)
+            - ID_1: 3 = 0(R) + 0(A) + 3(S)
+            - N: 6(ID_{0,1})
+        - Test: 
+            - N: 24(R) + 0(A) + 1(S)
+    Freeze Backbone: True
+    Epochs: 300 
+    Training Time: 0.037 hours
+
+Type_3:
+    Size: 2.500 GB
+    Number of images:
+        - Train: 
+            - ID_0: 240 =  0(R) + 228(A) + 12(S)
+            - ID_1: 240 =  0(R) + 228(A) + 12(S)
+            - ID_B:  20 =  0(R) +  18(A) +  2(S)
+            - N: 480(ID_{0,1}) + 20(B)
+        - Valid: 
+            - ID_0: 60 = 0(R) + 57(A) + 3(S)
+            - ID_1: 60 = 0(R) + 57(A) + 3(S)
+            - N: 120(ID_{0,1})
+        - Test: 
+            - N: 24(R) + 0(A) + 1(S)
+    Freeze Backbone: True
+    Epochs: 300 
+    Training Time: 0.380 hours
+
+Type_4:
+    Size: 1.400 GB
+    Number of images:
+        - Train: 
+            - ID_0: 240 =  0(R) + 0(A) + 240(S)
+            - ID_1: 240 =  0(R) + 0(A) + 240(S)
+            - ID_B:  20 =  0(R) + 0(A) +  20(S)
+            - N: 480(ID_{0,1}) + 20(B)
+        - Valid: 
+            - ID_0: 60 = 0(R) + 0(A) + 60(S)
+            - ID_1: 60 = 0(R) + 0(A) + 60(S)
+            - N: 120(ID_{0,1})
+        - Test: 
+            - N: 24(R) + 0(A) + 1(S)
+    Freeze Backbone: True
+    Epochs: 300 
+    Training Time: 0.301 hours
+
+Type_5:
+    Size: 1.400 GB
+    Number of images:
+        - Train: 
+            - ID_0: 240 = 12(R) + 0(A) + 228(S)
+            - ID_1: 240 = 12(R) + 0(A) + 228(S)
+            - ID_B:  20 =  2(R) + 0(A) + 18(S)
+            - N: 480(ID_{0,1}) + 20(B)
+        - Valid: 
+            - ID_0: 60 = 3(R) + 0(A) + 57(S)
+            - ID_1: 60 = 3(R) + 0(A) + 57(S)
+            - N: 120(ID_{0,1})
+        - Test: 
+            - N: 24(R) + 0(A) + 1(S)
+    Freeze Backbone: True
+    Epochs: 300 
+    Training Time: 0.300 hours
+```
+
+**Comparison of training results**
+
 | Type of the Dataset | GIoU: Train | GIoU: Valid | Objectness: Train | Objectness: Valid | Classification: Train | Classification: Valid | Precision | Recall | mAP@0.5 | mAP@0.5:0.95 |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | Type-0 | 0.2558 | 0.3898 | 0.3012 | 0.3412 | 0.7736 | 0.7618 | 0.9852 | 1.0000 | 0.9950 | 0.9665 |
@@ -190,14 +318,12 @@ Batch Size: Automatically estimate the best YOLO batch size to use a fraction of
 | Type-4 | 0.2039 | 0.1957 | 0.1595 | 0.1675 | 0.7758 | 0.7436 | 0.9991 | 1.0000 | 0.9950 | 0.9933 |
 | Type-5 | 0.1974 | 0.2079 | 0.1619 | 0.1712 | 0.7662 | 0.7404 | 0.9991 | 1.0000 | 0.9950 | 0.9930 |
 
-|              | Header 1        | Header 2                       || Header 3                       ||
-|              | Subheader 1     | Subheader 2.1  | Subheader 2.2  | Subheader 3.1  | Subheader 3.2  |
-|==============|-----------------|----------------|----------------|----------------|----------------|
-| Row Header 1 | 3row, 3col span                                 ||| Colspan only                   ||
 
 ## Evaluation of the Experiment
 
 Text ......
+
+**Comparison of prediction results on the test dataset**
 
 | Type of the Dataset | Precision | Recall | mAP@0.5 | mAP@0.5:0.95 |
 | :---: | :---: | :---: | :---: | :---: |
