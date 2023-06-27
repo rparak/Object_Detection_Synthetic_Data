@@ -55,6 +55,8 @@ and the training results, models etc. can also be found here on Google Drive:
 
 [YOLO.zip](https://drive.google.com/file/d/1B_kyKrbVJNvrqnOPZnZo_mWCvWOtO58t/view?usp=drive_link)
 
+For information on object detection using the YOLOv8 model, please visit the [Ultralytics YOLOv8](https://docs.ultralytics.com/tasks/detect/) website.
+
 More detailed information about the data acquisition process, generating synthetic data using Blender, data augmentation, training the object detection model on a custom dataset, and last but not least, the evaluation of the experiment can be found in the individual sections of the README file below.
 
 The project was realized at the Institute of Automation and Computer Science, Brno University of Technology, Faculty of Mechanical Engineering (NETME Centre - Cybernetics and Robotics Division).
