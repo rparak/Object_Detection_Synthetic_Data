@@ -23,11 +23,11 @@ Text ...
 
 ## Project Hierarchy:
 
-**../CAD/**
+**../Object_Detection_Synthetic_Data/CAD/**
 
 3D models of individual objects.
 
-**../Blender/**
+**../Object_Detection_Synthetic_Data/Blender/**
 
 Blender environment for access to synthetic data generation, robot workplace visualization, etc.
 
@@ -38,7 +38,7 @@ gen_object_bounding_box.py       gen_synthetic_data.py    save_image.py
 gen_synthetic_background_data.py get_object_boundaries.py
 ```
 
-**../src/**
+**../Object_Detection_Synthetic_Data/src/**
 
 The source code of the project with additional dependencies. The individual scripts for data collection, training, augmentation, validation of the results, etc. contain additional information.
 
@@ -48,7 +48,7 @@ $ ../src/Training/Google_Colab> ls
 YOLOv8_Train_Custom_Dataset.ipynb
 ```
 
-**../Template/**
+**../Object_Detection_Synthetic_Data/Template/**
 
 The "Template" section contains the required folders for the training and validation process. Both folders are explained below. To run the project smoothly, it is necessary to follow the structure of the individual folders.
 
