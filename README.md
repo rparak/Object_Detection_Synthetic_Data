@@ -36,17 +36,22 @@ The experiment aims to detect two types of objects (see figure):
   <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Objects/Object_Metal_Blank.png?raw=true" width="250" height="250">
 </p>
 
-To determine the most effective object detection method, we created six types of datasets that were trained using the YOLOv8 model (Ultralytics HUB).
+To determine the most effective object detection method, we created six types of datasets and trained them using the YOLOv8 model (Ultralytics HUB).
 
 | Type of the Dataset  | Short Description |
 | -------------------- | ------------- |
-| Type 0               | Content Cell  |
+| Type-0 | A smaller dataset that contains real monochrome images from the Photoneo scanner. |
+| Type-1 | Augmented real monochrome images used to increase the size of the Type-0 dataset. |
+| Type-2 | A smaller dataset that contains synthetic monochrome images from the Blender camera. |
+| Type-3 | Augmented synthetic monochrome images used to increase the size of the Type-2 dataset. |
+| Type-4 | A larger dataset that contains synthetic monochrome images from the Blender camera. |
+| Type-5 | A hybrid dataset that contains synthetic monochrome images from the Blender camera, as well as real monochrome images from the Photoneo scanner. |
 
 The full dataset can be found here in a shared folder on Google Drive:
 
 [Data.zip](https://drive.google.com/file/d/1VXEg9HtX9TzuSyUX8PPbrxeeKiCVEjNV/view?usp=drive_link)
 
-and the training results with models etc. can also be found here on Google Drive:
+and the training results, models etc. can also be found here on Google Drive:
 
 [YOLO.zip](https://drive.google.com/file/d/1B_kyKrbVJNvrqnOPZnZo_mWCvWOtO58t/view?usp=drive_link)
 
