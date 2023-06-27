@@ -170,8 +170,16 @@ Text ......
 
 ## Train YOLOv8 Object Detection on a Custom Dataset
 
-Text ......
+The training process was performed using an internal NVIDIA GeForce GTX 1080 Ti 16 GB GPU.
 
+**Training parameters of the YOLOv8 object detection model**
+```
+Model: YOLOv8n (Nano)
+Image Size: 640x480 (rectangular training with each batch collated for minimum padding).
+Maximum Number of Epochs: 300
+Patience: 0
+Batch Size: Automatically estimate the best YOLO batch size to use a fraction of the available CUDA memory.
+```
 
 | Type of the Dataset | GIoU: Train | GIoU: Valid | Objectness: Train | Objectness: Valid | Classification: Train | Classification: Valid | Precision | Recall | mAP@0.5 | mAP@0.5:0.95 |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -182,6 +190,11 @@ Text ......
 | Type-4 | 0.2039 | 0.1957 | 0.1595 | 0.1675 | 0.7758 | 0.7436 | 0.9991 | 1.0000 | 0.9950 | 0.9933 |
 | Type-5 | 0.1974 | 0.2079 | 0.1619 | 0.1712 | 0.7662 | 0.7404 | 0.9991 | 1.0000 | 0.9950 | 0.9930 |
 
+|              | Header 1        | Header 2                       || Header 3                       ||
+|              | Subheader 1     | Subheader 2.1  | Subheader 2.2  | Subheader 3.1  | Subheader 3.2  |
+|==============|-----------------|----------------|----------------|----------------|----------------|
+| Row Header 1 | 3row, 3col span                                 ||| Colspan only                   ||
+| Row Header 2 |       ^                                         ||| Rowspan only   | Cell           
 
 ## Evaluation of the Experiment
 
