@@ -19,7 +19,7 @@ import Lib.Utilities.General
 
 """
 Description:
-    Open Camera_View.blend from the Blender folder and copy + paste this script and run it.
+    Open Gen_Synthetic_Data.blend from the Blender folder and copy + paste this script and run it.
 
     Terminal:
         $ cd Documents/GitHub/Blender_Synthetic_Data/Blender
