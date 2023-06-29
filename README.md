@@ -146,7 +146,7 @@ $ ../src/Camera/Collection> python scan.py
 
 After scanning the environment, we obtain the raw image without adjusting the contrast and brightness. To adjust the contrast 'alpha' and brightness 'beta' of each image, we utilize the histogram clip function.
 
-A program to adjust the contrast {alpha} and brightness {beta} of the raw image can be found below:
+A program to adjust the contrast 'alpha' and brightness 'beta' of the raw image can be found below:
 ```
 $ ../src/Camera> python image_processing.py 
 ```
