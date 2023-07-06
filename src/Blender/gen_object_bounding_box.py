@@ -14,6 +14,7 @@ import Lib.Blender.Utilities
 import Lib.Transformation.Core as Transformation
 #   ../Lib/Utilities/General
 import Lib.Utilities.General
+
 """
 Description:
     Open Object_Bounding_Box.blend from the Blender folder and copy + paste this script and run it.
