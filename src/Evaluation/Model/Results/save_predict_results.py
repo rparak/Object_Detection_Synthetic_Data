@@ -1,4 +1,3 @@
-# Ultralytics (Real-time object detection and image segmentation 
 # System (Default)
 import sys
 #   Add access if it is not in the system path.
