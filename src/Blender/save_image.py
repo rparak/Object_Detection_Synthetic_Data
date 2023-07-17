@@ -39,6 +39,9 @@ def main():
         A simple script to save an image from the camera to the Desktop folder.
     """
 
+    # Locate the path to the project folder.
+    project_folder = os.getcwd().split('Object_Detection_Synthetic_Data')[0] + 'Object_Detection_Synthetic_Data'
+    
     # Deselect all objects in the current scene.
     Lib.Blender.Utilities.Deselect_All()
 
@@ -57,9 +60,6 @@ def main():
 
     # Generate random camera and lighting properties.
     Camera_Cls.Random()
-    
-    # Locate the path to the project folder.
-    project_folder = os.getcwd().split('Object_Detection_Synthetic_Data')[0] + 'Object_Detection_Synthetic_Data'
 
     # Save the image to the file.
     bpy.context.scene.render.filepath = f'{project_folder}/images/Object_ID_{Object_Str.Id}_{Object_Str.Name}.png'
