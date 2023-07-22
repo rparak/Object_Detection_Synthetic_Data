@@ -86,7 +86,7 @@ T_Joint_001_Str = Object_Parameters_Str(Name='T_Joint_001', Id=0)
 T_Joint_001_Str.T = Transformation.Homogeneous_Transformation_Matrix_Cls(None, np.float32).Rotation([0.0, Mathematics.Degree_To_Radian(2.0), 0.0], 
                                                                                                     'ZYX').Translation([0.175, 0.0, 0.0193])
 # Parameters of the object bounding box.
-T_Joint_001_Str.Bounding_Box = Primitives.Box_Cls([0.00545, 0.0, 0.0], [0.0475, 0.0584, 0.0366])
+T_Joint_001_Str.Bounding_Box = Primitives.Box_Cls([-0.00545, 0.0, 0.0], [0.0475, 0.0584, 0.0366])
 # Other parameters.
 T_Joint_001_Str.Limit.Position = {'x': [-0.2, 0.2], 'y': [-0.325, 0.4], 'z': None}
 T_Joint_001_Str.Limit.Rotation = {'x': None, 'y': None, 'z': [-Mathematics.CONST_MATH_PI, Mathematics.CONST_MATH_PI]}
@@ -100,7 +100,7 @@ Metal_Blank_001_Str = Object_Parameters_Str(Name='Metal_Blank_001', Id=1)
 Metal_Blank_001_Str.T = Transformation.Homogeneous_Transformation_Matrix_Cls(None, np.float32).Rotation([0.0, 0.0, 0.0], 
                                                                                                         'ZYX').Translation([0.175, 0.0, 0.001])
 # Parameters of the object bounding box.
-Metal_Blank_001_Str.Bounding_Box = Primitives.Box_Cls([0.0, 0.0, 0.007], [0.05, 0.05, 0.014])
+Metal_Blank_001_Str.Bounding_Box = Primitives.Box_Cls([0.0, 0.0, -0.007], [0.05, 0.05, 0.014])
 # Other parameters.
 Metal_Blank_001_Str.Limit.Position = {'x': [-0.2, 0.2], 'y': [-0.325, 0.4], 'z': None}
 Metal_Blank_001_Str.Limit.Rotation = {'x': None, 'y': None, 'z': [-Mathematics.CONST_MATH_PI, Mathematics.CONST_MATH_PI]}
