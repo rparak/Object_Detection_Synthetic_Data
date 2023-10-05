@@ -194,7 +194,7 @@ class Camera_Cls(object):
             return Transformation.Homogeneous_Transformation_Matrix_Cls([[alpha_u,   gamma, u_0, 0.0],
                                                                          [    0.0, alpha_v, v_0, 0.0],
                                                                          [    0.0,     0.0, 1.0, 0.0],
-                                                                         [    0.0,     0.0, 0.0, 1.0]], np.float32).R
+                                                                         [    0.0,     0.0, 0.0, 1.0]], np.float64).R
         
         except AssertionError as error:
             print(f'[ERROR] Information: {error}')
@@ -235,7 +235,7 @@ class Camera_Cls(object):
         # Modification matrix {R} to adjust the direction (sign {+, -}) of each axis.  
         R_mod = np.array([[1.0,  0.0,  0.0],
                           [0.0, -1.0,  0.0],
-                          [0.0,  0.0, -1.0]], dtype=np.float32)
+                          [0.0,  0.0, -1.0]], dtype=np.float64)
 
         # Expression of the parameters R, t of the extrinsic matrix.
         R = R_mod @ self.__Cam_Param_Str.T.Transpose().R
@@ -267,12 +267,12 @@ class Camera_Cls(object):
         """
 
         # The strength of the light (the material of the object to be used for illumination).
-        bpy.data.materials['Light'].node_tree.nodes['Emission'].inputs[1].default_value = np.float32(np.random.uniform(7.5 - 1.0, 
+        bpy.data.materials['Light'].node_tree.nodes['Emission'].inputs[1].default_value = np.float64(np.random.uniform(7.5 - 1.0, 
                                                                                                                        7.5 + 1.0))
 
         # Non-Ideal parameters (images with additional noise):
         #   adaptive_threshold = 0.02 .. 0.03
-        bpy.context.scene.cycles.adaptive_threshold = np.float32(np.random.uniform(0.025 - 0.005, 
+        bpy.context.scene.cycles.adaptive_threshold = np.float64(np.random.uniform(0.025 - 0.005, 
                                                                                    0.025 + 0.005))
 
         #  Update the scene.
@@ -321,14 +321,14 @@ class Object_Cls(object):
             self.__Obj_Param_Str = Obj_Param_Str
 
             # Initialize the homogeneous transformation matrix as the identity matrix.
-            self.__T = Transformation.Homogeneous_Transformation_Matrix_Cls(None, np.float32)
+            self.__T = Transformation.Homogeneous_Transformation_Matrix_Cls(None, np.float64)
 
             # Create a dictionary and initialize the object's bounding box parameters.
             self.__Bounding_Box = {'Centroid': self.__T.p.all(), 'Size': self.__Obj_Param_Str.Bounding_Box.Size, 
                                    'Vertices': self.__Obj_Param_Str.Bounding_Box.Vertices.copy()}
 
             # Set the object transform to zero position.
-            Lib.Blender.Utilities.Set_Object_Transformation(self.__Obj_Param_Str.Name, Transformation.Homogeneous_Transformation_Matrix_Cls(None, np.float32))
+            Lib.Blender.Utilities.Set_Object_Transformation(self.__Obj_Param_Str.Name, Transformation.Homogeneous_Transformation_Matrix_Cls(None, np.float64))
             self.__Update()
 
             # Return the object to the initialization position.
@@ -399,7 +399,7 @@ class Object_Cls(object):
         """
                 
         return np.array(Lib.Blender.Utilities.Get_Vertices_From_Object(self.__Obj_Param_Str.Name),
-                        dtype=np.float32)
+                        dtype=np.float64)
     
     @property
     def Bounding_Box(self) -> tp.Tuple[tp.List[float], tp.List[float], tp.List[tp.List[float]]]:
@@ -415,7 +415,7 @@ class Object_Cls(object):
         # Oriented Bounding Box (OBB) transformation according to the homogeneous transformation matrix of the object.
         q = self.__T.Get_Rotation('QUATERNION'); p = self.__T.p.all()
         for i, point_i in enumerate(self.__Obj_Param_Str.Bounding_Box.Vertices):
-            self.__Bounding_Box['Vertices'][i, :] = q.Rotate(Transformation.Vector3_Cls(point_i, np.float32)).all() + p
+            self.__Bounding_Box['Vertices'][i, :] = q.Rotate(Transformation.Vector3_Cls(point_i, np.float64)).all() + p
 
         # The center of the bounding box is the same as the center of the object.
         self.__Bounding_Box['Centroid'] = p
@@ -436,7 +436,7 @@ class Object_Cls(object):
             Function to return the object to the initialization position.
         """
 
-        self.__T = Transformation.Homogeneous_Transformation_Matrix_Cls(self.__Obj_Param_Str.T.all().copy(), np.float32)
+        self.__T = Transformation.Homogeneous_Transformation_Matrix_Cls(self.__Obj_Param_Str.T.all().copy(), np.float64)
 
         # Set the transformation of the object to the initial position.
         Lib.Blender.Utilities.Set_Object_Transformation(self.__Obj_Param_Str.Name, self.__Obj_Param_Str.T)
@@ -464,7 +464,7 @@ class Object_Cls(object):
                 If there are no boundaries in any axis (equals None), continue without generating.
         """
 
-        p = np.zeros(3, np.float32); theta = p.copy()
+        p = np.zeros(3, np.float64); theta = p.copy()
         for i, (l_p_i, l_theta_i) in enumerate(zip(self.__Obj_Param_Str.Limit.Position.items(), 
                                                    self.__Obj_Param_Str.Limit.Rotation.items())):
             # Random Position: {p}

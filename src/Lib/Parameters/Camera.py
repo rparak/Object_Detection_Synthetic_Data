@@ -80,7 +80,7 @@ Description:
 """
 PhoXi_Scanner_M_Str = Camera_Parameters_Str()
 # Homogeneous transformation matrix {T} of the object.
-PhoXi_Scanner_M_Str.T = Transformation.Homogeneous_Transformation_Matrix_Cls(None, np.float32).Rotation([0.0, Mathematics.Degree_To_Radian(11.75), -Mathematics.CONST_MATH_HALF_PI], 
+PhoXi_Scanner_M_Str.T = Transformation.Homogeneous_Transformation_Matrix_Cls(None, np.float64).Rotation([0.0, Mathematics.Degree_To_Radian(11.75), -Mathematics.CONST_MATH_HALF_PI], 
                                                                                                         'XYZ').Translation([0.145, -0.175, 0.885])
 # Camera resolution in pixels.
 PhoXi_Scanner_M_Str.Resolution = {'x': 2064, 'y': 1544}

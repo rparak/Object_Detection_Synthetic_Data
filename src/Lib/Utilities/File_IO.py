@@ -67,7 +67,7 @@ def Load(file_path: str, format: str, separator: str) -> tp.List[tp.Union[float,
                 data_tmp.append(np.float64(line.split(separator)))
 
         # Convert a list to an array.
-        data = np.array(data_tmp, dtype=np.float32)
+        data = np.array(data_tmp, dtype=np.float64)
     
     # Close the file after loading the data.
     f.close()

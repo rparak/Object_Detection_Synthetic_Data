@@ -43,7 +43,7 @@ def Get_Min_Max(vertices: tp.List[float]) -> tp.Tuple[tp.List[float], tp.List[fl
         (2) parameter [Vector<float> 1x3]: Maximum X, Y, Z values of the input vertices.
     """
 
-    min_vec3 = np.array([vertices[0, 0], vertices[0, 1], vertices[0, 2]], dtype=np.float32)
+    min_vec3 = np.array([vertices[0, 0], vertices[0, 1], vertices[0, 2]], dtype=np.float64)
     max_vec3 = min_vec3.copy()
     
     for _, verts_i in enumerate(vertices[1::]):
@@ -179,7 +179,7 @@ def Get_2D_Coordinates_Bounding_Box(vertices: tp.List[tp.List[float]], P: tp.Lis
             p.append(p_tmp/p_tmp[-1])
 
         # Get the minimum and maximum values of the pixel coordinates.
-        (p_min, p_max) = Get_Min_Max(np.array(p, dtype=np.float32))
+        (p_min, p_max) = Get_Min_Max(np.array(p, dtype=np.float64))
 
         return Convert_Boundig_Box_Data('PASCAL_VOC', format_out, {'x_min': p_min[0], 'y_min': p_min[1], 'x_max': p_max[0], 'y_max': p_max[1]}, 
                                         Resolution)

@@ -37,7 +37,7 @@ def main():
     Lib.Blender.Utilities.Deselect_All()
     
     # The identity homogeneous transformation matrix. Zero position.
-    T_0 = Transformation.Homogeneous_Transformation_Matrix_Cls(None, np.float32)
+    T_0 = Transformation.Homogeneous_Transformation_Matrix_Cls(None, np.float64)
     
     for obj in bpy.data.objects:
         # Reset the position and rotation of the object in the scene.
@@ -48,14 +48,14 @@ def main():
         
         # Calculate the bounding box parameters from the vertices of the object.
         #   Get the minimum and maximum values of the X, Y, Z vertices of the object.
-        (min_verts, max_verts) = Lib.Utilities.General.Get_Min_Max(np.array(Lib.Blender.Utilities.Get_Vertices_From_Object(obj.name), dtype=np.float32))
+        (min_verts, max_verts) = Lib.Utilities.General.Get_Min_Max(np.array(Lib.Blender.Utilities.Get_Vertices_From_Object(obj.name), dtype=np.float64))
         #   Obtain the main parameters of the bounding box.
         origin = []; size = []
         for _, (min_v_i, max_v_i) in enumerate(zip(min_verts, max_verts)):
             origin.append((max_v_i + min_v_i)/2.0); size.append(np.abs(max_v_i - min_v_i))
             
         # Convery list to numpy array.
-        origin = np.array(origin, np.float32); size = np.array(size, np.float32)
+        origin = np.array(origin, np.float64); size = np.array(size, np.float64)
         
         # Display the results of the calculation.
         print(f'[INFO] Object name: {obj.name}')

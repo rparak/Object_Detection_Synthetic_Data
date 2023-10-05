@@ -83,7 +83,7 @@ Description:
 """
 T_Joint_001_Str = Object_Parameters_Str(Name='T_Joint_001', Id=0)
 # Homogeneous transformation matrix {T} of the object.
-T_Joint_001_Str.T = Transformation.Homogeneous_Transformation_Matrix_Cls(None, np.float32).Rotation([0.0, Mathematics.Degree_To_Radian(2.0), 0.0], 
+T_Joint_001_Str.T = Transformation.Homogeneous_Transformation_Matrix_Cls(None, np.float64).Rotation([0.0, Mathematics.Degree_To_Radian(2.0), 0.0], 
                                                                                                     'ZYX').Translation([0.175, 0.0, 0.0193])
 # Parameters of the object bounding box.
 T_Joint_001_Str.Bounding_Box = Primitives.Box_Cls([-0.00545, 0.0, 0.0], [0.0475, 0.0584, 0.0366])
@@ -97,7 +97,7 @@ Description:
 """
 Metal_Blank_001_Str = Object_Parameters_Str(Name='Metal_Blank_001', Id=1)
 # Homogeneous transformation matrix {T} of the object.
-Metal_Blank_001_Str.T = Transformation.Homogeneous_Transformation_Matrix_Cls(None, np.float32).Rotation([0.0, 0.0, 0.0], 
+Metal_Blank_001_Str.T = Transformation.Homogeneous_Transformation_Matrix_Cls(None, np.float64).Rotation([0.0, 0.0, 0.0], 
                                                                                                         'ZYX').Translation([0.175, 0.0, 0.001])
 # Parameters of the object bounding box.
 Metal_Blank_001_Str.Bounding_Box = Primitives.Box_Cls([0.0, 0.0, -0.007], [0.05, 0.05, 0.014])

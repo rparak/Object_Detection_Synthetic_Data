@@ -405,9 +405,9 @@ def Quadratic_Eqn(a: float, b: float, c: float) -> tp.List[float]:
                 return np.array([(-b + (D)**(1.0/2.0)) / (2*a), (2*c)/(-b + (D)**(1.0/2.0))], dtype=a.dtype)
         else:
             # The roots do not exist or the roots are imaginary.
-            return np.array([0.0, 0.0], dtype=np.float32)
+            return np.array([0.0, 0.0], dtype=np.float64)
     else:
-        return np.array([0.0, Linear_Eqn(b, c)[0]], dtype=np.float32)
+        return np.array([0.0, Linear_Eqn(b, c)[0]], dtype=np.float64)
 
 def Inverse_Companion_Matrix(p: tp.List[float]) -> tp.List[tp.List[float]]:
     """
@@ -454,7 +454,7 @@ def Inverse_Companion_Matrix(p: tp.List[float]) -> tp.List[tp.List[float]]:
     """
 
     if isinstance(p, list):
-        p = np.array(p, dtype=np.float32)
+        p = np.array(p, dtype=np.float64)
 
     # The size {N} of the square matrix.
     N = p.size - 1
@@ -506,7 +506,7 @@ def Roots(p: tp.List[float]) -> tp.List[float]:
 
     try:    
         if isinstance(p, list):
-            p = np.array(p, dtype=np.float32)
+            p = np.array(p, dtype=np.float64)
     
         # Check the degree of the input polynomial.
         assert p.size > 1
