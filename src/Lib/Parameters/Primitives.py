@@ -29,7 +29,7 @@ File Name: Primitives.py
 import numpy as np
 # Typing (Support for type hints)
 import typing as tp
-# Custom Script:
+# Custom Library:
 #   ../Utilities/Transformation
 from Lib.Transformation.Core import Homogeneous_Transformation_Matrix_Cls as HTM_Cls
 
