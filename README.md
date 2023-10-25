@@ -541,7 +541,7 @@ Roman.Parak@outlook.com
 
 ## Citation (BibTex)
 ```
-@misc{RomanParak_Unity3D,
+@misc{RomanParak_BlenderSynth,
   author = {Roman Parak},
   title = {Analysis of training object detection models using different types of datasets},
   year = {2020-2023},
