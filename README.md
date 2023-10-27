@@ -547,7 +547,7 @@ Roman.Parak@outlook.com
   year = {2020-2023},
   publisher = {GitHub},
   journal = {GitHub repository},
-  howpublished = {\url{https://github.com/rparak/Unity3D_Robotics_Overview}}
+  howpublished = {\url{https://github.com/rparak/Object_Detection_Synthetic_Data}}
 }
 ```
 
