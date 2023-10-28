@@ -23,9 +23,9 @@ See the "Installation Dependencies" section in the Readme file.
 
 ## Project Description
 
-The project focuses on analyzing the training of object detection models using various types of datasets, including real data, augmented data, synthetic data, and hybrid data. Consequently, I compare these approaches to train the model and determine the most effective method for object detection in real-world applications.
+The project focuses on analyzing the training of object detection models using various types of datasets, including real data, augmented data, synthetic data, and hybrid data. Consequently, we compare these approaches to train the model and determine the most effective method for object detection in real-world applications.
 
-The experiment was conducted in a robotics lab called Industry 4.0 Cell (I4C), located at Brno University of Technology. The main hardware used for the experiment was a PhoXi 3D Scanner M. Since the project primarily focuses on object detection in 2D space, I utilized only the 2D camera of the scanner in our experiment. For future expansions of the project, I can also incorporate the third dimension to fully leverage the scanner's potential.
+The experiment was conducted in a robotics lab called Industry 4.0 Cell (I4C), located at Brno University of Technology. The main hardware used for the experiment was a PhoXi 3D Scanner M. Since the project primarily focuses on object detection in 2D space, we utilized only the 2D camera of the scanner in our experiment. For future expansions of the project, I can also incorporate the third dimension to fully leverage the scanner's potential.
 
 <p align="center">
   <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Real_Workplace/Image_11.png?raw=true" width="750" height="450">
