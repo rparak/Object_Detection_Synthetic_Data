@@ -46,33 +46,47 @@ CONST_EPS_64 = 2.22e-16
 CONST_MATH_PI = 3.141592653589793
 CONST_MATH_HALF_PI = 1.5707963267948966
 
-def Radian_To_Degree(x: float) -> float:
+def Radian_To_Degree(x: tp.Union[float, tp.List[float]]) -> tp.Union[float, tp.List[float]]:
     """
     Description:
         Functions for converting angles from radians to degrees.
 
     Args:
-        (1) x [float]: Anglein radians.
+        (1) x [float or Vector<float>]: Angle in radians.
 
     Returns:
-        (1) parameter [float]: Angle in degrees.
+        (1) parameter [float or Vector<float>]: Angle in degrees.
     """
 
-    return x * (180.0 / CONST_MATH_PI)
+    try:
+        assert isinstance(x, float) or isinstance(x, np.ndarray)
+        
+        return x * (180.0 / CONST_MATH_PI)
 
-def Degree_To_Radian(x: float) -> float:
+    except AssertionError as error:
+        print(f'[ERROR] Information: {error}')
+        print(f'[ERROR] Incorrect type of input parameters. Input parameter x must be of type float or np.ndarray.')
+
+def Degree_To_Radian(x: tp.Union[float, tp.List[float]]) -> tp.Union[float, tp.List[float]]:
     """
     Description:
         Functions for converting angles from degrees to radians.
 
     Args:
-        (1) x [float]: Angle in degrees.
+        (1) x [float or Vector<float>]: Angle in degrees.
 
     Returns:
-        (1) parameter [float]: Angle in radians.
+        (1) parameter [float or Vector<float>]: Angle in radians.
     """
 
-    return x * (CONST_MATH_PI / 180.0)
+    try:
+        assert isinstance(x, float) or isinstance(x, np.ndarray)
+        
+        return x * (CONST_MATH_PI / 180.0)
+
+    except AssertionError as error:
+        print(f'[ERROR] Information: {error}')
+        print(f'[ERROR] Incorrect type of input parameters. Input parameter x must be of type float or np.ndarray.')
 
 def Sign(x: float) -> float:
     """
@@ -110,13 +124,13 @@ def Euclidean_Norm(x: tp.List[float]) -> float:
     
     x_res = np.array(x).flatten()
     if x_res.size == 1:
-        return (x ** 2) ** (1.0/2.0)
+        return (x ** 2) ** (0.5)
     else:
         x_res_norm = 0.0
         for _, x_res_i in enumerate(x_res):
             x_res_norm += x_res_i ** 2
 
-        return x_res_norm ** (1.0/2.0)
+        return x_res_norm ** (0.5)
 
 def Max(x: tp.List[float]) -> tp.Tuple[int, float]:
     """
@@ -308,6 +322,24 @@ def Factorial(n: int) -> int:
         print('[ERROR] The input condition for the calculation is not satisfied.')
         print('[ERROR] The number n ({n}) must be larger than or equal to 0.')
 
+def Combinations(n: int, r: int):
+    """
+    Description:
+        Get the number of possible combinations.
+
+            Formula:
+                C(n,r) = n!/(r! * (n - r)!)
+
+    Args:
+        (1) n [int]: Total number of objects.
+        (2) r [int]: Sample size.
+
+    Returns:
+        (1) parameter [int]: The number of possible combinations.
+    """
+
+    return int(Factorial(n) / (Factorial(r) * Factorial(n - r)))
+
 def Perpendicular_Distance(A: tp.List[float], B: tp.List[float], C: tp.List[float]) -> float:
     """
     Description:
@@ -400,9 +432,9 @@ def Quadratic_Eqn(a: float, b: float, c: float) -> tp.List[float]:
         if D >= 0.0:
             # Numerically stable method for solving quadratic equations.
             if b >= 0.0:
-                return np.array([(-b - (D)**(1.0/2.0)) / (2*a), (2*c)/(-b - (D)**(1.0/2.0))], dtype=a.dtype)
+                return np.array([(-b - (D)**(0.5)) / (2*a), (2*c)/(-b - (D)**(0.5))], dtype=a.dtype)
             else:
-                return np.array([(-b + (D)**(1.0/2.0)) / (2*a), (2*c)/(-b + (D)**(1.0/2.0))], dtype=a.dtype)
+                return np.array([(-b + (D)**(0.5)) / (2*a), (2*c)/(-b + (D)**(0.5))], dtype=a.dtype)
         else:
             # The roots do not exist or the roots are imaginary.
             return np.array([0.0, 0.0], dtype=np.float64)
