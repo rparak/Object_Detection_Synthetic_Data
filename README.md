@@ -548,7 +548,7 @@ Roman.Parak@outlook.com
 @misc{RomanParak_BlenderSynth,
   author = {Roman Parak},
   title = {Analysis of training object detection models using different types of datasets},
-  year = {2020-2023},
+  year = {2023-2023},
   publisher = {GitHub},
   journal = {GitHub repository},
   howpublished = {\url{https://github.com/rparak/Object_Detection_Synthetic_Data}}
