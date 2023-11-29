@@ -523,7 +523,7 @@ Deactivate environment.
 $ ../user_name> conda deactivate
 
 Remove environment.
-$ ../user_name> conda remove -name {name} --all
+$ ../user_name> conda remove --name {name} --all
 
 To verify that the environment was removed, in your terminal window or an Anaconda Prompt, run.
 $ ../user_name> conda info --envs
