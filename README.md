@@ -1,4 +1,4 @@
-# Analysis of Training Object Detection Models using Different Types of Datasets
+# Analysis of Training Object Detection Models Using Different Types of Datasets
 
 <p align="center">
   <img src="https://github.com/rparak/Object_Detection_Synthetic_Data//blob/main/images/Background/Image_11.png?raw=true" width="750" height="450">
